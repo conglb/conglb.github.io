@@ -2,24 +2,25 @@
 layout: post
 title:  "IELTS Vocabulary: from yesterday's answer"
 subtitle: "Một số kinh nghiệm tôi thu được sau khi chuyển website cá nhân từ Wordpress sang Jekyll"
-date:   2019-06-16
-categories: [ielts-help-and-english-pr]
-tags: [ielst, speaking, vocabulary]
-permalink: /blogging/kinh-nghiem-tao-webiste-ca-nhan-voi-jekyll/
-bigimg: "/assets/img/blogging/jekyll/jekyllhomepage.png"
+gh-repo: daattali/beautiful-jekyll
+gh-badge: [star, fork, follow]
+tags: [test]
+comments: true
 ---
 
 
 Here's a list of some good phrases that I used in yesterday's sample speaking answer. Notice that some of the phrases are perfect for the speaking test, but a little too informal for a written essay.
 
-experience poor service
-have a bite to eat (informal)
+Dưới đây là danh sách phrases tốt khi dùng trong phần thi nói, nhưng không được formal trong văn viết.
+
+experience poor service: trải nghiệm dịch vụ tồi
+have a bite to eat (informal): 
 come across something (meaning 'find by chance')
-book in advance
+book in advance: 
 as soon as we walked through the door
 things started to go wrong (informal)
 not at all impressed with
-the attitude of the staff
+the attitude of the staff: thái độ của nhân viên
 standing around (informal)
 attract the attention of someone / attract someone's attention
 only to be told that
