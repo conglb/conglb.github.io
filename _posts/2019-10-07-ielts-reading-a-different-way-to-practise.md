@@ -1,7 +1,6 @@
 ---
 layout: post
-title: IELTS Reading: a different way to practise
-tags: [ielts]
+title: "IELTS Reading: a different way to practise"
 ---
 
 Here's an interesting way to use reading tests from the Cambridge IELTS books:
