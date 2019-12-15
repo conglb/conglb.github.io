@@ -1,11 +1,6 @@
 ---
 layout: post
 title:  "IELTS Vocabulary: from yesterday's answer"
-subtitle: "Một số kinh nghiệm tôi thu được sau khi chuyển website cá nhân từ Wordpress sang Jekyll"
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
-tags: [test]
-comments: true
 ---
 
 
