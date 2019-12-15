@@ -2,8 +2,7 @@
 layout: post
 title: IELTS Reading: a different way to practise
 subtitle: Each post also has a subtitle
-bigimg: /img/path.jpg
-tags: [ielts, ielts reading]
+tags: [ielts]
 ---
 
 Here's an interesting way to use reading tests from the Cambridge IELTS books:
@@ -23,4 +22,3 @@ Dưới đây là một cách thú vị để luyện tập từ bộ Cambridge:
 2. Lấy đáp án từ cuối sách
 3. Giờ đọc câu hỏi đầu tiên, gạch chân keywords và tìm câu trả lời trong bài đọc - dù bạn đã biết đáp án nên bạn chỉ tìm câu trả lời ở đâu.
 4. Gạch chân từ mà đồng nghĩa với keywords ở question.
-5. 
