@@ -2,10 +2,8 @@
 layout: post
 title: IELTS Reading: a different way to practise
 subtitle: Each post also has a subtitle
-gh-repo: daattali/beautiful-jekyll
-gh-badge: [star, fork, follow]
-tags: [test]
-comments: true
+bigimg: /img/path.jpg
+tags: [ielts, ielts reading]
 ---
 
 Here's an interesting way to use reading tests from the Cambridge IELTS books:
