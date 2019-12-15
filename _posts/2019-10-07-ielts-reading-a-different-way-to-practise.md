@@ -1,7 +1,6 @@
 ---
 layout: post
 title: IELTS Reading: a different way to practise
-subtitle: Each post also has a subtitle
 tags: [ielts]
 ---
 
