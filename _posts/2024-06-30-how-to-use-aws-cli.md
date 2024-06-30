@@ -1,9 +1,7 @@
---
-title: How to set up and use AWS CLI
+---
 layout: post
-tag: computer science
-comments: true
---
+title: "How to set up and use AWS CLI"
+---
 
 Here's a detailed guide on how to use the AWS CLI to manage your AWS services from the command line.
 
