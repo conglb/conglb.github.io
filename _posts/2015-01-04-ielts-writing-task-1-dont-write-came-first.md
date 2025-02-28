@@ -1,6 +1,6 @@
 ---
 layout: post
-title: IELTS Writting Tast 1: don't write 'came first'
+title: IELTS Writting Tast 1: don't write came first
 image: /img/hello_world.jpeg
 ---
 
