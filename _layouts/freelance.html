@@ -1,0 +1,40 @@
+---
+layout: base
+---
+
+{% include header.html type="page" %}
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <!-- Content here -->
+         Employ me!
+         Consulting:
+            <ul>
+            <li>1 hour: $100</li>
+            <li>5 hours: $450</li>
+            <li>10 hours: $800</li>
+            </ul>
+        Development:
+            <ul>
+            <li>1 hour: $150</li>
+            <li>5 hours: $700</li>
+            <li>10 hours: $1200</li>
+            </ul>
+        The price vary 10% depending on the complexity of the task.
+        <p>Contact me at <a href="mailto:benle0912@gmail.com">benle0912@gmail.com</a></p>
+        
+        <div class="disqus-comments">
+	        {% include disqus.html %}
+        </div>
+	        {% include fb-comment.html %}
+        <div class="staticman-comments">
+          {% include staticman-comments.html %}
+        </div>
+        <div class="justcomments-comments">
+          {% include just_comments.html %}
+        </div>
+	    {% endif %}
+    </div>
+  </div>
+</div>
