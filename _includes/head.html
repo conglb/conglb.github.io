@@ -64,6 +64,16 @@
   {% include cloudflare_analytics.html %}
   {% include mathjax.html %}
 
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+      // activate configuration for Tailwind
+      // https://tailwindcss.com/docs/configuration
+      tailwind.config = {
+          darkMode: 'class',
+      }
+  </script>
+
   {% if layout.common-ext-css %}
     {% for css in layout.common-ext-css %}
       {% include ext-css.html css=css %}
@@ -157,15 +167,6 @@
 
   {% include matomo.html %}
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-      // activate configuration for Tailwind
-      // https://tailwindcss.com/docs/configuration
-      tailwind.config = {
-          darkMode: 'class',
-      }
-  </script>
 
   {% if page.comments and site.staticman.repository and site.staticman.branch %}
   <link rel="stylesheet" href="{{ "/assets/css/staticman.css" | relative_url }}">
