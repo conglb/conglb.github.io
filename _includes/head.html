@@ -157,6 +157,16 @@
 
   {% include matomo.html %}
 
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+      // activate configuration for Tailwind
+      // https://tailwindcss.com/docs/configuration
+      tailwind.config = {
+          darkMode: 'class',
+      }
+  </script>
+
   {% if page.comments and site.staticman.repository and site.staticman.branch %}
   <link rel="stylesheet" href="{{ "/assets/css/staticman.css" | relative_url }}">
   {% endif %}
@@ -172,13 +182,5 @@
     {% endfor %}
   {% endif %}
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-      // activate configuration for Tailwind
-      // https://tailwindcss.com/docs/configuration
-      tailwind.config = {
-          darkMode: 'class',
-      }
-  </script>
+
 </head>
