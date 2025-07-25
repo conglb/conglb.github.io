@@ -1,0 +1,3618 @@
+diff --git a/.bundle/config b/.bundle/config
+deleted file mode 100644
+index 01ae3c9..0000000
+--- a/.bundle/config
++++ /dev/null
+@@ -1,2 +0,0 @@
+----
+-BUNDLE_CLEAN: "false"
+diff --git a/.devcontainer/devcontainer.json b/.devcontainer/devcontainer.json
+deleted file mode 100644
+index 8d96444..0000000
+--- a/.devcontainer/devcontainer.json
++++ /dev/null
+@@ -1,26 +0,0 @@
+-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+-// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+-{
+-	"name": "Existing Dockerfile",
+-	"build": {
+-		// Sets the run context to one level up instead of the .devcontainer folder.
+-		"context": "..",
+-		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+-		"dockerfile": "../Dockerfile"
+-	}
+-
+-	// Features to add to the dev container. More info: https://containers.dev/features.
+-	// "features": {},
+-
+-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+-	// "forwardPorts": [],
+-
+-	// Uncomment the next line to run commands after the container is created.
+-	// "postCreateCommand": "cat /etc/os-release",
+-
+-	// Configure tool-specific properties.
+-	// "customizations": {},
+-
+-	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+-	// "remoteUser": "devcontainer"
+-}
+diff --git a/.github/workflows/jekyll.yml b/.github/workflows/jekyll.yml
+deleted file mode 100644
+index eb9e02e..0000000
+--- a/.github/workflows/jekyll.yml
++++ /dev/null
+@@ -1,65 +0,0 @@
+-# This workflow uses actions that are not certified by GitHub.
+-# They are provided by a third-party and are governed by
+-# separate terms of service, privacy policy, and support
+-# documentation.
+-
+-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+-name: Deploy Jekyll site to Pages (customized)
+-
+-on:
+-  # Runs on pushes targeting the default branch
+-  push:
+-    branches: ["master"]
+-
+-  # Allows you to run this workflow manually from the Actions tab
+-  workflow_dispatch:
+-
+-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+-permissions:
+-  contents: read
+-  pages: write
+-  id-token: write
+-
+-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+-concurrency:
+-  group: "pages"
+-  cancel-in-progress: false
+-
+-jobs:
+-  # Build job
+-  build:
+-    runs-on: ubuntu-latest
+-    steps:
+-      - name: Checkout
+-        uses: actions/checkout@v4
+-      - name: Setup Ruby
+-        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
+-        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+-        with:
+-          ruby-version: '3.1' # Not needed with a .ruby-version file
+-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+-          cache-version: 0 # Increment this number if you need to re-download cached gems
+-      - name: Setup Pages
+-        id: pages
+-        uses: actions/configure-pages@v5
+-      - name: Build with Jekyll
+-        # Outputs to the './_site' directory by default
+-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+-        env:
+-          JEKYLL_ENV: production
+-      - name: Upload artifact
+-        # Automatically uploads an artifact from the './_site' directory by default
+-        uses: actions/upload-pages-artifact@v3
+-
+-  # Deployment job
+-  deploy:
+-    environment:
+-      name: github-pages
+-      url: ${{ steps.deployment.outputs.page_url }}
+-    runs-on: ubuntu-latest
+-    needs: build
+-    steps:
+-      - name: Deploy to GitHub Pages
+-        id: deployment
+-        uses: actions/deploy-pages@v4
+diff --git a/.ruby-version b/.ruby-version
+deleted file mode 100644
+index 6a81b4c..0000000
+--- a/.ruby-version
++++ /dev/null
+@@ -1 +0,0 @@
+-2.7.8
+diff --git a/CNAME b/CNAME
+deleted file mode 100644
+index 60c8f79..0000000
+--- a/CNAME
++++ /dev/null
+@@ -1 +0,0 @@
+-www.muahangnhap.com
+\ No newline at end of file
+diff --git a/Dockerfile b/Dockerfile
+deleted file mode 100644
+index a8a2fb8..0000000
+--- a/Dockerfile
++++ /dev/null
+@@ -1,8 +0,0 @@
+-FROM jekyll/jekyll:2
+-
+-COPY --chown=jekyll:jekyll Gemfile .
+-COPY --chown=jekyll:jekyll Gemfile.lock .
+-
+-RUN bundle install --quiet --clean
+-
+-CMD ["jekyll", "serve"]
+\ No newline at end of file
+diff --git a/_config.yml b/_config.yml
+index 5c79f46..572fd5f 100644
+--- a/_config.yml
++++ b/_config.yml
+@@ -10,21 +10,25 @@
+ ############################
+ 
+ # Name of website
+-title: conglb
++title: My website
+ 
+ # Your name to show in the footer
+-author: cong le
++author: Some Person
+ 
+ ###############################################
+ # --- List of links in the navigation bar --- #
+ ###############################################
+ 
+ navbar-links:
+-  Home: "aboutme"
++  About Me: "aboutme"
+   Resources:
+-    - IELTS Reading: "#"
+-    - IELTS Listening: "#"
+-  Contact: "#"
++    - Beautiful Jekyll: "https://beautifuljekyll.com"
++    - Learn markdown: "https://www.markdowntutorial.com/"
++  Author's home: "https://deanattali.com"
++
++################
++# --- Logo --- #
++################
+ 
+ # Image to show in the navigation bar - works best with a square image
+ # Remove this parameter if you don't want an image in the navbar
+@@ -37,32 +41,25 @@ round-avatar: true
+ # then specify the following parameter
+ #title-img: /path/to/image
+ 
+-# --- Background colour/image options --- #
+-
+-# Alternatively, the navbar, footer, and page background can be set to use background images
+-# instead of colour
+-
+-# navbar-img: "/img/bgimage.png"
+-# footer-img: "/img/bgimage.png"
+-# page-img: "/img/bgimage.png"
+-
+-# --- Footer options --- #
+ 
+-# Change all these values or delete the ones you don't want.
+-# Important: you must keep the "name" parameter, everything else you can remove
+-author: "Le Ba Cong"
++#####################################
++# --- Footer social media links --- #
++#####################################
+ 
+-# Select your active Social Network Links.
+-# Uncomment the links you want to show in the footer and add your information to each link.
+-# You can reorder the items to define the link order.
+-# If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
++# Select the social network links that you want to show in the footer.
++# You can change the order that they show up on the page by changing the order here.
++# Uncomment the links you want to show and add your information to each one.
+ social-network-links:
+-  rss: true
+-  email: "congmb@gmail.com"
+-  facebook: bacongle
+-  github: conglb
+-  twitter: conglb
+-#  reddit: yourname
++  email: "someone@example.com"
++  rss: true  # remove this line if you don't want to show an RSS link at the bottom
++  facebook: deanattali
++  github: daattali
++  twitter: daattali
++  patreon: DeanAttali
++  youtube: "@daattali"
++  whatsapp: 15551212
++#  medium: yourname
++#  reddit: yourname or r/yoursubreddit
+ #  linkedin: daattali
+ #  xing: yourname
+ #  stackoverflow: "3943160/daattali"
+@@ -151,17 +148,6 @@ footer-text-col: "#777777"
+ footer-link-col: "#404040"
+ footer-hover-col: "#0085A1"
+ 
+-navbar-col: "#8C1515"
+-navbar-text-col: "#FFFFFF"
+-navbar-children-col: "#F5F5F5"
+-page-col: "#FFFFFF"
+-link-col: "#008AFF"
+-hover-col: "#0085A1"
+-footer-col: "#F5F5F5"
+-footer-text-col: "#777777"
+-footer-link-col: "#404040"
+-
+-
+ # Alternatively, the navbar, footer, and page background can be set to an image
+ # instead of colour
+ 
+@@ -173,8 +159,8 @@ footer-link-col: "#404040"
+ #mobile-theme-col: "#0085A1"
+ 
+ # For any extra visual customization, you can include additional CSS files in every page on your site. List any custom CSS files here
+-site-css:
+-  - "/assets/css/custom-styles.css"
++#site-css:
++#  - "/assets/css/custom-styles.css"
+ 
+ # If you have common JavaScript files that should be included in every page, list them here
+ #site-js:
+diff --git a/_includes/nav.html b/_includes/nav.html
+index d31fe7a..8293ca2 100644
+--- a/_includes/nav.html
++++ b/_includes/nav.html
+@@ -1,18 +1,4 @@
+-<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+-  <div class="container-fluid" style="margin-left:12%;">
+-    <div class="navbar-header">
+-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+-        <span class="sr-only">Toggle navigation</span>
+-        <span class="icon-bar"></span>
+-        <span class="icon-bar"></span>
+-        <span class="icon-bar"></span>
+-      </button>
+-      {%- if site.title-img -%}
+-        <a class="navbar-brand navbar-brand-logo" href="{{ '' | absolute_url }}"><img src="{{ site.title-img }}"/></a>
+-      {%- else -%}
+-        <a class="navbar-brand" href="{{ '' | absolute_url }}">{{ site.title }}</a>
+-      {%- endif -%}
+-    </div>
++<nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom {% if page.nav-short %}top-nav-short-permanent{% else %}top-nav-regular{% endif %}">
+ 
+   {%- if site.title-img -%}
+     <a class="navbar-brand navbar-brand-logo" href="{{ '/' | absolute_url }}"><img alt="{{ site.title }} Logo" src="{{ site.title-img | relative_url}}"/></a>
+diff --git a/_layouts/freelance.html b/_layouts/freelance.html
+deleted file mode 100644
+index 1c561ec..0000000
+--- a/_layouts/freelance.html
++++ /dev/null
+@@ -1,40 +0,0 @@
+----
+-layout: base
+----
+-
+-{% include header.html type="page" %}
+-
+-<div class="container" role="main">
+-  <div class="row">
+-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+-        <!-- Content here -->
+-         Employ me!
+-         Consulting:
+-            <ul>
+-            <li>1 hour: $100</li>
+-            <li>5 hours: $450</li>
+-            <li>10 hours: $800</li>
+-            </ul>
+-        Development:
+-            <ul>
+-            <li>1 hour: $150</li>
+-            <li>5 hours: $700</li>
+-            <li>10 hours: $1200</li>
+-            </ul>
+-        The price vary 10% depending on the complexity of the task.
+-        <p>Contact me at <a href="mailto:benle0912@gmail.com">benle0912@gmail.com</a></p>
+-        
+-        <div class="disqus-comments">
+-	        {% include disqus.html %}
+-        </div>
+-	        {% include fb-comment.html %}
+-        <div class="staticman-comments">
+-          {% include staticman-comments.html %}
+-        </div>
+-        <div class="justcomments-comments">
+-          {% include just_comments.html %}
+-        </div>
+-	    {% endif %}
+-    </div>
+-  </div>
+-</div>
+diff --git a/_layouts/home.html b/_layouts/home.html
+index 4e8f7cb..5ff3d97 100644
+--- a/_layouts/home.html
++++ b/_layouts/home.html
+@@ -37,7 +37,7 @@ layout: page
+       {% endif %}
+ 
+       <a href="{{ post.url | absolute_url }}">
+-        <h3 class="post-title">{{ post.title | strip_html }}</h3>
++        <h2 class="post-title">{{ post.title | strip_html }}</h2>
+ 
+         {% if post.subtitle %}
+           <h3 class="post-subtitle">
+diff --git a/_posts/2015-01-04-ielts-writing-task-1-dont-write-came-first.md b/_posts/2015-01-04-ielts-writing-task-1-dont-write-came-first.md
+deleted file mode 100644
+index 3de730d..0000000
+--- a/_posts/2015-01-04-ielts-writing-task-1-dont-write-came-first.md
++++ /dev/null
+@@ -1,19 +0,0 @@
+----
+-layout: post
+-title: IELTS Writting Tast 1: don't write came first
+-image: /img/hello_world.jpeg
+----
+-
+-Đừng bao giờ miêu ra một đối tượng trong graph hay chart rằng chúng coming first, second hoặc last.
+-Bởi vì cảm giác như là bạn đang miêu tả một cuộc thi.
+-
+-Ví dụ, không viết:
+-* Theme parks were first.
+-* Theme parks came first, and museums were in second place.
+-* In last place were wildlife parks and zoos.
+-
+-Hãy viết:
+-* Theme parks were the most popular type of tourist attration.
+-* Theme parks attracted the highest proportion of visitors, and museums were the second most visited attraction.
+-* Wildlife parks and zoos were the least popular of the four types of tourist attraction.
+-
+diff --git a/_posts/2019-06-10-ielts-vocabulary-from-yesterdays-answer.md b/_posts/2019-06-10-ielts-vocabulary-from-yesterdays-answer.md
+deleted file mode 100644
+index 38b21f1..0000000
+--- a/_posts/2019-06-10-ielts-vocabulary-from-yesterdays-answer.md
++++ /dev/null
+@@ -1,31 +0,0 @@
+----
+-layout: post
+-title:  "IELTS Vocabulary: from yesterday's answer"
+----
+-
+-
+-Here's a list of some good phrases that I used in yesterday's sample speaking answer. Notice that some of the phrases are perfect for the speaking test, but a little too informal for a written essay.
+-
+-Dưới đây là danh sách phrases tốt khi dùng trong phần thi nói, nhưng không được formal trong văn viết.
+-
+-experience poor service: trải nghiệm dịch vụ tồi
+-have a bite to eat (informal): 
+-come across something (meaning 'find by chance')
+-book in advance: 
+-as soon as we walked through the door
+-things started to go wrong (informal)
+-not at all impressed with
+-the attitude of the staff: thái độ của nhân viên
+-standing around (informal)
+-attract the attention of someone / attract someone's attention
+-only to be told that
+-a party of our size
+-to be adamant that
+-our only option was to
+-getting fed up (informal)
+-being treated as if
+-where we felt unwelcome
+-we left feeling disappointed
+-to be dismissive
+-a much friendlier place
+-just around the corner
+diff --git a/_posts/2019-10-07-ielts-reading-a-different-way-to-practise.md b/_posts/2019-10-07-ielts-reading-a-different-way-to-practise.md
+deleted file mode 100644
+index bfc774f..0000000
+--- a/_posts/2019-10-07-ielts-reading-a-different-way-to-practise.md
++++ /dev/null
+@@ -1,22 +0,0 @@
+----
+-layout: post
+-title: "IELTS Reading: a different way to practise"
+----
+-
+-Here's an interesting way to use reading tests from the Cambridge IELTS books:
+-
+-Choose a passage from one of the reading tests.
+-Get the correct answers from the back of the book.
+-Now read the first question, underline keywords, and search for the answer in the passage - you already know the correct answer, so your only aim is to find where it is in the passage.
+-Underline words in the passage that have the same meaning as the keywords in the question.
+-When you have done this for each question, make a keyword table.
+-This technique forces you to stop testing yourself. Instead, it makes you focus on finding key vocabulary and understanding the reason for each answer. You might be surprised at the improvements you make if you regularly practise in this way.
+-
+-
+-
+-Dưới đây là một cách thú vị để luyện tập từ bộ Cambridge:
+-
+-1. Chọn một bài đọc từ một test bất kỳ.
+-2. Lấy đáp án từ cuối sách
+-3. Giờ đọc câu hỏi đầu tiên, gạch chân keywords và tìm câu trả lời trong bài đọc - dù bạn đã biết đáp án nên bạn chỉ tìm câu trả lời ở đâu.
+-4. Gạch chân từ mà đồng nghĩa với keywords ở question.
+\ No newline at end of file
+diff --git a/_posts/2019-10-10-the-sun-or-the-earth-is-the-centre-of-the-solar-system.md b/_posts/2019-10-10-the-sun-or-the-earth-is-the-centre-of-the-solar-system.md
+deleted file mode 100644
+index 3ad4300..0000000
+--- a/_posts/2019-10-10-the-sun-or-the-earth-is-the-centre-of-the-solar-system.md
++++ /dev/null
+@@ -1,105 +0,0 @@
+----
+-layout: post
+-title:  "The sun or the earth is the centre of the solar system"
+----
+-
+-In the night sky, the stars appear to revolve around the Earth, rising in the east, and disappearing in the west.
+-
+-Trên bầu trời đêm, nhiều ngôi sao xuất hiện xung quanh trái đất, mọc ở phía đông, và lặn ở phía tây.
+-
+-The Earth itself seems solid, fixed, and stable, and such common sense perception suggests that the Earth is the centre of the universe.
+-
+-Trái đất chính bản thân nó dường như rắn, cố định và ổn định, và nhiều nhận thức phổ biến cho rằng trái đất chính là trung tâm của vũ trụ.
+-
+-This is known as ‘geo’ ‘centrism’, with geo meaning Earth, and all pre-modern civilisations drew this conclusion.
+-
+-Điều này được gọi là “thuyết địa tâm”, với geo là trái đất, và tất cả nền văn minh tiền hiện đại đã rút ra kết luận này.
+-
+-We now know, of course, that the Earth revolves around the sun, and this is called ‘helio’ ‘centrism’, with helio meaning sun, but historically, it took quite a while for this to be deduced.
+-
+-Tất nhiên, bây giờ chúng ta biết rằng trái đất xuất hiện xoay quanh mặt trời, và điều này được gọi là “thuyết nhật tâm, với helio có nghĩa là mặt trời, nhưng trong lịch sử, nó mất một khoảng thời gian để suy đoán ra sự thật này.
+-
+-As early as the third century BC, an ancient Greek astronomer, Aristarchus of Samos, proposed helio centrism, but received little support from his peers.
+-
+-Ngay từ thế kỷ thứ ba trước Công nguyên, một nhà thiên văn Hy Lạp cổ đại, Aristarchus of Samos, đề xuất thuyết nhật tâm, nhưng nhận được rất ít sự hỗ trợ từ các đồng nghiệp của ông.
+-
+-Similarly, throughout subsequent history, isolated individuals proposed this new idea, but again, no one was listening.
+-
+-Tương tự, trong suốt lịch sử tiếp theo, các cá nhân bị cô lập đã đề xuất ý tưởng mới này, nhưng một lần nữa, không ai lắng nghe.
+-
+-Geocentrism just seemed too logical to refute. Geocentrism also fitted the views of the established Christian church, who could quote biblical passages such as ‘the world also shall be stable, that it be not moved’.
+-
+-Thuyết địa tâm dường như quá logic để bác bỏ. Thuyết địa tâm cũng phù hợp với quan điểm được thành lập của nhà thờ tin lành, những người có thể trích dẫn những đoạn Kinh Thánh như ‘thế giới cũng sẽ ổn định, rằng nó không di chuyển được’.
+-
+-Those who dared disagree were subject to accusations of heresy, often with dire punishments to follow.
+-
+-Những người dám không đồng ý bị buộc tội dị giáo, thường bị trừng phạt thảm khốc.
+-
+-The trouble was, as the night sky was observed more closely, that simple revolution of the stars proved not so simple at all
+-
+-Khi bầu trời đêm được quan sát kỹ hơn, vấn đề là cuộc cách mạng đơn giản của các ngôi sao tỏ ra không đơn giản chút nào.
+-
+-In relation to the others stars, some steadily wandered in given directions, then sometimes reversed for months, and disappeared altogether.
+-
+-Liên quan đến những ngôi sao khác, một số ngôi sao đi lang thang đều đặn theo những hướng nhất định, sau đó đôi khi đảo ngược trong nhiều tháng, và biến mất hoàn toàn.
+-
+-They were called planets, meaning ‘wanderers’.
+-
+-Chúng được gọi là hành tinh, có nghĩa là 'kẻ lang thang'.
+-
+-In addition, the position of the sun and moon altered slightly over the year, and comets, those mysterious glowing spots, would come and go.
+-
+-Ngoài ra, vị trí của mặt trời và mặt trăng thay đổi một chút trong năm, và những ngôi sao chổi, đó là những điểm phát sáng bí ẩn, sẽ đến và đi.
+-
+-In order to predict the motion of the planets, and accurately serve the primary purpose of navigation for sailing ships, increasingly elaborate mathematical models were needed—a sure sign that something was not quite right.
+-
+-Để dự đoán chuyển động của các hành tinh, và phục vụ chính xác mục đích chính của dẫn đường cho các tàu thuyền, các mô hình toán học ngày càng phức tạp là cần thiết - một dấu hiệu chắc chắn rằng một điều gì đó không hoàn toàn đúng.
+-
+-Heliocentrism, or the belief that the sun is the centre of the solar system, still needed a mathemalically-sound description before it could be scientifically accepted, and it was a Polish astronomer, Nicolaus Copernicus, who, in 1543, first published this.
+-
+-Thuyết nhật tâm, hay niềm tin rằng mặt trời là trung tâm của hệ mặt trời, vẫn cần một mô tả nghe có vẻ toán học trước khi nó có thể được khoa học chấp nhận, và đó là một nhà thiên văn Ba Lan, Nicolaus Copernicus, là người lần đầu tiên xuất bản cuốn sách này vào năm 1543.
+-
+-This event is sometimes referred to as the Copernican revolution.
+-
+-Sự kiện này đôi khi được gọi là cuộc cách mạng Copernican.
+-
+-Copernicus himself certainly feared the consequences of his proof, knowing full well it might invoke the anger of the established church.
+-
+-Bản thân Copernicus chắc chắn sợ những hậu quả từ bằng chứng của chính mình, biết rõ nó có thể đánh động đến sự giận dữ của nhà thờ của chính quyền.
+-
+-Probably for this reason, he wailed until the last year of his life, when he was sick and dying, to release his findings.
+-
+-Có lẽ vì lý do này, ông đã than vãn cho đến năm cuối đời, khi ông bị bệnh và chết, để đưa ra những phát hiện của mình.
+-
+-In addition, the preface of the book, written by a respected member of the church, staled that the model was not necessarily correct.
+-
+-Ngoài ra, lời mở đầu của cuốn sách, được viết bởi một thành viên được tôn trọng của nhà thờ, nói rằng mô hình này không nhất thiết phải chính xác.
+-
+-As a result of this, there was no ‘revolution\" whatsoever—in fact, the book received scant attention in the subsequent decades, apart from a few irate clergy men who angrily dismissed the whole scheme as irrelevant.
+-
+-Kết quả là, không có bất cứ 'cuộc cách mạng' nào - trên thực tế, cuốn sách nhận được sự chú ý nho nhỏ trong những thập kỷ tiếp theo, ngoài một vài giáo sĩ vô tội, đó những người bác bỏ quyết liệt toàn bộ kế hoạch không liên quan.
+-
+-Yet the following generations of astronomers did not always fare so well.
+-
+-Thế nhưng các thế hệ các nhà thiên văn học không phải lúc nào cũng tốt.
+-
+-The Italian scientist, Galileo, got into trouble, as did a fellow Italian, with the surname Bruno, Giordono Bruno, who was burnt at the stake, yet ultimately, nothing could slow the spread of heliocentrism across Europe.
+-
+-Nhà khoa học người Ý, Galileo, gặp rắc rối, cũng như một người Ý trước đây, với họ Bruno, Giordono Bruno, người bị trừng phạt gắt gao, nhưng cuối cùng, không có gì có thể làm chậm sự lây lan của thuyết nhật tâm trên khắp châu u.
+-
+-It formed the basis of lsaac Newton's great work on the motion of the planets — a work which implied that even the sun around which the Earth circled, was itself in motion around a common centre of gravity.
+-
+-Nó hình thành nền tảng của công trình vĩ đại của lsaac Newton về chuyển động của các hành tinh - một tác phẩm ngụ ý rằng ngay cả mặt trời mà Trái Đất xoay quanh, chính nó đang chuyển động xung quanh một trung tâm trọng lực chung.
+-
+-No discourse about heliocentrism could finish without mentioning that, somewhat unbelievably, there still exists those today who choose to believe that the Earth is the centre of the universe.
+-
+-Không có bài diễn văn về thuyết nhật tâm có thể kết thúc mà không nhắc đến điều đó, có phần không tin được, nó vẫn tồn tại cho đến ngày nay những người chọn tin rằng Trái đất là trung tâm của vũ trụ.
+-
+-Modern geocentrism is usually the result of literal interpretations of the Bible, which is the cornerstone of these people's beliefs. 
+-
+-Thuyết địa tâm hiện đại là kết quả sự giải nghĩa theo nghĩa đen của Kinh Thánh, đó là nền tảng niềm tin của những người này.
+-
+-They, therefore, also believe in creationism -- that is, that a God
+-
+-Do đó, họ cũng tin vào chủ nghĩa sáng tạo - đó là Thiên Chúa.
+-
+diff --git a/_posts/2019-12-11-the-immunisation-controversy.md b/_posts/2019-12-11-the-immunisation-controversy.md
+deleted file mode 100644
+index fdf4c46..0000000
+--- a/_posts/2019-12-11-the-immunisation-controversy.md
++++ /dev/null
+@@ -1,153 +0,0 @@
+----
+-layout: post
+-title:  "The immunisation controversy"
+----
+-
+-Carl Sagan once said, ‘Science loses ground to pseudo-science because the latter seems to offer more comfort.
+-
+-Carl Sagan đã từng nói: “Khoa học thất thế trước Ngụy khoa học bởi vì phản khoa học dường như khiến người ta thoải mái hơn.
+-
+-’ Yes, hard science, proven facts, and indisputable logic are often not sufficiently consoling, and thus routinely eliminated from the equation.
+-
+-” Đúng vậy, hard science (khoa học \"cứng\"), những sự thật có căn cứ và các logic không thể chối cãi/ rõ ràng thường không đủ để làm người ta dễ chịu, và do đó nó thường bị loại ra khỏi vấn đề phức tạp này.
+-
+-Never, though, has this been more distressing than with the so-called ‘anti-vaccination’ movement.
+-
+-Dù vậy, chưa bao giờ điều này gây nhiều lo lắng hơn với cái gọi là phong trào ‘chống tiêm chủng’.
+-
+-The end result has been the needless death of very young children, the most helpless of bystanders, and yet it seems there is no end in sight.
+-
+-Và cái kết là những cái chết không đáng của những đứa trẻ rất nhỏ, sự bất lực tột cùng của những người ngoài cuộc, song điều này dường như sẽ không dừng lại tại đây.
+-
+-It is strange to believe that vaccination, with such a long and distinguished track record, is now under assault.
+-
+-Thật lạ lùng khi tin rằng tiêm chủng, với những thành tích dài và đáng chủ ý, thì giờ đây lại bị chỉ trích nặng nề.
+-
+-Smallpox, for example, had killed over half a billion human beings throughout history but was eradicated — completely removed from the face of the Earth — via immunisation programs.
+-
+-Lấy ví dụ, bệnh đậu mùa đã giết chết hơn nửa tỷ người trong suốt lịch sử nhưng đã bị loại trừ toàn diện - hoàn toàn biến mất khỏi thế giới - thông qua các chương trình tiêm chủng.
+-
+-Similarly, polio, rubella, whooping cough, measles, and a slew of other diseases which routinely decimated the youth are now, virtually, things of the past.
+-
+-Tương tự như vậy, bại liệt, rubella, ho gà, sởi, và nhiều bệnh dịch khác từng tàn sát trẻ em giờ đây hầu như chỉ còn là những câu chuyện của quá khứ.
+-
+-The days of high infant mortality, short life spans, and nasty brutish lives are indeed long gone, and we owe it all to this crucial insight into disease prevention.
+-
+-Đó là những chuỗi ngày mà tỉ lệ tử vong ở trẻ sơ sinh còn cao, nhịp sống ngắn ngủi, và cuộc sống đấu tranh với bệnh tật thực sự đã biến mất từ lâu, và chúng ta có được tất cả những thành công này là nhờ vào thành quả nghiên cứu quan trọng trong việc phòng ngừa bệnh tật.
+-
+-And this is part of the problem.
+-
+-Và đây là một phần của vấn đề.
+-
+-With the once terrible epidemics lying outside of human memory, a growing number of people are convinced that vaccinations are no longer necessary, and that the small risk of adverse effects outweighs the benefits.
+-
+-Một lần nữa, những dịch bệnh khủng khiếp bị quên lãng, và ngày càng có nhiều người bị thuyết phục rằng tiêm chủng không còn cần thiết nữa, và rằng những nguy cơ của tác dụng phụ lớn hơn lợi ích mà tiêm chủng mang lại.
+-
+-One reason for this belief is that many genetic disorders related to brain impairment often emerge at around two years of age — that is, the same period in which babies receive vaccinations.
+-
+-Một lý do cho niềm tin này là nhiều rối loạn di truyền liên quan đến suy giảm chức năng não thường xuất hiện vào khoảng hai tuổi - tức là, cùng thời kỳ mà trẻ được chủng ngừa.
+-
+-If one in a hundred babies is destined to develop autism among a vaccinated group, then observable symptoms of the problem will likely appear after a vaccination shot, leading distraught parents to link one event to the other.
+-
+-Nếu một trong một trăm trẻ sơ sinh có khuynh hướng phát triển chứng tự kỷ trong một nhóm các trẻ được tiêm chủng, thì các triệu chứng có thể quan sát thấy của bệnh có khả năng xuất hiện sau khi tiêm, điều này khiến những bậc cha mẹ lo lắng liên kết các sự việc lại với nhau.
+-
+-This misattribution is compounded by the Internet, which now hosts a sprawling forum of anti-vaccination lobby groups and their websites, full with unsubstantiated claims, fraudulent research, anecdotal evidence, and the passionate tirades of multitudes, firmly convinced of the correctness of their case.
+-
+-Sự quy chụp sai lệch này càng bị làm cho trầm trọng hơn bởi Internet, vốn đang là một diễn đàn ngổn ngang, lộn xộn của các nhóm hành lang chống lại tiêm chủng và các trang web của họ, tràn ngập các tuyên bố vô căn cứ, những nghiên cứu dối trá, những chứng cớ thực chứng không qua nghiên cứu, và những tràng công kích mạnh mẽ của đám đông, mạnh mẽ bị thuyết phục bởi sự đúng đắn từ trường hợp của chính mình.
+-
+-Authority is undermined, statistics ignored, and hard science excluded.
+-
+-Thông tin đáng tin cậy bị thất thể, số liệu thống kê bị bỏ qua và vì thế khoa học \"cứng\" bị loại trừ.
+-
+-Is it so surprising? If creationists and alternative medicine practitioners can gain respectability and widespread public and political support, so too can the pseudo-scicnce of the anti-vaccinationists.
+-
+-Điều này thật ngạc nhiên đúng không? Nếu những người tin vào thuyết 'sáng tạo linh hồn' (sáng tạo luận) và những người hành nghề y theo hướng 'y học bổ sung'  có thể chiếm được sự tôn trọng và ủng hộ rộng rãi của công chúng và chính trị, thì cái phản-khoa học của những người chống tiêm chủng cũng có thể như vậy.
+-
+-When faced with this wave of propaganda, it would be hard for many parents, motivated by the intense desire to protect their children, not to be influenced.
+-
+-Khi đối diện với làn sóng tuyên truyền này, rất khó để mà nhiều bậc cha mẹ, những người mà được thúc đẩy bởi mong muốn mạnh mẽ được bảo vệ con cái của mình, không bị ảnh hưởng theo.
+-
+-At this point, it must be clarified that there is no credible evidence whatsoever to support the anti-vaccinationists’ claims.
+-
+-Hiện tại, phải làm sáng tỏ rằng không có bất kỳ bằng chứng đáng tin cậy nào ủng hộ cho các tuyên bố chống tiêm chủng.
+-
+-Over a score of peer-reviewed studies have found nothing to link the MMR (measles/mumps/rubella) vaccine to autism, or even the more subtle neurological problems, and every reason to continue with vaccinations.
+-
+-Qua một số nghiên cứu được kiểm duyệt chéo thì vẫn không tìm thấy mối liên hệ nào giữa vắc-xin MMR (sởi / quai bị / rubella) với chứng tự kỷ, hay thậm chí là các vấn đề thần kinh tinh vi hơn, và thế là chúng ta đã có lý do để tiếp tục chủng ngừa.
+-
+-The so-called increase in autism so often attributed to vaccinations merely results from more accurate diagnoses.
+-
+-Cái gọi là phát triển chứng tự kỷ được quy chụp do tiêm chủng chỉ đơn thuần là kết quả từ các chẩn đoán cụ thể hơn.
+-
+-Children who in the past would have been labeled as ‘retarded’ or ‘slow’ are now identified as having one of the three main grades of autism (which is probably genetically determined).
+-
+-Những đứa trẻ mà trong quá khứ từng được cho là “chậm phát triển” hoặc \"trì độn\", hiện được xác định là rơi vào một trong ba loại bệnh tự kỷ chính (có thể là do di truyền).
+-
+-Yet this argument falls on deaf ears, and the counter-claimants have succeeded in reducing vaccination rates among certain communities to the extent that outbreaks of preventable childhood illnesses (such as polio, meningitis, and measles) are occurring.
+-
+-Tuy nhiên, lập luận này chẳng được ai nghe/ bị phớt lờ, và phe phản đối đã thành công trong việc giảm tỷ lệ tiêm chủng trong các cộng đồng nhất định tới mức mà các loại bệnh có thể ngăn ngừa ở trẻ em (như bại liệt, viêm màng não và sởi) ngày càng bùng nổ.
+-
+-The MMR controversy is a sad case.
+-
+-Các tranh cãi về MMR là một trường hợp đáng buồn.
+-
+-In 1998, a high-profile paper linked this vaccine to autism.
+-
+-Năm 1998, một nghiên cứu nổi tiếng đã cho thấy mối liên hệ giữa vắc-xin và chứng tự kỷ.
+-
+-It was later shown that the author was receiving funds from various groups engaged in a lawsuit against vaccine manufacturers, and that the study was both ethically and methodologically faulty.
+-
+-Sau đó người ta phát hiện ra rằng tác giả của nghiên cứu này đã nhận tiền từ nhiều nhóm đang dính líu vào một vụ kiện chống lại các nhà sản xuất vắc-xin, và rằng nghiên cứu này không đúng về cả mặt đạo đức lẫn phương pháp luận.
+-
+-Data had been manipulated, and results misreported.
+-
+-Dữ liệu thì bị nguỵ tạo còn kết quả thì bị sai báo.
+-
+-Similar studies found no link whatsoever, and in 2004, the medical journal which hosted the original article formally retracted its conclusion.
+-
+-Các nghiên cứu tương tự không tìm thấy bất kỳ sự liên kết nào, và vào năm 2004, tạp chí y khoa từng đăng tải bài báo gốc đã chính thức rút lại kết luận của mình.
+-
+-Yet vaccination rates in the UK had dropped to 80% in the subsequent years.
+-
+-Tuy nhiên tỷ lệ tiêm chủng ở Anh đã giảm xuống 80% trong những năm tiếp theo.
+-
+-In late 1999, a measles outbreak occurred in North Dublin (which had vaccination rates as low as 60%), resulting in 100 hospitalisations and three deaths.
+-
+-Vào cuối năm 1999, một đợt bùng phát dịch sởi đã diễn ra ở North Dublin (nơi mà có tỷ lệ tiêm chủng thấp tới 60%), dẫn đến 100 ca nhập viện và 3 ca tử vong.
+-
+-One of the key arguments of the anti-vaccinationists is that they have the right to choose their medication.
+-
+-Một trong những lý lẽ chính của những người chống tiêm chủng là họ có quyền lựa chọn thuốc cho bản thân mình.
+-
+-These people attack what they see as the impersonal, intrusive, and uncaring edifice of modern medical science.
+-
+-Những người này công kích cái họ cho là công trình của chung, bừa bãi, vô tâm của y khoa hiện đại.
+-
+-However, the success of immunisation programs depends on a sufficiently high number of the population being immune, which forces the disease to die out through lack of carriers.
+-
+-Tuy nhiên, sự thành công của các chương trình tiêm chủng phụ thuộc vào số lượng người được miễn dịch đủ cao, điều này buộc căn bệnh này phải suy yếu hoặc chấm dứt vì thiếu người mang mầm bệnh
+-
+-If there are enough susceptible individuals to provide a chain of disease transmission, safety is compromised for all, and this is why free choice should not be an issue, particularly when the hard evidence presents an overwhelming case.
+-
+-Nếu có đủ các cá nhân nhạy cảm để tạo nên một chuỗi truyền bệnh, thì sự an toàn của tất cả chúng ta sẽ bị hạ thấp, và đây là lý do tại sao sự tự do lựa chọn không phải là vấn đề, đặc biệt khi các bằng chứng chặt chẽ thể hiện một trường hợp khó khăn.
+-
+-Personally, I would have thought that when children started dying from preventable diseases, the anti-vaccinationists’ case would die also.
+-
+-Cá nhân tôi sẽ cho rằng khi trẻ em bắt đầu chết vì những căn bệnh có thể ngăn ngừa được, thì những người chống vaccine cũng vậy.
+-
+-But there are other agendas at play.
+-
+-Song, có những chiến dịch khác đang được thực hiện.
+-
+-Anti-vaccinationists can posture as moral crusaders, dismissing those who support immunisation as being in the payment of big pharmaceutical companies, whom they see as dishonest and immoral.
+-
+-Những kẻ chống tiêm chủng có thể đứng lên như những nhà hoạt động đạo đức, làm giảm đi sức mạnh của những người ủng hộ chủng ngừa, cứ như là những người này đang trả tiền cho các công ty dược phẩm lớn, mà họ cho là không trung thực và vô đạo đức.
+-
+-Talk show hosts, women’s magazines, paid ‘experts’, lawyers, and media celebrities, all benefit from creating controversy when none existed, while alternative medicine practitioners and snake-oil salesmen all oppose vaccination, believing that their own slew of pills, potions, and unproven expensive treatments do the job better.
+-
+-Các chủ show, các tạp chí phụ nữ, hay các ‘chuyên gia’, luật sư và những người nổi tiếng được trả lương, tất cả họ đều hưởng lợi từ việc tạo ra các cuộc tranh cãi khi thực chất không có vấn đề gì xảy ra, trong khi đó, những người hành nghề trong mảng 'y học thay thế' và các nhân viên bán cao rắn đều chống lại tiêm phòng, vì họ tin rằng nhiều thuốc, dược phẩm cùng các phương pháp điều trị đắt tiền chưa được chứng minh của họ làm tốt hơn.
+-
+-Against all this, how can rational science prevail? .
+-
+-Dựa vào tất cả điều này, làm thế nào để khoa học chân chính có thể tạo được ảnh hưởng/ có được tiếng nói? 
+-
+diff --git a/_posts/2019-12-15-the-changing-role-of-airports.md b/_posts/2019-12-15-the-changing-role-of-airports.md
+deleted file mode 100644
+index f788560..0000000
+--- a/_posts/2019-12-15-the-changing-role-of-airports.md
++++ /dev/null
+@@ -1,151 +0,0 @@
+----
+-layout: post
+-title: "IELTS Reading: The changing role of airports"
+-image: /img/hello_world.jpeg
+-tags: [ielts, ielts reading]
+----
+-
+-Airports continue to diversify their role in an effort to generate income. Are business meeting facilities the next step? Nigel Halpern, Anne Graham and Rob Davidson investigate.
+-
+-Sân bay tiếp tục mở rộng chức năng để nỗ lực tạo ra nguồn thu. Bước tiếp theo là trang bị cơ sở vật chất cho họp mặt công việc? Theo nghiên cứu của Nigel Halpen, Anne Graham và Rob Davidson.
+-
+-In recent times developing commercial revenues has become more challenging for airports due to a combination of factors, such as increased competition from Internet shopping, restrictions on certain sales, such as tobacco, and new security procedures that have had an impact on the dwell time of passengers
+-
+-Trong thời gian gần đây việc phát triển nguồn thu thương mại đang trở thành thách thức các cho sân bay bởi sự kết hợp của nhiều yếu tố như cạnh tranh ngày càng tăng từ shopping online, hạn chế bán một số mặt hàng như thuốc lá và các thủ tục an ninh làm ảnh hưởng đến thời gian chờ bay của hành khách.
+-
+-Moreover, the global economic downturn has caused a reduction in passenger numbers while those that are travelling generally have less money to spend
+-
+-Thêm vào đó, suy thoái kinh tế toàn cầu dẫn đến sự giảm số lượng khách bay, trong khi người đi du lịch lại tiêu ít tiền hơn.
+-
+-This has meant that the share subsequently declined slightly
+-
+-Điều đó đồng nghĩa với việc cổ phiếu giảm nhẹ.
+-
+-Meanwhile, the pressures to control the level of aeronautical revenues are as strong as ever due to the poor financial health of many airlines and the rapid rise of the low-cost carrier sector.
+-
+-Trong khi đó sức ép để kiểm soát nguồn thu hàng không ngày càng lớn do tình hình tài chính trì trệ của các hãng hàng không và sự gia tăng chóng mặt của hàng không giá rẻ
+-
+-Some of the more obvious solutions to growing commercial revenues, such as extending the merchandising space or expanding the variety of shopping opportunities, have already been tried to their limit at many airports
+-
+-Một vài giải pháp chắc chắn giúp tăng nguồn thu thương mại như mở rộng không gian buôn bán hoặc mở thêm các cơ hội shopping đã được giới hạn ở nhiều sân bay.
+-
+-A more radical solution is to find new sources of commercial revenue within the terminal, and this has been explored by many airports over the last decade or so
+-
+-Một giải pháp toàn diện hơn là tìm ra nguồn thu mới trong nhà ga và điều này đã được khai thác ở nhiều sân bay từ thập kỷ trước.
+-
+-As a result, many terminals are now much more than just shopping malls and offer an array of entertainment, leisure, and beauty and wellness facilities
+-
+-Kết quả là nhiều nhà ga trở thành trung tâm mua sắm, tổ hợp giải trí, thư giãn, làm đẹp và chăm sóc.
+-
+-At this stage of facilities provision, the airport also has possibility of talking on the role of the final destination rather than merely a facilitator of access.
+-
+-Giai đoạn trang bị cơ sở vật chất, sân bay đóng vai trò là điểm cuối hơn là chỉ đơn thuần cung cấp dịch vụ mới.
+-
+-At the same time, airports have been developing and expanding the range of services that they provide specifically for the business traveler in the terminal
+-
+-Cùng thời điểm đó, các sân bay đã và đang phát triển, mở rộng đa dạng dịch vụ cho các thương gia ở khu vực nhà ga.
+-
+-This includes offering business centres that supply support services, meeting or conference rooms and other space for special events.
+-
+-Điều này bao gồm cung cấp trung tâm giao dịch có phòng họp, phòng hội thảo và phòng tổ chức sự kiện.
+-
+-Within this context, Jarach (2001) discusses how dedicated meetings facilities located within the terminal and managed directly by the airport.
+-
+-Trong bối cảnh ấy, Jarach khi đó đã bàn về các cơ sở vật chất chuyên dụng ở nhà ga và quản lý trực tiếp bởi sân bay.
+-
+-Operator may be regarded as an expansion of the concept of airline lounges or as a way to reconvert abandoned or underused areas of terminal and managed directly by the airport hotels and other facilities offered in the surrounding area of the airport that had the potential to take on this role and become active as a business space (McNeill, 2009)
+-
+-Việc bên điều hành sân bay trực tiếp quản lý dựa vào sự mở rộng khu nghỉ sân bay hoặc tận dụng khu nhà ga bỏ trống, chưa sử dụng hết đang được quản lý bởi khách sạn sân bay hay cơ sở vật chất có sẵn khu vực lân cận sân bay đều rất tiềm năng trong mở rộng không gian kinh doanh.
+-
+-When an airport location can be promoted as a business venue, this may increase the overall appeal of the airport and help it become more competitive in both attracting and retaining airlines and their passengers
+-
+-Sân bay được nâng cấp thành địa điểm kinh doanh có thể làm tăng số lượng sân bay đồng thời làm tăng sự duy trì và cạnh tranh giữa các hãng hàng không và hành khách.
+-
+-In particular, the presence of meeting facilities could become one of the determining factors taken into consideration when business people are choosing airlines and where they change their planes.
+-
+-Đặc biêt, cơ sở vật chất cho hội họp có thể là yếu tố quyết định khi các thương gia cân nhắc lựa chọn hãng hàng không.
+-
+-This enhanced attractiveness itself may help to improve the airport operator’s financial position and future prospects, but clearly this will be dependent on the competitive advantage that the airport is able to achieve in comparison with other venues.
+-
+-Điều này làm tăng khả năng tài chính và triển vọng phát triển tương lai, nhưng rõ ràng điều này phụ thuộc vào lợi thế cạnh tranh của hãng hàng không so với hãng khác.
+-
+-In 2011, an online airport survey was conducted and some of the areas investigated included the provision and use of meeting facilities at airports and the perceived role and importance of these facilities in generating income and raising passenger numbers.
+-
+-Một khảo sát online được tiến hành năm 2011 một vài nơi có cung cấp nơi họp mặt ở máy bay và vai trò nhận thức về tầm quan trọng của cơ sở vật chất đó trong việc tạo ra nguồn thu và tăng số lượng khách.
+-
+-In total, there were responses from staff at 154 airports and 68% of these answered “yes” to the question: Does your airport own and have meetings facilities available for hire? The existence of meeting facilities therefore seems high at airports.
+-
+-Dựa trên số liệu phản hồi của 154 hãng hàng không thì có 68% trả lời có với câu hỏi “Máy bay của bạn có phòng họp cho thuê.
+-
+-In addition, 28% of respondents that did not have meeting facilities stared that they were likely to invest in them during the next five years.
+-
+-28% trả lời không nhưng dường như muốn đầu tư trong năm năm tới.
+-
+-The survey also asked to what extent respondents agreed or disagreed with a number of statements about asked the meeting facilities at their airport.
+-
+-Khảo sát cũng hỏi về mức độ đồng ý hay không đồng ý với số lượng thiết bị hội họp đã được trang bị.
+-
+-49% of respondents agreed that they would invest more in the immediate future.
+-
+-49% số người được hỏi trả lời rằng họ sẽ đầu tư nhiều hơn trong tương lai sắp tới.
+-
+-These are fairly high proportions considering the recent economic climate.
+-
+-Đây là một tỉ lệ khá cao khi chúng ta để ý tới tình hình kinh tế gần đây.
+-
+-The survey also asked airport with meeting facilities to estimate what proportion of users are from the local area. i.e. within a 90-minute drive from the airport, or from abroad
+-
+-Khảo sát cũng tìm hiểu về tỷ lệ sử dụng giữa người bản địa và người nước ngoài sử dụng thiết bị hội họp
+-
+-Their findings show that meeting facilities provided by the majority of respondents tend to serve local versus non-local or foreign needs
+-
+-Phát hiện của họ cho thấy các cơ sở hội họp được cung cấp bởi sân bay có xu hướng phục vụ các nhu cầu của địa phương hơn với ngoài địa phương hoặc nước ngoài.
+-
+-63% of respondents estimated that over 60% of users are from the local area.
+-
+-63% câu trả lời cho thấy 60% người sử dụng là trong nước.
+-
+-Only 3% estimated that over 80% of users are from abroad.
+-
+-Chỉ có 3% ước lượng trên 80% người sử dụng là nước ngoài.
+-
+-It is therefore not surprising that the facilities are of limited importance when it comes to increasing use of flights at the airports:
+-
+-Không có gì đáng ngạc nhiên khi thấy cơ sở vật chất là yếu tố ít quan trọng khi nói đến việc tăng số chuyến bay ở sân bay:
+-
+-16% of respondents estimated that none of the users of their meeting facilities use flights when travelling to or from them while 56% estimated that 20% or fewer of the users of their facilities use flights.
+-
+-16 % người được hỏi ước tính rằng không có ai sử dụng cơ sở vật chất phục vụ hội họp khi bay trong khi 56% người được hỏi cho rằng ít hơn 20% người sử dụng dịch vụ này.
+-
+-The survey asked respondents with meeting facilities to estimate how much revenue their airport earned from its meeting facilities during the last financial year.
+-
+-Khảo sát hỏi về nguồn thu ước tính kiếm được từ cơ sở vật chất hội họp năm trước.
+-
+-Average revenue per airport was just $12,959.
+-
+-Trung bình mỗi hãng kiếm được $12,959.
+-
+-Meeting facilities are effectively a non-aeronautical source of airport revenue.
+-
+-Các cơ sở hội nghị thực sự là một nguồn thu hiệu quả của sân bay.
+-
+-Only 1% respondents generated more than 20% non-aeronautical revenue from their meetings facilities; none generated more than 40%.
+-
+-Chỉ 1% trả lời thiết bị hội họp tạo ra 20% nguồn thu của hạng mục không bay, không tạo ra nhiều hơn 40%
+-
+-Given the focus on local demand, it is not surprising that less than a third of respondents agreed that their meeting facilities support business and tourism development in their home region or country.
+-
+-Tập trung vào nhu cầu người dân, ít hơn 1/3 lượt trả lời thiết bị hội họp hỗ trợ công việc và phát triển du lịch tại địa phương và quốc gia đó.
+-
+-The findings of this study suggest that few airports provide meetings facilities as a serious commercial venture.
+-
+-Nghiên cứu tìm ra từ khảo sát cho thấy còn ít hãng tập trung cung cấp thiết bị họp để tạo ra nguồn thu thương mại.
+-
+-It may be that, as owners of large property, space is available for meeting facilities ai airports and could play an important role in serving the needs of the airport, its partners, and stakeholders such as government and the local community.
+-
+-Điều này có thể là do không gian cho phòng họp trên máy bay là nhu cầu quan trọng cho đối tượng khách hàng là đối tác, cổ đông, nhà chức trách.
+-
+-Thus, while the local orientation means that competition with other airports is likely to be minimal, competition with local providers of meetings facilities is likely to be much greater.
+-
+-Bởi vậy định hướng cạnh tranh nhắm đến đối tượng khách hàng bản địa sử dụng phòng họp là nhỏ nhưng cạnh tranh giữa các hàng hàng không nội địa cung cấp cơ sở vật chất hội họp lại lớn.
+-
+diff --git a/_posts/2019-12-19-neutrino.md b/_posts/2019-12-19-neutrino.md
+deleted file mode 100644
+index 50856d2..0000000
+--- a/_posts/2019-12-19-neutrino.md
++++ /dev/null
+@@ -1,140 +0,0 @@
+----
+-layout: post
+-title:  "Neutrino"
+----
+-When considering the smallest unit of matter—the atom — most people know of electrons, protons, and neutrons, but almost none know of another particle, even though they are constantly emitted from the sun in the trillions, with 100 to 200 billion of them regularly passing through your body every second.
+-
+-Khi bàn đến đơn vị nhỏ nhất của vật chất – nguyên tử - hầu hết mọi người đều biết về các hạt electron, proton, neutron, nhưng hầu như không ai biết về một loại hạt khác, dù cho chúng được mặt trời giải phóng đều đặn hàng triệu tỷ hạt và 100 đến 200 tỷ trong số đó như thường lệ chạy xuyên qua cơ thể bạn mỗi giây.
+-
+-To repeat, that’s not thousands, not millions, but billions, every second.
+-
+-Nhắc lại rằng, không phải hàng ngàn, hàng triệu, mà là hàng tỷ hạt mỗi giây.
+-
+-You don’t feel them because they are small, in fact, so tiny that we can barely detect their presence at all.
+-
+-Bạn không cảm nhận được chúng bởi vì chúng quá bé, thực tế, bé đến nỗi bạn hầu như không hề phát hiện được sự hiện diện của chúng.
+-
+-These mysterious particles are called neutrinos.
+-
+-Những hạt bí ẩn này được gọi là neutrino.
+-
+-Despite such an abundance, detecting them is a huge undertaking, and there are many reasons for this.
+-
+-Mặc dù với số lượng phong phú như vậy nhưng việc tìm thấy chúng hẳn là 1 sự đảm đương to lớn, vì nhiều vấn đề
+-
+-Firstly, the neutrino itself is so small that you need to eliminate absolutely all other particles around.
+-
+-Đầu tiên, bản thân hạt neutrino quá nhỏ nên bạn phải loại bỏ chúng hoàn toàn khỏi tất cả các hạt chung quanh.
+-
+-To do this, you need what is called a clean room, one that has an extremely low level of dust, microbes, floating particles, or chemical vapours.
+-
+-Để làm được điều này, bạn cần một cái gọi là “clean room” một căn phòng sạch, nơi có hàm lượng cực thấp các hạt bụi, vi sinh vật, các hạt luân chuyển, hoặc hơi hóa học.
+-
+-You probably don’t know it, but the air around you right now has almost 40 million particles per cubic meter.
+-
+-Bạn có lẽ không biết điều này, nhưng quanh bạn ngay lúc này có gần 40 triệu hạt trong một mét khối không khí.
+-
+-In contrast, the cleanest of clean rooms has less than 10.
+-
+-Trái lại, căn phòng sạch nhất trong số các “clean room” chỉ chứa ít hơn 10 hạt.
+-
+-The second problem is that you also need an environment with absolutely no background radiation.
+-
+-Vấn đề thứ hai là bạn cần một môi trường tuyệt đối không có dấu vết phóng xạ.
+-
+-At the surface of the Earth, such radiation is all around, from the sun and sky, and from TVs and communication devices.
+-
+-Trên bề mặt trái đất, những tia phóng xạ ở khắp nơi, từ mặt trời trên cao cho đến các thiết bị truyền thông và ti-vi.
+-
+-The only way to screen out all that is to go underground, and I mean deep underground.
+-
+-Cách duy nhất để lọc bỏ các tia này là đi xuống mặt đất, ý tôi là đi thật sâu xuống lòng đất.
+-
+-For example, the Sudbury Neutrino Observatory in Canada uses an old nickel mine, one of the deepest in the world, and puts the Observatory in its lowest tunnel, more than two kilometers below the surface.
+-
+-Ví dụ như trung tâm quan sát neutrino Sudbury ở Canada sử dụng một hầm ni-ken cũ, một trong những hầm sâu nhất thế giới, và đặt hệ thống thăm dò trong đường hầm thấp nhất của chúng, khoảng 2km dưới mặt đất.
+-
+-At such depths, stray radiation is sufficiently screened out to allow neutrinos only to pass by.
+-
+-Ở độ sâu đó, tia phóng xạ rải rác hoàn toàn bị lọc bỏ chỉ có neutrinos mới có thể xuyên đến.
+-
+-The final problem is that you need an elaborate detection system, and this apparatus is huge, and its installation in this deep underground cavity presents quite a headache.
+-
+-Vấn đề cuối cùng là bạn cần một hệ thống thăm dò tinh vi và cỗ máy này thì rất lớn, việc thiết lập nó dưới hầm ở độ sâu như thế cũng là một vấn đề đau đầu.
+-
+-Holding such a weighty construction safe and secure requires complex engineering work, such as rock-bolting and support structuring.
+-
+-Để giữ một cấu trúc nặng nề như thế được an toàn và bảo đảm đòi hỏi thao tác kỹ nghệ phức tạp như neo (một phương tiện dùng để giữ ổn định cấu trúc của hầm sau khi đào) và cấu trúc hỗ trợ.
+-
+-This obviously requires great care, and takes a lot of effort.
+-
+-Điều này rõ ràng yêu cầu một sự chú tâm rất lớn và đòi hỏi nhiều nỗ lực.
+-
+-So, I've told you about the difficulty in detecting neutrinos.
+-
+-Tôi đã nói với bạn về sự khó khăn trong việc phát hiện các hạt neutrino.
+-
+-They are tiny, virtually weightless, have no electric charge, and hardly interact with anything at all.
+-
+-Chúng rất nhỏ, được xem như không trọng lượng, không tích điện và hầu như không tương tác với bất kỳ thứ gì.
+-
+-Yet we can detect them, and to see how, let’s consider the Sudbury installation once again.
+-
+-Tuy nhiên chúng ta có thể phát hiện chúng, và để xem ta làm việc đó bằng cách nào, hãy xem xét việc thiết lập Sudbury một lần nữa.
+-
+-The detector there consists of a spherical container filled with heavy water.
+-
+-Cỗ máy thăm dò có cấu tạo dạng thùng hình cầu chứa đầy heavy water (nước nặng).
+-
+-This rests inside another vessel tilled with normal water, which helps support the weight of the inner sphere, as well as providing further shielding from any stray radiation.
+-
+-Phần này nằm trong một ống khác chứa đầy normal water (nước thường) để nâng đỡ trọng lượng của quả cầu bên trong, cũng như cung cấp một lớp bảo vệ tăng cường khỏi bất kỳ tia phóng xạ rải rác nào.
+-
+-At the edge of this inner sphere are about 10,000 electronic detectors.
+-
+-Ở rìa của quả cầu này có khoảng 10000 cảm biến điện tử.
+-
+-These tire extremely sensitive, able to multiply a hundred million times any electric current which occurs.
+-
+-Chúng cực kỳ nhạy, có khả năng khuếch đại một trăm triệu lần bất kỳ một dòng điện nào xuất hiện.
+-
+-So, as the neutrinos pass through this sphere of water, there is a very very very small chance that one of them may hit a water molecule.
+-
+-Khi các hạt neutrino băng qua quả cầu chứa nước khả năng chúng va phải một phân tử nước là rất rất rất thấp.
+-
+-To increase the likelihood of this, two strategies are used.
+-
+-Để tăng khả năng này, hai chiến lược được sử dụng.
+-
+-One, the larger the sphere of water, the belter, and the Sudbury lank holds not 10 tons, not 100 tons, but 1000 tons.
+-
+-Chiến lược thứ nhất, sử dụng quả cầu chứa nước lớn hơn, hệ thống này nặng không phải 10 tấn, 100 tấn mà là 1000 tấn.
+-
+-Two, the water is special, consisting as it does of heavier molecules.
+-
+-Chiến lược thứ hai, nước này phải đặc biệt, chứa các phân tử nặng hơn.
+-
+-So, what happens is this.
+-
+-Và điều xảy ra là đây.
+-
+-If the neutrino hits the water molecule, the neutrino is absorbed, but the molecule itself splits apart, producing a tiny electric current.
+-
+-Khi các hạt neutrino đụng phải phân tử nước, chúng bị hấp thụ nhưng phân tử nước sẽ bị phá vỡ tạo thành các dòng điện rất nhỏ.
+-
+-It is this which is detected, and analysed, giving key information about the neutrino.
+-
+-Dòng điện này được phát hiện và phân tích để cung cấp những thông tin chính về neutrino.
+-
+-The final question is why do we care about these elusive particles Well, just think -- they can pass right through the core of our sun at the speed of light without being affected or losing strength.
+-
+-Câu hỏi cuối cùng là tại sao chúng ta lại quan tâm về những thứ hạt khó nắm bắt như vậy? Ồ, nghĩ xem, chúng có thể xuyên thẳng qua tâm của mặt trời với tốc độ ánh sáng mà không hề bị ảnh hưởng hay giảm đi sức mạnh gì cả.
+-
+-No other form of radiation can do that, meaning that the knowledge we get about neutrinos can help us to control them.
+-
+-Không có một dạng hạt phóng xạ nào làm được điều đó, có nghĩa là kiến thức mà chúng ta có về neutrino có thể giúp chúng ta kiểm soát chúng.
+-
+-With this ability, we can probe the centre of our Earth, the inner layers of our sun, and the outer limits of our solar system, and that make it all worth the effort.
+-
+-Với khả năng này, chúng ta có thể thăm dò tâm của trái đất, những lớp trong của mặt trời, và những giới hạn ngoài của hệ mặt trời, và những điều này khiến nỗ lực thăm dò neutrino trở nên đáng giá.
+-
+diff --git a/_posts/2019-12-20-dictation-online-websites-learning.md b/_posts/2019-12-20-dictation-online-websites-learning.md
+deleted file mode 100644
+index 352c4ca..0000000
+--- a/_posts/2019-12-20-dictation-online-websites-learning.md
++++ /dev/null
+@@ -1,13 +0,0 @@
+----
+-layout: post
+-title: Dictation website for learning English
+----
+-
+-Some of you know the largely efficiency of dictation in enhancing listening skill. But many of them always struglle with the implementation. Partly, it's hard and waste a lot of time. Therefore, in this ariticle I am going to introduce with you some of good dictation webpage that i use. Hopefully, you will find it helpful.
+-
+-1. ToLearnEnglish.com
+-The page includes a variety of listeing topic. In addition, they have both audio and video which people listen and  dictate, therefore you are not likely to feel discouraged when practicing there.
+-
+-https://www.tolearnenglish.com/cgi2/myexam/liaison.php?liaison=_dictee_
+-
+-
+diff --git a/_posts/2019-12-21-ban-tro-thanh-nhung-gi-ban-tin.md b/_posts/2019-12-21-ban-tro-thanh-nhung-gi-ban-tin.md
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/_posts/2020-01-01-cubism.md b/_posts/2020-01-01-cubism.md
+deleted file mode 100644
+index cfe723c..0000000
+--- a/_posts/2020-01-01-cubism.md
++++ /dev/null
+@@ -1,144 +0,0 @@
+----
+-layout: post
+-title:  Cubism
+----
+-When the name of Picasso is spoken, the concept of ‘Cubism’ usually springs to mind.
+-
+-Khi cái tên ‘Picasso’ được nói đến, thì khái niệm ‘Cubism’ hay còn gọi là ‘Trường phái lập thể’ thường nảy sinh trong đầu.
+-
+-That this happens indicates just how deep and long-lasting has been its influence on the world, yet although many people know of the name ‘Cubism’, few can speak about it with any degree of conversancy.
+-
+-Điều này cho thấy mức độ ảnh hưởng sâu sắc và lâu dài của nó trên thế giới, mặc dù nhiều người biết đến cái tên ‘Cubism’, nhưng ít người có thể nói và hiểu về nó một cách quen thuộc.
+-
+-It is Georges Braque who is now credited as an equal pioneer in this revolutionary art movement, but claiming that these two artists alone created cubism oversimplifies a very complex issue.
+-
+-Georges Braque, hiện nay được coi là người tiên phong bình đẳng trong phong trào nghệ thuật mang tính cách mạng này, nhưng người ta cho rằng hai nghệ sĩ này đã tạo ra trường phái lập thể để đơn giản hóa một vấn đề rất phức tạp.
+-
+-Defining Cubism itself is difficult.
+-
+-Thật khó để định nghĩa Trường phái lập thể là gì.
+-
+-At its simplest, the three-dimensional object being painted can be considered broken into pieces, sometimes square or cube-shaped (hence the name).
+-
+-Đơn giản nó là một đối tượng ba chiều và được chia nhỏ ra thành nhiều mảnh, đôi khi là hình vuông hoặc hình lập phương (vì vậy nó được gọi là Trường phái lập thể).
+-
+-These are reassembled in less than coherent order, and often at different angles.
+-
+-Những mảnh này được tập hợp lại theo trật tự ít mạch lạc hơn, và thường ở các khía cạnh khác nhau.
+-
+-They can overlap, and sometimes more than one view is presented at the same time, moving beyond the limits of a fixed observer.
+-
+-Chúng có thể nằm chồng lên nhau, và đôi khi được thể hiện dưới nhiều góc nhìn khác nhau trong cùng một thời điểm, vượt xa ngoài giới hạn của một người có góc nhìn cố định.
+-
+-The terms ‘multiple viewpoints’ and ‘mobile perspectives’ are often used — that is, the subject is captured from different angles, at different times, with the corresponding images fused into a single picture.
+-
+-Tiêu chí ‘góc nhìn đa chiều' và 'luật phối cảnh lưu động' thường được sử dụng ở đây - tức là đối tượng được vẽ từ các góc độ khác nhau, vào các thời điểm khác nhau, với những hình ảnh tương ứng được hợp nhất thành một bức tranh duy nhất.
+-
+-Braque’s pre-war paintings began experimenting with this idea, which inevitably led to an association with Picasso, who had been dabbling also in rendering three-dimensional views into two-dimensional geometric shapes — for example, in his painting Young Ladies of Avignon — often labelled ‘proto-cubist’.
+-
+-Những bức tranh trước chiến tranh của Braque đã bắt đầu thử nghiệm với ý tưởng này, nó có mối liên hệ với ý tưởng của Picasso , người cũng đang nghiên cứu việc biến những viễn cảnh ba chiều thành những hình dạng hình học hai chiều - ví dụ, trong bức tranh Young Ladies of Avignon của ông - thường được dán nhãn 'proto-cubist' hay còn gọi là người vẽ tranh lập thể đi đầu.
+-
+-Some even consider this painting to be the true beginning of Cubism itself, as it inspired Braque to follow the lead, developing the movement towards its trademark features.
+-
+-Thậm chí một số người còn coi bức tranh này là sự khởi đầu của trường phái lập thể, vì nó đã truyền cảm hứng cho Braque đi theo, phát triển phong trào theo những đặc điểm phân biệt đặc trưng của nó.
+-
+-Yet both artists were influenced by earlier painters, in particular, the later works of Cezanne.
+-
+-Tuy nhiên, cả hai đều bị ảnh hưởng bởi các họa sĩ trước đó, cụ thể là các tác phẩm sau này của Cezanne.
+-
+-Cezanne was one of the first to divide the canvas into several views, as well as to begin presenting natural objects in geometric figures.
+-
+-Cezanne là một trong những người đầu tiên chia tranh sơn dầu thành nhiều góc nhìn, cũng như bắt đầu trình bày các vật thể tự nhiên dưới dạng hình học không gian.
+-
+-Paul Cezanne had died in 1906, but a year later several museums exhibited his paintings in a retrospective of the artist’s life.
+-
+-Paul Cezanne đã qua đời vào năm 1906, nhưng một năm sau đó, một số bảo tàng đã trưng bày các bức tranh của ông trong cuộc triển lãm để tưởng nhớ về cuộc đời của nghệ sĩ này.
+-
+-Inevitably, young painters in the Parisian art scene, including Picasso and Braque, would have seen these.
+-
+-Chắc chắn rằng, các họa sĩ trẻ trong lĩnh vực nghệ thuật ở Paris, gồm có Picasso và Braque, cũng sẽ biết đến chúng.
+-
+-Whilst not yet fractured into facets or cubes, Cezanne occasionally implanted an underlying geometry—for example, in one of his most famous (and unfinished) paintings, The Bathers.
+-
+-Trong lúc vẫn chưa chia thành các khía cạnh hoặc hình khối, đôi khi Cezanne còn đưa vào một hình học cơ bản - ví dụ như, một trong những bức tranh nổi tiếng nhất của ông (dù chưa hoàn thành) là The Bathers.
+-
+-This work breaks tradition in its unflattering portrait of the women, whose naked forms are rendered in sharp symmetry, also forming a triangular pattern with the river and trees.
+-
+-Tác phẩm này phá vỡ sự truyền thống trong bức chân dung không tì vết của những người phụ nữ, mà vẻ đẹp trần trụi của họ được thể hiện trong sự đối xứng sắc nét, cũng tạo thành một cấu trúc có hình tam giác với dòng sông và cây cối.
+-
+-It is said to have inspired Picasso’s very similarly styled work, mentioned previously.
+-
+-Nó được cho là đã lấy cảm hứng từ tác phẩm có phong cách tương tự của Picasso mà đã được đề cập trước đó.
+-
+-Moving beyond those early years of Cubism, many other artists were exploring the same idea, but taking it in individual directions.
+-
+-Tiến xa hơn những năm đầu của Trường phái lập thể, nhiều nghệ sĩ khác đang khám phá cùng một ý tưởng, nhưng thực hiện nó theo phong cách riêng.
+-
+-They are often unfairly considered as having played less significant roles simply because they did not adhere to the strict perspectives of Braque or Picasso.
+-
+-Không công bằng rằng khi họ thường bị coi là đóng vai trò ít quan trọng chỉ vì họ không tuân thủ các quan điểm nghiêm ngặt của Braque hay Picasso.
+-
+-Yet, conceivably they could have evolved their own awareness of Cubism more from Cezanne’s pervading and almost universal influence on the Parisian art scene of that day, meaning that they must now be considered true innovators in their own right.
+-
+-Tuy nhiên, có thể tin rằng họ có thể phát triển nhận thức của riêng mình về Trường phái lập thể nhiều hơn từ sự ảnh hưởng rộng lớn và hầu như toàn cầu của Cezanne trong lĩnh vực nghệ thuật Paris lúc đó, có nghĩa là bây giờ họ xứng đáng được coi là nhà đổi mới thực sự.
+-
+-Juan Gris, for example, produced many interesting works, yet now remains little regarded.
+-
+-Ví dụ, Juan Gris đã tạo ra nhiều tác phẩm thú vị, mà giờ vẫn còn chút coi trọng.
+-
+-Interestingly, being a compatriot of Picasso, the two artists became personally acquainted, to the extent that Gris painted his well-known Portrait of Picasso, now regarded as one of the best examples of the Cubist style.
+-
+-Thú vị thay, như một đồng hương của Picasso, hai người đã trở nên thân thiết với nhau, đến mức Gris đã vẽ ra bức chân dung nổi tiếng của Picasso, giờ đây được coi là một trong những ví dụ điển hình về phong cách Lập thể.
+-
+-Gris ventured beyond the monochromatic (or single family of colours) employed by Picasso and Braque.
+-
+-Gris đã mạo hiểm vượt ra ngoài sự đơn sắc (một dải màu đơn) được sử dụng bởi Picasso và Braque.
+-
+-He combined vibrant hues in interesting and sometimes unusual combinations, such as in his still life, Newspaper and Fruit Dish.
+-
+-Ông đã kết hợp nhiều màu sắc rực rỡ để tạo nên những sự phối màu thú vị và đôi khi khác thường, chẳng hạn như trong tranh tĩnh vật của ông hay tác phẩm Newspaper and Fruit Dish.
+-
+-Similarly exploratory were the Orphic Cubists (as they would later become known), who moved further towards abstraction, but with Gris’s similar use of bright colours.
+-
+-Khám phá tương tự là những người theo chủ nghĩa Orphic Cubism (sau này họ trở nên nổi tiếng), những người đã tiến xa hơn về tính trừu tượng, nhưng với việc sử dụng tương tự của Gris về những màu sắc tươi sáng.
+-
+-These were used to convey meaning but blended in a way that went beyond the physical subject.
+-
+-Chúng được sử dụng để truyền đạt ý nghĩa nhưng được pha trộn theo cách vượt ra ngoài chủ thể vật lý.
+-
+-Its main proponent was the Frenchman, Robert Delaunay, who, together with his wife, regularly exhibited in Parisian salons with increasingly non-representational forms.
+-
+-Người đề xuất chính của nó là người Pháp, Robert Delaunay, đã cùng với vợ thường xuyên trưng bày tại các tiệm Paris với các mẫu ngày càng không mang tính đại diện.
+-
+-His Simultaneous Windows is barely recognisable as a window—just a blend of prismatic hues with one prominent square, giving a hint of three-dimensionality.
+-
+-Tác phẩm Simultaneous Windows của ông, hầu như không thể nhận ra đó là một cửa sổ - chỉ là một sự pha trộn của các lăng kính đầy sắc màu với một hình vuông nổi bật, tạo ra một gợi ý về ba chiều.
+-
+-Leger also followed a more personal form of Cubism.
+-
+-Léger cũng theo một hình thức cá nhân của Trường phái lập thể.
+-
+-As with most of his generation, he had seen the Cezanne 1907 retrospective, which enkindled interest in experimentation with geometric forms.
+-
+-Như với hầu hết mọi người thuộc thế hệ của mình, ông đã xem triển lãm tranh của Cezanne năm 1907, điều đã khiến ông quan tâm đến việc thử nghiệm với các hình thức theo dạng hình học.
+-
+-This eventually led to the completely abstract, in which tubes, cones, and cubes, are all splayed on the canvas in bold primary colours — seen, for example, in his Railway Crossing.
+-
+-Điều này đã dẫn đến sự trừu tượng hoàn toàn, trong đó các ống, hình nón, và hình khối, tất cả đều được dàn ra trên tranh sơn dầu với các màu đậm cơ bản - ví dụ như, trong Railway Crossing.
+-
+-Merc, in spite of its non-representational quality, is the suggestion of the harsh mechanisation and alienation of modern life, a theme which the artist’s experiences in World War One only accentuated, and which pre-dates similar trends (such as pop art) by decades.
+-
+-Merc của ông, mặc dù cái tiêu biểu của nó không phải là chất lượng bức tranh, thì nó vẫn gợi lên sự cơ giới hóa khắc nghiệt và xa lánh cuộc sống hiện đại, một chủ đề mà những nghệ sĩ trải nghiệm trong Thế chiến thứ nhất là chủ yếu, và tồn tại trước những xu hướng tương tự nhiều thập kỷ (như nghệ thuật phim ảnh).
+-
+-Clearly, Cubism was a complex art movement, and names such as Analytical, Synthetic, and Orphic Cubism are constructs which were invented long after the events and artworks which they attempt to describe.
+-
+-Rõ ràng, Trường phái lập thể là một phong trào nghệ thuật phức tạp, và những phong cách như phong cách phân tích, phong cách tổng hợp, va phong cách trường phái lập thể đơn lẻ là những khái niệm được phát minh sau các tác phẩm nghệ thuật mà họ đã vẽ.
+-
+-These names appear to give a coherent order to what was actually a collective movement in which many individuals contributed.
+-
+-Những khái niệm này dường như đưa ra một trật tự nhất quán với những gì thực sự là một phong trào tập thể trong đó nhiều cá nhân đã đóng góp.
+-
+-Among all this confusion, one does not doubt that the early years of last century were a fascinating period in the Parisian art scene.
+-
+-Trong tất cả sự phức tạp khó hiểu nói trên, người ta không nghi ngờ rằng những năm đầu của thế kỷ trước là một thời kỳ hấp dẫn trong lĩnh vực nghệ thuật Paris.
+-
+diff --git a/_posts/2020-01-01-the-king-of-fruits.md b/_posts/2020-01-01-the-king-of-fruits.md
+deleted file mode 100644
+index ad83a90..0000000
+--- a/_posts/2020-01-01-the-king-of-fruits.md
++++ /dev/null
+@@ -1,165 +0,0 @@
+----
+-layout: post
+-title:  The king of fruits
+----
+-
+-Whatever the description, it wafts from what must be considered the most singular fruit on the planet—the durian, a Southeast Asian favourite, commonly called the ‘king of fruits’. Its title is, in many ways, deserved.
+-
+-Dù được mô tả là gì đi nữa, mùi này được mang tới từ một loại quả phải được xem là kỳ lạ nhất hành tinh – quả sầu riêng, loại trái cây ưa thích ở Đông Nam Á, thường được mệnh danh là “vua của các loại trái cây”. Trên nhiều phương diện, quả sầu riêng xứng đáng với danh hiệu đó.
+-
+-One fact is certain: you’ll smell it before you see it.
+-
+-Một điều chắc chắn rằng: bạn sẽ ngửi thấy mùi nó trước khi bạn nhìn thấy nó.
+-
+-The scent (or should that be odour?) is overpowering (or should that be nauseating?).
+-
+-Mùi thơm (hay nên là mùi thối) làm cho mê mẩn (hay nên cảm thấy buồn nôn).
+-
+-One inhales it with delight, or shrinks back in disgust.
+-
+-Một số người hít vào với sự thích thú, số khác lùi lại với sự ghê tởm.
+-
+-Is it sweet almonds with vanilla custard and a splash of whiskey? Or old socks garnished with rotten onion and a sprinkling of turpentine? 
+-
+-Đó là món hạnh nhân ngọt ngào nồng hương vị bánh trứng sữa vani và một giọt rượu mạnh whisky? Hay là những chiếc tất cũ được bày cùng hành tây thối và một chút nhựa thông?
+-
+-Whatever the description, it wafts from what must be considered the most singular fruit on the planet—the durian, a Southeast Asian favourite, commonly called the ‘king of fruits’.
+-
+-Dù được mô tả là gì đi nữa, mùi này được mang tới từ một loại quả phải được xem là kỳ lạ nhất hành tinh – quả sầu riêng, loại trái cây ưa thích ở Đông Nam Á, thường được mệnh danh là “vua của các loại trái cây”.
+-
+-Its title is, in many ways, deserved.
+-
+-Trên nhiều phương diện, quả sầu riêng xứng đáng với danh hiệu đó.
+-
+-As fruits go, it is huge and imposing.
+-
+-Là một loại trái cây, nó to lớn và đường bệ.
+-
+-As big as a basketball, up to three kilograms heavy, and most noticeably, covered with a thick and tough thorn-covered husk, it demands a royal respect.
+-
+-To như một quả bóng rổ, nặng tới 3 kg, và đáng nói nhất, được bao phủ bởi một lớp vỏ dày và đầy gai nhọn, quả sầu riêng yêu cầu một sự tôn kính hoàng gia.
+-
+-The thorns are so sharp that even holding the massive object is difficult.
+-
+-Những chiếc gai sắc nhọn đến mức giữ một quả to là rất khó.
+-
+-In supermarkets, they are usually put into mesh bags to ease handling, while extracting the flesh itself requires the wearing of thick protective gloves, a delicate and dexterous use of a large knife, and visible effort.
+-
+-Tại các siêu thị, những quả sầu riêng thường được đặt vào trong các túi lưới để xách dễ dàng, trong khi để tách được múi sầu riêng cần phải đeo loại găng tay bảo vệ dầy, sử dụng tinh tế và khéo léo một con dao lớn, và sự cố gắng hết mình.
+-
+-One can see why it is increasingly popular, in western markets, to have that flesh removed, wrapped up, and purchased directly.
+-
+-Người ta có thể thấy tại sao loại quả này ngày càng phổ biến, ở các thị trường phương tây, rằng múi sầu riêng được tách ra, gói vào túi và mua trực tiếp.
+-
+-This leads one to wonder why nature designed such a smelly fruit in such an inconvenient package.
+-
+-Điều này làm cho người ta băn khoăn rằng tại sao thiên nhiên tạo ra một lại quả mùi nồng trong một lớp vỏ quá bất tiện như vậy.
+-
+-Nature is, however, cleverer than one might think.
+-
+-Tuy nhiên, thiên nhiên thông minh hơn bất cứ ai có thể nghĩ.
+-
+-For a start, that pungent odour allows easier detection by animals in the thick tropical forests of Brunei, Indonesia, and Malaysia, where the wild durian originates.
+-
+-Để bắt đầu, mùi mạnh nồng làm cho chúng dễ phát hiện hơn bởi các loại động vật trong các rừng rậm nhiệt đới ở Brunei, Indonesia, và Malaysia, nơi sầu riêng dại có nguồn gốc từ các khu vực trên.
+-
+-When the pod falls, and the husk begins to crack open, wild deer, pigs, , and elephants, are easily drawn forth, navigating from hundreds of meters away directly to the tree.
+-
+-Khi vỏ quả rơi xuống, và lớp vỏ bắt đầu vỡ tách ra, hươu nai, lợn, đười ươi và voi hoang dã dễ dàng đánh hơi, lôi kéo chúng từ nơi cách xa cây hàng trăm mét.
+-
+-The second clever fact is that, since the inner seeds are rather large, the durian tree needs correspondingly larger animals to eat, ingest, and transport these seeds away, hence the use of that tough spiny cover.
+-
+-Khía cạnh thông minh thứ hai là, do hạt bên trong khá lớn, cây sầu riêng cần những động vật to hơn tương ứng đến ăn, nuốt và vận chuyển những hạt này đi xa, do đó cần đến lớp vỏ dày nhiều gai.
+-
+-Only the largest and strongest animals can get past that.
+-
+-Chỉ những loài động vật to lớn nhất và khỏe nhất có thể đáp ứng yêu cầu đó.
+-
+-And what are they seeking? Upon prising open the large pod, one is presented with white fibrous pith in which are nestled pockets of soft yellowish flesh, divided into lobes.
+-
+-Và chúng đang tìm kiếm gì? Khi tách lớp vỏ dày, người ta có thể thấy lớp vỏ sợi trắng bao bên trong những tổ kén là lớp thịt màu vàng nhẹ, được chia thành các múi.
+-
+-Each lobe holds a large brown seed within.
+-
+-Mỗi múi có một hạt màu nâu lớn.
+-
+-Although these seeds themselves can be cooked and eaten, it is the surrounding flesh over which all the fuss is made.
+-
+-Mặc dù chính những hạt này có thể nấu và ăn, lớp thịt xung quanh tạo nên mọi thứ.
+-
+-One of the best descriptions comes from the British naturalist, Alfred Wallace.
+-
+-Một trong những mô tả chính xác nhất đến từ nhà tự nhiên học người Anh, Alfred Wallace.
+-
+-Writen in 1856, his experience is typical of many, and certainly of mine.
+-
+-Được viết năm 1856, trải nghiệm của ông giống rất nhiều người, trong đó có cả tôi.
+-
+-At first, he struggled hard to overcome the ‘disagreeable aroma’, but upon ‘eating it out of doors’ found the flesh to have a ‘rich glutinous smoothness, neither acid nor sweet nor juicy; yet it wants neither of these qualities, for it is in itself perfect’.
+-
+-Lúc đầu, ông phải đấu tranh để vượt qua “mùi thơm khó chịu”, nhưng khi “thưởng thức ngoài trời” thì thấy rằng lớp thịt có “sự mềm mịn giàu dinh dưỡng”, không phải axit, cũng không phải ngọt ngào hay vị quả, nhưng nó không muốn những phẩm chất đó, vì nó đã hoàn toàn là chính nó rồi.
+-
+-He ‘at once became a confirmed durian eater’.
+-
+-Ông “ngay lập tức trở thành người thích ăn sầu riêng chính hiệu”.
+-
+-Exactly!.
+-
+-Chính xác!.
+-
+-In actual fact, the flavour can vary considerably depending on the stage of ripeness and methods of storage.
+-
+-Trên thực tế, hương vị này có thể khác biệt đáng kể phụ thuộc vào giai đoạn chín và các phương pháp cất trữ bảo quản.
+-
+-In Southern Thailand, the people prefer younger durian, with firmer texture and milder flavour, whereas in Malaysia, the preference is to allow the durian to fall naturally from the tree, then further ripen during transport.
+-
+-Ở miền Nam Thái Lan, người dân thích trái sầu riêng non hơn, với kết cấu thịt quả chắc hơn và hương vị nhẹ hơn, trong khi ở Malaysia, họ ưu tiên để các trái sầu riêng tự rụng xuống từ trên cây, sau đó tiếp tục chín trong quá trình vận chuyển.
+-
+-This results in a buttery texture and highly individual aroma, often slightly fermented.
+-
+-Việc này làm cho kết cấu mềm mịn béo ngậy và hương thơm khá đặc biệt, thường lên men nhẹ.
+-
+-Whatever the ease, it is this soft creamy consistency which easily allows durian to blend with other Southeast Asian delicacies, from candy and cakes, to modern milkshakes and ice cream.
+-
+-Dù bằng cách nào, tính chất béo ngậy mềm mịn làm cho sầu riêng dễ dàng để xay với các đồ ăn khác ở Đông Nam Á, từ kẹo và bánh, tới sữa lắc hiện đại và kem.
+-
+-It can also appear in meals, mixed with vegetables or chili, and lower-grade durian (otherwise unfit for human consumption) is fermented into paste, used in a variety of local rice dishes.
+-
+-Nó cũng có thể xuất hiện trong các bữa ăn, trộn với rau hoặc ớt, và sầu riêng loại thấp hơn (trừ loại không phù hợp cho con người sử dụng) được lên men thành hỗn hợp pa-tê, được sử dụng trong các món cơm địa phương.
+-
+-Such popularity has seen the widespread cultivation of durian, although the tree will only respond to tropical climates'—for example, only in the very northern parts of Australia, where it was introduced in the early 1960s.
+-
+-Sự phổ biến này cho thấy việc canh tác mở rộng cây sầu riêng, mặc dù loại cây này sẽ chỉ phù hợp với khí hậu nhiệt đới – ví dụ, phía vùng phía bắc của Autralia, nơi sầu riêng được giới thiệu vào đầu những năm 1960.
+-
+-Since that time, modern breeding and cultivating techniques have resulted in the introduction of hundreds of cultivars (subspecies bred, and maintained by propagation, for desirable characteristics).
+-
+-Từ đó, các kỹ thuật nhân giống và canh tác hiện đại cho kết quả tạo được tới hàng trăm giống cây trồng (các phân loài được lai tạo, và duy trì bởi quá trình nhân giống, cho ra các đặc tính mong muốn).
+-
+-They produce different degrees of odour, seed size, colour, and texture of flesh.
+-
+-Người ta tạo được các mức độ khác nhau về mùi vị, kích cỡ hạt, màu sắc và kết cấu của thịt quả.
+-
+-The tree itself is always very large, up to 50 metres, and given that the heavy thorny pods can hang from even the highest branches, and will drop when ripened, one does not walk within a durian plantation without a hardhat—or at least, not without risking serious injury.
+-
+-Bản thân cây sầu riêng rất cao lớn, tới 50 mét, do quả nặng có vỏ gai có thể nằm ở cành cây cao nhất, và sẽ rơi khi chín, một người không nên đi dưới tán cây sầu riêng mà không đội một chiếc mũ cứng – hoặc ít nhất, không muốn bị thương nghiêm trọng.
+-
+-Thailand, where durian remains very popular, now exports most of this fruit, with five cultivars in large-scale commercial production.
+-
+-Thái Lan, đất nước rất nổi tiếng về quả sầu riêng, hiện nay xuất khẩu rất lớn loại trái cây này, với 5 giống sầu riêng được sản xuất thương mại với quy mô lớn.
+-
+-The market is principally other Asian nations, although interest is growing in the West as Asian immigrants take their tastes and eating preferences with them — for example, in Canada and Australia.
+-
+-Thị trường xuất khẩu chủ yếu là các quốc gia Châu Á khác, mặc dù thị hiếu đang tăng ở phương Tây vì người nhập cư châu Á đem theo khẩu vị và sở thích ăn uống với họ - ví dụ, ở Canada và Australia.
+-
+-The fruit is seasonal, and local, sale of durian pods is usually done by weight.
+-
+-Loại quả này có tính mùa vụ, và địa phương, việc mua bán quả sầu riêng dựa trên cân nặng.
+-
+-These can fetch high prices, particularly in the more affluent Asian countries, and especially when one considers that less than one third of that heavy pod contains the edible pulp.
+-
+-Điều này có thể làm giá bán cao, đặc biệt tại các nước châu Á giàu có hơn, và đặc biệt khi người ta cân nhắc rằng ít hơn một phần ba quả nặng đó có chứa thịt quả có thể ăn được.
+-
+-In the true spirit of Alfred Wallace, there are certainly a large and growing number of ‘confirmed durian eaters’ out there.
+-
+-Với tinh thần thực sự của Alfred Wallace, điều chắc chắn là có một số lượng lớn và đang tăng “những người thích ăn sầu riêng”.
+-
+diff --git a/_posts/2020-01-02-esperanto.md b/_posts/2020-01-02-esperanto.md
+deleted file mode 100644
+index 8a926a2..0000000
+--- a/_posts/2020-01-02-esperanto.md
++++ /dev/null
+@@ -1,149 +0,0 @@
+----
+-layout: post
+-title:  Esperanto
+----
+-
+-Cu vi paroli Esperanlon? Ne? Can you understand this? Should you be expected to? Depending on who you ask, somewhere from 10,000 to two million people in places all over the world could understand this sentence, and presumably reply in this same language.
+-
+-Cu vi paroli Esperanlon? Ne? Bạn có hiểu câu hỏi này không? Bạn có muốn biết ý nghĩa của nó? Tùy thuộc vào người được bạn hỏi, ở một nơi nào đó trong 10000 đến hai triệu người ở khắp nơi trên thế giới có thể hiểu câu này, và có lẽ trả lời bằng cùng ngôn ngữ này.
+-
+-And it is not one that ever evolved through any natural process.
+-
+-Và nó không phải là ngôn ngữ đã từng tiến hóa qua bất kỳ quá trình tự nhiên nào.
+-
+-To give it its technical name, it is a ‘constructed auxiliary language’.
+-
+-Ngôn ngữ này có một cái tên kỹ thuật là 'ngôn ngữ bổ trợ xây dựng'.
+-
+-More specifically, it is ‘Esperanto’, and out of the several attempts throughout modern history to create artificial languages, Esperanto remains the most widely spoken.
+-
+-Cụ thể hơn, đó là ‘Esperanto’, và trong rất nhiều nỗ lực để tạo ra ngôn ngữ nhân tạo trong suốt lịch sử hiện đại, Esperanto vẫn được sử dụng rộng rãi nhất.
+-
+-‘Widely spoken’ is a relative term here.
+-
+-‘Nói rộng rãi’ là một thuật ngữ tương đối ở đây.
+-
+-Compared to any natural language, the number of Esperanto speakers remains pitiably small — a far cry from the high hopes of its inventor, Dr Ludwig Zamenhof.
+-
+-So với bất kỳ ngôn ngữ tự nhiên nào, số lượng người nói Esperanto vẫn còn rất ít – rất khác với hi vọng của người sáng tạo ra nó, tiến sĩ Ludwig Zamenhof.
+-
+-He was an eye doctor, who grew up in the racially divided Eastern-European town of Bialystok.
+-
+-Ông là một bác sĩ nhãn khoa lớn lên ở thị trấn phân biệt chủng tộc Đông Âu của Bialystok.
+-
+-In this complex and uneasy mixture of Poles, Jews, Russians, and Germans, each speaking their own language, a high-minded Zamenhof lamented how these languages so obviously categorised the city’s residents into different, and often hostile, groups.
+-
+-Trong cộng đồng phức tạp và khó chịu của người Ba Lan, người Do Thái, người Nga và người Đức, mỗi người nói ngôn ngữ riêng, một Zamenhof có tâm hồn cao cả đã than thở về việc các ngôn ngữ này phân loại rõ ràng cư dân của thành phố thành các nhóm khác nhau, và thường là các nhóm thù địch như thế nào.
+-
+-He resolved to create an easily learnt and politically neutral language, one that would transcend nationality, ethnicity, race, colour, and creed.
+-
+-Ông đã quyết định tạo ra một ngôn ngữ trung lập mang tính chính trị và dễ học, một ngôn ngữ có thể vượt qua rào cản về quốc tịch, sắc tộc, chủng tộc, màu da và tín ngưỡng.
+-
+-It would be a universal second language, and his first book detailing this idea was published in 1887.
+-
+-Nó sẽ là một ngôn ngữ thứ hai phổ biến, và cuốn sách đầu tiên của ông nêu chi tiết về ý tưởng này đã được xuất bản vào năm 1887.
+-
+-Surprisingly perhaps, the concept quickly gained acceptance and a loyal following.
+-
+-Đáng ngạc nhiên có lẽ là khái niệm này nhanh chóng đạt được sự chấp nhận và được nhiều người theo dõi.
+-
+-It seems that in a linguistically divided Eastern Europe, many people possessed the same idealism which drove Zamenhof.
+-
+-Dường như trong một xã hội Đông Âu bị phân chia ngôn ngữ, việc nhiều người sở hữu cùng một chủ nghĩa duy tâm đã thúc đẩy Zamenhof sáng tạo ra ngôn ngữ mới.
+-
+-From there, then to the West, then into the Americas and Asia, Esperanto journals, magazines, and clubs, were formed, ultimately leading to the first world congress of Esperanto speakers in France, in 1905.
+-
+-Bắt đầu từ Đông Âu, sau đó đến phương Tây, rồi đến châu Mỹ và châu Á, các tạp chí, tạp chí và câu lạc bộ sử dụng tiếng Esperanto được hình thành, cuối cùng dẫn đến việc hội nghị của người nói tiếng Esperanto toàn thế giới lần đầu tiên tổ chức ở Pháp, vào năm 1905.
+-
+-These congresses have been held every year since then, apart from when world wars delayed proceedings.
+-
+-Các hội nghị này đã được tổ chức hàng năm kể từ sau đó và chỉ bị tạm hoãn khi chiến tranh thế giới xảy ra.
+-
+-And today, Esperanto is still present, although very much under the radar.
+-
+-Và ngày nay, Esperanto vẫn còn được sử dụng mặc dù vẫn phải chịu nhiều sự kiểm soát.
+-
+-Whilst not yet having achieved the status of being an official language of any state or governing body, it is, at least, occasionally taught at schools and educational institutions on an informal or experimental basis.
+-
+-Mặc dù chưa là ngôn ngữ chính thức của bất kỳ tiểu bang hoặc cơ quan quản lý nào nhưng ít nhất, Esperanto thỉnh thoảng vẫn được dạy ở trường học và các cơ sở giáo dục trên cơ sở không chính thức hoặc thử nghiệm.
+-
+-What actually keeps Esperanto going is the motivation of those who become interested.
+-
+-Điều thực sự giúp Esperanto phát triển là động lực của những người quan tâm đến ngôn ngữ này.
+-
+-Language books, journals, and various online and video-based self-learning technologies exist, as well as an active speaking community, but the key question remains: whether it is worth investing the time in acquiring the language.
+-
+-Sách ngôn ngữ, tạp chí và nhiều công nghệ tự học trực tuyến đa dạng và dựa trên video tồn tại, cũng như cộng đồng nói tích cực, nhưng câu hỏi quan trọng vẫn là liệu có đáng để chúng ta đầu tư thời gian học ngôn ngữ này hay không.
+-
+-In other words, does it have any innate advantages over other languages or equip its speakers with a useful skill in life? The first question can be promptly answered.
+-
+-Nói cách khác là liệu Esperanto có bất kì lợi thế sẵn có nào so với các ngôn ngữ khác hay nó có giúp con người trang bị một kỹ năng hữu ích trong cuộc sống không? Câu hỏi đầu tiên có thể được trả lời ngay lập tức.
+-
+-Proponents explain that, by being so simple and internally consistent, Esperanto is easy to learn, being able to be mastered in a fraction of the lime needed for any conventional language.
+-
+-Những người yêu thích ngôn ngữ này giải thích bằng cách đơn giản và nhất quán rằng, Esperanto dễ học, có thể được làm chủ trong một phần nhỏ của những thứ cần thiết cho bất kỳ ngôn ngữ thông thường nào.
+-
+-While we may accept that, the second question is far more problematic and raises further issues, the main one being whether the language is even necessary.
+-
+-Trong khi chúng ta có thể chấp nhận điều đó, câu hỏi thứ hai lại khá mơ hồ và phát sinh thêm nhiều vấn đề, vấn đề chính là liệu ngôn ngữ đó có cần thiết hay không.
+-
+-Would international communication indeed be better if we all spoke Esperanto? Are there not other factors involved? And why cannot the English language take that role (which it virtually has)? Why divert state funds to support what may always remain a marginalised speech community, especially when there exists so many other languages spoken by far more people, and of far greater utility? The answers are emotional, complex, and confusing.
+-
+-Liệu thông tin quốc tế có thực sự được truyền tải tốt hơn nếu tất cả chúng ta đều nói Esperanto? Có yếu tố nào khác liên quan không? Và tại sao ngôn ngữ tiếng Anh không thể đảm nhận vai trò đó (mà nó hầu như có)? Tại sao lại chuyển hướng quỹ nhà nước để hỗ trợ những thứ luôn có thể vẫn là một cộng đồng ngôn ngữ bị cách ly, đặc biệt là khi có rất nhiều ngôn ngữ khác được nói bởi nhiều người hơn, và tiện ích lớn hơn nhiều? Câu trả lời mang tính cảm xúc, phức tạp và thật khó hiểu.
+-
+-One problem with Esperanto is that it is culturally European.
+-
+-Một vấn đề với Esperanto là nó là văn hóa châu Âu.
+-
+-Its vocabulary and internal rules of construction derive from European languages, making it difficult for Asian learners.
+-
+-Từ vựng và quy tắc xây dựng nội bộ của nó bắt nguồn từ các ngôn ngữ Châu Âu, khiến người học Châu Á gặp khó khăn.
+-
+-There is also a large and imposing vocabulary, with many nouns rather idiosyncratically chosen, and a certain unnecessary complexity which Zamenhof (who was not a professional linguist) had not realised.
+-
+-Ngoài ra còn có một từ vựng lớn và hùng vĩ, với nhiều danh từ thay vì lựa chọn riêng, và một sự phức tạp không cần thiết nhất định mà Zamenhof (người không phải là một nhà ngôn ngữ học chuyên nghiệp) đã không nhận ra.
+-
+-In 1894, he suggested a ‘reformed Esperanto’; however, the Esperanto speakers of that day were loathe to alter a language which they had already mastered, rejecting Zamenhof’s proposals, and also those of a special French committee formed 13 years later to discuss the adoption of a standard international language.
+-
+-Năm 1894, ông đề nghị một \"Esperanto cải cách\"; tuy nhiên, những người nói Esperanto ngày hôm đó không thích thay đổi ngôn ngữ mà họ đã làm chủ, từ chối đề xuất của Zamenhof, và cũng là những đề xuất của một ủy ban đặc biệt của Pháp được thành lập sau 13 năm để thảo luận về việc áp dụng một ngôn ngữ quốc tế tiêu chuẩn.
+-
+-In the meantime, another artificial language had emerged.
+-
+-Trong khi đó, một ngôn ngữ nhân tạo khác đã xuất hiện, gọi là ‘Ido’.
+-
+-Called ‘Ido’, it was a product of various academics who embedded the changes that Esperanto was thought to have needed.
+-
+-Nó là một sản phẩm của nhiều học giả khác nhau và đã thể hiện được những thay đổi được cho là cần thiết đối với Esperanto.
+-
+-This new language, sharing the same lofty goals, divided the support base of Esperanto.
+-
+-Ngôn ngữ mới này, chia sẻ cùng một mục tiêu cao cả, chia cơ sở hỗ trợ của Esperanto.
+-
+-A large number defected to Ido, which then underwent further changes through committee after committee, and eventually the formation of an independent academy.
+-
+-Một số lượng lớn được chuyển sang Ido, sau đó đã trải qua nhiều thay đổi, hơn nữa thông qua ủy ban, và cuối cùng hình thành của một học viện độc lập.
+-
+-However, Ido suffered substantial decline when its best-known advocate was killed in a car accident, and with the advent of World War One.
+-
+-Tuy nhiên, Ido bị suy giảm đáng kể khi người ủng hộ nổi tiếng nhất của nó đã bị giết trong một tai nạn xe hơi, và khi chiến tranh thế giới thứ nhất nổ ra.
+-
+-After the war, its most vocal proponent published his own constructed language, ‘Novial’, making the schism all too confusing, such that the original Esperanto quickly became the predominant language of its type.
+-
+-Sau chiến tranh, người đề xuất có tiếng nói nhất của Ido đã xuất bản ngôn ngữ được xây dựng riêng của mình, ‘Novial’, khiến cho sự ly giáo quá khó hiểu, chính vì vậy mà Esperanto ban đầu nhanh chóng trở thành ngôn ngữ chủ đạo của loại hình này.
+-
+-Esperanto may lead the field, but it falls far short of the aim of both its creator and many of its speakers — that of a truly global second language uniting all in mutual understanding.
+-
+-Esperanto có thể dẫn đầu lĩnh vực này, nhưng nó không còn là mục tiêu của cả người sáng tạo và người nói ngôn ngữ này - đó là một ngôn ngữ thứ hai toàn cầu thực sự hợp nhất tất cả trong sự hiểu biết lẫn nhau.
+-
+-This high-minded goal, almost universally shared in the early days of the language, has mellowed among many followers, who are now content just to have a special language and its culture and community with whom they can interact.
+-
+-Mục tiêu cao cả này, hầu như được chia sẻ phổ biến trong những ngày đầu của ngôn ngữ, đã lan tỏa đến nhiều người theo dõi – những người hiện giờ chỉ có một ngôn ngữ đặc biệt với văn hóa và cộng đồng mà họ có thể tương tác.
+-
+-The unlikelihood of achieving more than this was even admitted in an Esperanto convention in 1980, although many still cling to the pracelo, the ‘original goal’, of an official status and worldwide use.
+-
+-Khả năng đạt được nhiều hơn thế này thậm chí còn được thừa nhận trong một hội nghị Esperanto vào năm 1980, mặc dù nhiều người vẫn bám vào pracelo, 'mục tiêu ban đầu', của một trạng thái chính thức và sử dụng trên toàn thế giới.
+-
+-Will this ever be achieved? All I can say is estus agrable pensas tiel, sed preshau certe ne estos.
+-
+-Điều này sẽ có thể đạt được hay không? Tất cả những gì tôi có thể nói là estus agrable pensas tiel, sed preshau certe ne estos.
+-
+diff --git a/_posts/2020-01-03-the-most-dangerous-insect-in-the-world.md b/_posts/2020-01-03-the-most-dangerous-insect-in-the-world.md
+deleted file mode 100644
+index 9826f96..0000000
+--- a/_posts/2020-01-03-the-most-dangerous-insect-in-the-world.md
++++ /dev/null
+@@ -1,149 +0,0 @@
+----
+-layout: post
+-title:  The most dangerous insect in the world
+----
+-
+-If asked to name the deadliest insect in the world, most people would search their minds for some sinister-looking spiders or scorpions, or exotic garden pests.
+-
+-Nếu được hỏi tên loài côn trùng nguy hiểm nhất trên thế giới, hầu hết mọi người sẽ lục lọi trong ký ức của họ để tìm một số loài nhện hoặc bọ cạp vẻ ngoài nham hiểm, hoặc những loài gây hại ngoại lai trong vườn.
+-
+-However, if we define ‘deadly’ in terms of the number of people who die directly as a result of the insect, one of them leads the field, by far: the mosquito.
+-
+-Tuy nhiên, nếu chúng ta định nghĩa ‘gây ra cái chết’ một số người, người mà chết trực tiếp do hậu quả của côn trùng, thì một trong số chúng vươn lên dẫn đầu, cho đến nay: muỗi.
+-
+-As a blood-sucking pest, it transmits diseases to over 700 million people a year, killing a fair proportion of them in the process.
+-
+-Là một loài hút máu, muỗi truyền bệnh cho hơn 700 triệu người mỗi năm, giết chết khá nhiều người trong quá trình này.
+-
+-No other insect comes even close to this.
+-
+-Không có loài côn trùng nào khác có thể làm điều tương tự như vậy.
+-
+-Although all mosquitoes are nectar feeders, the females also need protein from a blood meal in order to produce eggs.
+-
+-Mặc dù tất cả các loài muỗi là những loài hút mật hoa, nhưng những con cái cũng cần protein từ một bữa ăn máu để sản xuất ra trứng.
+-
+-To find this, they have a keen sense of smell, detecting the sweat and other organic compounds of mammals, such as the carbon dioxide they exhale.
+-
+-Để tìm ra, chúng có một thính giác nhạy bén, phát hiện mồ hôi và các hợp chất hữu cơ khác của động vật có vú, chẳng hạn như carbon dioxide chúng thở ra.
+-
+-Scientific tests have proven that some people attract more mosquitoes than others, presumably having a better ‘scent profile’ — in fact, so adept are female mosquitoes at following these trails, they can infiltrate buildings through pipeways and air-conditioning ducts as they move inexorably towards their victims.
+-
+-Các thử nghiệm khoa học đã chứng minh rằng một số người thu hút nhiều muỗi hơn những người khác, có lẽ là có một “mùi hương” tốt hơn - thực ra, muỗi cái theo những dấu vết mùi này, chúng có thể xâm nhập vào các tòa nhà thông qua hào đặt đường ống và ống dẫn máy điều hòa khi chúng di chuyển không thể tránh khỏi đối với nạn nhân của chúng.
+-
+-Upon biting, they inject an anti-coagulating saliva into the flesh, and it is this fluid (and not their blood) which may contain the range of viral and parasitical nasties for which mosquitoes are notorious.
+-
+-Khi cắn, chúng tiêm một lượng nước bọt có chất chống đông máu vào bắp thịt, và chất lỏng này (và không phải là máu của chúng), có thể chứa nhiều loại vi rút và siêu vi mà muỗi nổi tiếng.
+-
+-Yet even without such diseases, mosquitoes are an irritating nuisance which can occasionally cause serious injury.
+-
+-Tuy nhiên, ngay cả khi không có những căn bệnh như vậy, muỗi là một mối phiền toái khó chịu mà đôi khi có thể gây ra tổn thương nghiêm trọng.
+-
+-Upon being bitten, the body’s immune system is activated, and subsequent bites trigger antibodies which cause inflammation and itching, particularly with young children.
+-
+-Khi bị cắn, hệ miễn dịch của cơ thể được kích hoạt, và những vết cắn tiếp theo sẽ kích hoạt các kháng thể gây viêm và ngứa, đặc biệt là với trẻ nhỏ.
+-
+-More bites can increase such sensitivity, resulting in pronounced swelling and blistering — wounds which can occasionally become infected, particularly when scratched.
+-
+-Càng nhiều vết cắn có thể làm tăng độ nhạy như vậy, dẫn đến sưng rõ rệt và phồng rộp - vết thương đôi khi có thể bị nhiễm trùng, đặc biệt là khi bị trầy xước.
+-
+-Two famous victims of infected mosquito bites are Lord Carnarvon, the Egyptologist who played a role in the discovery of Tutankhamen’s tomb, and the British poet, Rupert Brooke, passing away in Egypt and Greece, respectively.
+-
+-Hai nạn nhân nổi tiếng của muỗi bị nhiễm bệnh là Lord Carnarvon, một nhà nghiên cứu về Ai Cập, ông đóng vai trò trong việc khám phá mộ của Tutankhamen, và nhà thơ người Anh, Rupert Brooke, qua đời ở Ai Cập và Hy Lạp, tương ứng.
+-
+-But the real danger will always be mosquito-borne diseases.
+-
+-Nhưng mối nguy hiểm thực sự sẽ luôn là những căn bệnh do muỗi sinh ra.
+-
+-Dengue fever, West Nile virus, and several encephalitis-type diseases are all modern day killers.
+-
+-Sốt xuất huyết, vi rút West Nile và một số loại bệnh viêm não là tất cả những kẻ giết người hiện đại.
+-
+-A less deadly but more insidious example is filariasis, a disease named from the thread-like parasites which migrate to the body’s lymphatic system, causing parts of the body to permanently swell to grotesque proportions.
+-
+-Một ví dụ ít nguy hiểm hơn nhưng âm thầm hơn là bệnh giun chỉ, một loại bệnh có tên từ các ký sinh trùng giống như sợi, di chuyển đến hệ bạch huyết của cơ thể, khiến các bộ phận của cơ thể sưng lên vĩnh viễn với tỷ lệ kỳ cục.
+-
+-Yet, as distressing as all this is, in terms of its death toll, the worst disease is undoubtedly malaria.
+-
+-Tuy nhiên, như lo lắng cho tất cả điều này, về số người chết, căn bệnh tồi tệ nhất chắc chắn là bệnh sốt rét.
+-
+-Carried by the Anopheles mosquito, this parasite causes fever, shivering, joint pains, vomiting, and, if left untreated, a painful death.
+-
+-Được lây truyền bởi muỗi Anopheles, ký sinh trùng này gây ra sốt, run rẩy, đau khớp, nôn mửa, và nếu không chữa trị, nó gây ra một cái chết đau đớn.
+-
+-It infects over two million people a year, most of them children, killing over one quarter in the process.
+-
+-Nó lây nhiễm cho hơn hai triệu người mỗi năm, hầu hết trong số này là trẻ em, giết chết hơn một phần tư trong quá trình này.
+-
+-The Aedes Aepypti mosquito is the species responsible for that other great killer: yellow fever.
+-
+-Muỗi Aedes Aepypti là loài chịu trách nhiệm cho kẻ giết người lượng lớn khác: sốt vàng da.
+-
+-This is a viral disease, but limited to tropical areas, primarily in Africa, but also Central and South America.
+-
+-Đây là một căn bệnh do vi rút, nhưng chỉ giới hạn ở các vùng nhiệt đới, chủ yếu ở châu Phi, mà còn ở Trung và Nam Mỹ.
+-
+-After high lever, nausea, and joint pains, the virus attacks the liver, causing the host’s skin to turn yellow (hence the name), with death following some days later.
+-
+-Sau khi sốt cao, buồn nôn và đau khớp, vi rút tấn công vào gan, làm da vật chủ chuyển sang màu vàng (lấy tên từ đây), cái chết theo sau đó vài ngày.
+-
+-Its toll is much smaller than malaria, with about 200,000 infections and 30,000 deaths every year, mostly in Africa.
+-
+-Số lượng chết do căn bệnh này nhỏ hơn nhiều so với bệnh sốt rét, với khoảng 200,000 ca nhiễm và 30,000 ca tử vong mỗi năm, chủ yếu ở châu Phi.
+-
+-Unlike malaria, there exists a vaccine, and extensive vaccination programs sponsored by the WHO have had some success, whilst travelers to disease-prone areas are usually similarly protected.
+-
+-Không giống như bệnh sốt rét, đã có vắc-xin, và các chương trình chủng ngừa mở rộng do WHO tài trợ đã thành công, trong khi các du khách đến những khu vực dễ bị bệnh thường được bảo vệ tương tự.
+-
+-With such a death toll, it took a surprisingly long time before the link between mosquitoes and disease was realised.
+-
+-Với số lượng người chết như vậy, phải mất một thời gian dài đáng ngạc nhiên trước khi mối liên hệ giữa muỗi và bệnh được hiểu rõ.
+-
+-This is exemplified in the construction of the Panama Canal — that ambitious project to excavate a passageway for ships through that narrow Central-American nation.
+-
+-Điều này được minh họa trong việc xây dựng Kênh đào Panama - một dự án đầy tham vọng để khai quật một lối đi cho các con tàu qua quốc gia Trung - Mỹ chật hẹp.
+-
+-In the 1880s, the French struggled for eight years in insect-infested jungle, but the death toll from malaria and yellow fever made it very difficult to maintain an experienced work force.
+-
+-Vào những năm 1880, người Pháp đã phải vật lộn suốt tám năm trong khu rừng bị côn trùng phá hoại, nhưng số người chết vì bệnh sốt rét và sốt vàng khiến rất khó duy trì một lực lượng lao động có kinh nghiệm.
+-
+-After the loss of 22,000 lives, work was abandoned, yet shortly afterwards, a British doctor in India, Ronald Ross, deduced the means of disease transmission, identifying the malaria parasite in the gastrointestinal tract of mosquitoes.
+-
+-Sau khi mất 22,000 người, công việc đã bị bỏ hoang, nhưng ngay sau đó, một bác sĩ người Anh ở Ấn Độ, Ronald Ross, đã suy luận ra trung gian truyền bệnh, nhận dạng ký sinh trùng sốt rét ở đường tiêu hóa của muỗi.
+-
+-He also realised that mosquito numbers could be reduced by limiting their access to water, providing two crucial insights which laid the foundations for controlling the disease.
+-
+-Ông cũng nhận ra rằng số lượng muỗi có thể được giảm xuống bằng cách hạn chế tiếp cận với nước, cung cấp hai thông tin chi tiết quan trọng đã đặt nền móng cho việc kiểm soát bệnh.
+-
+-Thus, in 1904, when America resumed work on the Panama Canal, they instituted a multi-million dollar mosquito-abatement program, consisting of many strategies.
+-
+-Do đó, vào năm 1904, khi Mỹ tiếp tục công việc trên kênh đào Panama, họ đã thiết lập một chương trình giảm muỗi trị giá hàng triệu đô la, bao gồm nhiều chiến lược.
+-
+-Houses for workers were built with screens on the windows, buildings harbouring mosquitoes were fumigated, and sick workers were isolated behind nets.
+-
+-Nhà cho công nhân được xây dựng với màn che cửa sổ, các tòa nhà chứa muỗi bị xông khói, và công nhân bị bệnh đã được cách ly sau những tấm lưới.
+-
+-Stagnant pools of water (where mosquitoes breed) were sprayed with oil and insecticide, and roads were paved to eliminate puddles.
+-
+-Các hồ nước ứ đọng (nơi muỗi sinh sản) được phun dầu và thuốc trừ sâu, và các con đường được trải nhựa để loại bỏ vũng nước.
+-
+-For this same reason, swamps were drained, and proper piping was used for the transmission of drinking and waste water.
+-
+-Vì lý do tương tự này, đầm lầy đã được thoát nước, và đường ống thích hợp được sử dụng để trung chuyển nước uống và nước thải.
+-
+-All this reduced the number of deaths from disease over the ten-year construction phase to less than 6,000 — a considerable number, but still considered a major success.
+-
+-Tất cả điều này làm giảm số người chết vì bệnh trong giai đoạn xây dựng mười năm đến dưới 6,000 người - một số lượng đáng kể, nhưng vẫn được coi là một thành công lớn.
+-
+-To this day, reducing the incidence of stagnant pools of water, however small, remains very cost-effective in combatting mosquito-borne diseases in urban areas.
+-
+-Cho đến ngày nay, việc giảm tỷ lệ các vũng nước ứ đọng, tuy nhỏ, nhưng vẫn rất hiệu quả trong việc chống lại các bệnh do muỗi gây ra ở các khu vực thành thị.
+-
+-Many of the most dangerous species breed in incidental ditches, flowerpots, or discarded containers into which rainwater has pooled.
+-
+-Nhiều loài sinh vật nguy hiểm nhất trong mương, chậu hoa, hoặc các thùng chứa vứt bỏ có trữ nước mưa bên trong.
+-
+-By eliminating such sites, the insects’ numbers fall greatly, limiting bites to those mosquitoes which come from further afield, yet since they cannot travel far, the likelihood of being bitten (and infected) is greatly reduced.
+-
+-Bằng cách loại bỏ các nơi như vậy, số lượng côn trùng giảm rất nhiều, hạn chế vết cắn từ những con muỗi đến từ những cánh đồng ở xa hơn, nhưng kể từ khi chúng không thể đi xa, khả năng bị cắn (và bị nhiễm trùng) được giảm đáng kể.
+-
+diff --git a/_posts/2020-01-04-the-search-for-colour.md b/_posts/2020-01-04-the-search-for-colour.md
+deleted file mode 100644
+index a2af364..0000000
+--- a/_posts/2020-01-04-the-search-for-colour.md
++++ /dev/null
+@@ -1,189 +0,0 @@
+----
+-layout: post
+-title:  The search for colour
+----
+-
+-We seldom reflect on the artificial colour of modern merchandise.
+-
+-Chúng ta ít khi phản ánh (nghĩ) về màu nhân tạo của các sản phẩm thương nghiệp (hàng hóa, sản phẩm) hiện đại.
+-
+-A blue car is blue; a red chair, red; a green bicycle, green.
+-
+-Một chiếc ô tô màu xanh lam thì có màu xanh lam; một chiếc ghế đỏ (thì) có màu đỏ (và) một chiếc xe đạp xanh lá (thì có) màu xanh lá.
+-
+-But why does it have colour? Answer, because its surface contains pigment.
+-
+-Nhưng tại sao chúng lại có màu sắc? Câu trả lời là vì bề mặt của chúng có chứa phẩm màu.
+-
+-If this was originally dissolved in a carrier liquid to transfer the colour, it is known as a dye, but whatever the case, since colour is the most visible element in all objects we desire, pigments can be said to be the basis of customer choice, and therefore of almost all hard trade and transactions.
+-
+-Nếu thuốc màu này chỉ đơn thuần hòa tan vào chất lỏng vận chuyển để chuyển màu, nó được biết tới là phẩm nhuộm, nhưng trong bất cứ trường hợp nào, bởi vì màu sắc là yếu tố nền tảng nhất ở tất cả các vật thể chúng ta yêu cầu, thuốc nhuộm có thể nói là cơ sở cho sự lựa chọn của khách hàng, và vì thế là cơ sở của hầu như tất cả các loại giao thương vật chất và giao dịch .
+-
+-Consequently, production of this substance is big business, now accounting for over twenty billion dollars annually in global sales—yet there was a time when none of it existed.
+-
+-Như một kết quả, sự sản xuất của loại chất này một nguồn lợi lớn hiện nay, ước tính chiếm hơn 20 tỷ đô la hàng năm trong thương mại toàn cầu - mặc dù vậy vẫn có một khoảng thời gian khi không một trong số những điều đó tồn tại.
+-
+-Going back into the mists of prehistory, objects, tools, and clothing were all earthen and bland, without anything except their natural colours.
+-
+-Trở lại màn sương mù của thời kỳ tiền sử, tất cả các vật dụng, công cụ và quần áo nói chung đều được làm bằng đất và đơn sơ, không có gì ngoại trừ màu tự nhiên của chúng.
+-
+-The first pigments used were of mineral origin — from natural clays tinted by the presence of iron-oxides.
+-
+-Những loại màu nhuộm đầu tiên được sử dụng có nguồn gốc từ khoáng chất - lấy từ đất sét tự nhiên bị nhuộm màu bởi sự xuất hiện của sắt oxit.
+-
+-The best known examples are the gold colour of ochre, the brown of umber, and the yellow of sienna.
+-
+-Ví dụ tiêu biểu nhất phải kể đến màu vàng kim của thổ hoàng, màu nâu của đất umber và màu vàng của đất sienna.
+-
+-These were ground up and mixed with fat to create paint, used, for example, in the earliest European cave paintings.
+-
+-Chúng được nghiền nát và trộn với chất béo để tạo ra màu sơn, được sử dụng, ví dụ, trong những bức tranh sơn động đầu tiên của Châu Âu.
+-
+-Ash, as well as charcoal (derived from heating wood in the absence of oxygen), were also used to provide black, but in the search for colour, it was soon discovered that biological matter, such as plants, animal waste, mollusks, and insects, could yield more interesting results.
+-
+-Tro, cũng như than củi, lấy từ củi đốt trong điều kiện không có oxi, cũng được sử dụng để mang lại màu đen, nhưng trong công cuộc tìm kiếm màu sắc, nó đã sớm được khám phá ra rằng những vật chất sinh học, chẳng hạn như thực vật, chất thải động vật, động vật thân mềm và côn trùng, có thể mang lại nhiều kết quả thú vị hơn.
+-
+-Crimson —a bright red colour—is a good example.
+-
+-Crimson - màu loại màu đỏ sáng - là một ví dụ tốt.
+-
+-It was extracted from kermes, a small insect found on Southern-European oak trees.
+-
+-Nó được chiết xuất từ kermes - một loại côn trùng nhỏ được tìm thấy trên những cây sồi ở vùng phía Nam Châu Âu.
+-
+-The pigment is a constituent of the carminic acid produced inside the creature’s body, used to discourage predation by birds or other insects.
+-
+-Chất màu này là một thành phần của axit carminic, một loại axit được sản xuất từ cơ thể sống, được sử dụng để ngăn cản sự săn mồi của chim và các loại côn trùng khác.
+-
+-However, with the trees being large and bushy, and the sap-feeding insects few and far between, pigment production was a meticulous and time-consuming process.
+-
+-Mặc dù vậy, khi cây cối trở nên to lớn và rậm rạp hơn, và côn trùng ăn nhựa cây không thường xuyên, quá trình sản xuất phẩm màu khá công phu và tốn nhiều thời gian.
+-
+-This increased the price of the product, the end result being that, in Northern Europe, pure crimson long remained a luxury colour for clothing and textiles.
+-
+-Điều này khiến cho giá thành phẩm tăng, và kết quả là ở vùng Bắc Âu, màu crimson nguyên chất giữ vị trí lâu dài là một loại màu xa xỉ dùng cho quần áo và hàng dệt may.
+-
+-Interestingly, across the Pacific Ocean, people were producing the same colour from the same chemical within another insect.
+-
+-Một cách thú vị, trên khắp Thái Bình Dương, mọi người sản xuất loại màu sắc giống nhau từ cùng loại hóa chất có trong một loại côn trùng khác.
+-
+-They were called cochineals: small scaly creatures which breed in abundant clusters on the fleshy leaves of a commonly occurring cactus.
+-
+-Chúng được gọi là rệp son: loài sinh vật có vảy nhỏ sinh đẻ thành các cụm lớn trên chiếc lá dày cùi thịt của những cây xương rồng thường gặp.
+-
+-These insects have many advantages over kermes.
+-
+-Loại côn trùng này đem lại nhiều ưu thế hơn so với côn trùng kermes.
+-
+-Being so prolific and so easily seen by predators, they need to produce higher concentrations of carminic acid for protection, up to a quarter of their body weight.
+-
+-Quá mắn đẻ cũng như dễ bị phát hiện bởi thú săn mồi, chúng cần xuất ra nồng độ axit carminic cao hơn để phòng vệ, lên đến ¼ cân nặng cơ thể.
+-
+-The pigment which results is also stronger and longer-lasting.
+-
+-Thành quả là chất màu được tạo ra cũng đặc hơn và giữ được lâu hơn.
+-
+-Finally, the insects are far more easily obtained, being simply scrapped or knocked off the cactus leaves. Thus, after the Spanish conquest of Mexico, cochineals replaced kermes almost completely, becoming a lucrative Central American export for the next few centuries.
+-
+-Cuối cùng, loại côn trùng này dễ thu được hơn, đơn giản là loại bỏ lá xương rồng. Vì vậy, sau khi Tây Ban Nha xâm chiếm Mexico, rệp son gần như thay thế hoàn toàn cho kermes, trở thành một mặt hàng xuất khẩu có giá trị lợi nhuận cao của khu vực Trung Mỹ trong vài thế kỷ tiếp sau đó.
+-
+-The lure of crimson was only exceeded by the vivid ‘Tyrian purple’ — a colour which had ranked in highest favour since antiquity.
+-
+-Sức hấp dẫn của màu crimson chỉ bị vượt qua bởi ‘màu tím Ty-rơ’ - một loại màu đã luôn được ưa thích nhiều nhất trừ thời xưa.
+-
+-Its source was the medium-sized Murex sea snail.
+-
+-Nguồn gốc của nó là từ loài ốc biển Murex cỡ trung bình.
+-
+-With a range around the coastal Mediterranean, early civilisations there soon realised that the mucus the snail secretes when poked and prodded could be treated to produce a purplish-blue dye which did not fade with time.
+-
+-Với cả một dải xung quanh bờ biển Địa Trung Hải, những cư dân đầu tiên ở đó đã sớm nhận ra chất nhầy con ốc tiết ra khi bị đâm chọc và kích thích có thể được sử dụng để sản xuất phẩm nhuộm màu xanh tía mà không bị phai màu theo thời gian.
+-
+-However, by needing thousands of sea snails and using a complicated (and still little known) process, all for the production of only small amounts of pigment, the colour was so expensive it could only be afforded by the ruling classes.
+-
+-Mặc dù vậy, việc cần cả ngàn con ốc biển và phải sử dụng một quá trình phức tạp (và ít được biết tới), tất cả chỉ để sản xuất một lượng nhỏ thuốc màu, loại màu này rất đắt và chỉ có thể được sử dụng cho tầng lớp thống trị.
+-
+-This led to purple becoming associated with royalty.
+-
+-Điều đó dẫn tới việc màu tím trở nên gắn liền với người trong hoàng tộc.
+-
+-Roman emperors traditionally wore clothing of this colour.
+-
+-Hoàng đế La Mã thường mặc trang phục với màu sắc này một cách truyền thống.
+-
+-For a less durable blue, suitable for dyeing clothes, the indigo plant was discovered.
+-
+-Đối với màu xanh ít lâu bền hơn, thích hợp cho quần áo nhuộm, cây chàm được phát hiện.
+-
+-Its leaves were fermented, and then left to age, and the sediment eventually produced was dried, treated, then reduced to a blue powder.
+-
+-Lá của nó được lên men, sau một thời gian dài, cuối cùng chất cặn được làm khô, xử lý, rồi được biến đổi thành một loại bột màu xanh lam.
+-
+-This pigment can, in fact, be said to be the oldest used to colour fabric.
+-
+-Đấy có thể coi là loại màu lâu đời nhất dùng để nhuộm vải.
+-
+-It is one reason jeans were originally blue, and remain so to this day, indigo being the dye used to colour them.
+-
+-Đó là một lý do vì sao quần jeans ban đầu có màu xanh lam, và cứ như vậy cho tới ngày nay, màu chàm được sử dụng để nhuộm chúng.
+-
+-However, it was not suitable for painting or artistic purposes.
+-
+-Mặc dù vậy, loại màu này không thích hợp dùng cho mục đích hội họa và nghệ thuật.
+-
+-For that, European artists used a mixture derived from the grinding up of lapis lazuli, a semi-precious stone, whose only known source was in far Afghanistan.
+-
+-Vì thế, các nhà họa sĩ người Châu Âu sử dụng một hỗn hợp tạo thành từ việc nghiền nát đá lapis lazuli, một loại đá bán quý, mà nguồn gốc duy nhất được biết tới là ở xa Afghanistan.
+-
+-Consequently, this colour was very costly, and many artists avoided it altogether.
+-
+-Kết quả là, loại màu này rất đắt đỏ, và nhiều họa sĩ nhìn chung là tránh nó.
+-
+-Others, however, were deliberately extravagant in its use, producing proportionally more expensive paintings.
+-
+-Một số người khác, mặc dù vậy, cố ý sử dụng phung phí, sản xuất ra tương đối những bức họa đắt tiền hơn.
+-
+-The cost of this paint resulted in much experimentation during the Industrial Revolution in search of chemical-based alternatives.
+-
+-Giá trị của loại màu sơn này dẫn tới việc nhiều cuộc thí nghiệm diễn ra trong thời kỳ Cách mạng công nghiệp với công cuộc tìm kiếm những lựa chọn dựa vào hóa học khác.
+-
+-This eventually led to the first modern synthetic pigment, Prussian Blue.
+-
+-Điều này cuối cùng dẫn tới sắc tố tổng hợp hiện đại đầu tiên, màu xanh Phổ.
+-
+-Discovered in Germany in the early 18th century, it was put into rapid production and exportation, giving artists around the world the first cheap, yet stable, blue pigment.
+-
+-Được tìm thấy ở Đức vào đầu thế kỉ 18, nó được đưa vào đầu tư sản xuất nhanh và xuất khẩu, đưa đến cho các họa sĩ vòng quanh thế giới thuốc màu xanh lam đầu tiên rẻ, nhưng bền.
+-
+-Other chemists were making similar breakthroughs.
+-
+-Những nhà hóa học khác cũng tạo nên những bước đột phá tương tự.
+-
+-The vivid purple of the Murex snail was accidentally produced by an English chemist, William Perkins, who soon put ‘mauveine’ into commercial production.
+-
+-Màu tím sáng từ ốc Murex được tạo ra một cách ngẫu nhiên bởi một nhà hóa học người Anh, William Perkins, người đã sớm đưa màu “mauveine” vào làm sản phẩm thương mại.
+-
+-With such efforts, affordable pigments were soon found in all colours.
+-
+-Với tất cả những nỗ lực như vậy, chất màu với giá cả phải chăng đã sớm được tìm thấy trong tất cả các màu sắc.
+-
+-Mass production followed, bringing industrial prosperity to Northern Europe, but decline in many parts of the world where traditional organic pigments were still under production.
+-
+-Sự sản xuất hàng loạt sau đó đã mang lại sự phát đạt cho vùng Bắc Âu, nhưng suy giảm ở nhiều nơi trên thế giới nơi các chất màu hữu cơ truyền thống vẫn đang được đặt vào sản xuất.
+-
+-In the Americas, for example, the crimson of cochineals, having long been a Spanish monopoly and rich source of export income, went into steady decline.
+-
+-Ở Châu Mỹ làm ví dụ, màu đỏ thẫm từ con rệp son, từ lâu đã trở thành độc quyền của Tây Ban Nha và tạo nguồn thu nhập xuất khẩu phong phú, dần dần đi xuống.
+-
+-However, all was not lost.
+-
+-Mặc dù vậy, chúng đều không bị mất đi.
+-
+-In this modern age, there has been a shift back towards naturalness, even in pigments, and this has seen a resurgence in the popularity of cochineals.
+-
+-Trong thời đại hiện nay, có một sự thay đổi hướng tới tính tự nhiên, kể cả trong phẩm màu, và điều này chứng kiến sự hồi sinh trở lại về sự phong phú của rệp son.
+-
+-The pigment is now commercially produced in several countries, with Peru being the largest exporter.
+-
+-Chất màu này hiện nay được sản xuất thương mại ở nhiều quốc gia, với Peru trở thành nhà xuất khẩu lớn nhất.
+-
+diff --git a/_posts/2020-01-05-the-year-without-summer.md b/_posts/2020-01-05-the-year-without-summer.md
+deleted file mode 100644
+index b4f7b19..0000000
+--- a/_posts/2020-01-05-the-year-without-summer.md
++++ /dev/null
+@@ -1,148 +0,0 @@
+----
+-layout: post
+-title:  The year without summer
+----
+-1816 was a strange year indeed.
+-
+-Năm 1816 thực sự là một năm kì lạ.
+-
+-In America, in midsummer, a ‘dry log’ covered the land so thickly that snow fell, and large parts of the country were gripped by an intense and lingering cold front.
+-
+-Ở nước Mỹ, giữa mùa hè, tuyết rơi phủ đầy mặt đất như một “khúc gỗ khô” (cứng nhắc) và nhiều bang lớn bị tràn ngập bởi một frông lạnh kéo dài với cường độ mạnh.
+-
+-The situation was no better in Great Britain and Europe, where cool temperatures and wet weather persisted for months.
+-
+-Tình huống cũng không khá hơn ở Anh và châu Âu nơi mà nhiệt độ lạnh và thời tiết ẩm ướt dai dẳng trong nhiều tháng.
+-
+-Mary Shelley, author of Frankenstein, while holidaying in Switzerland, complained of 'incessant rainfall’, a feeling which may have put her in the mood for writing her most famous work.
+-
+-Mary Shelley, tác giả của Frankenstein, trong khi đang đi nghỉ tại Thụy Sĩ đã phàn nàn về việc mưa liên tục, một cảm giác có thể khiến cô ấy có cảm xúc để viết nên tác phẩm nổi tiếng nhất của mình.
+-
+-But there were to be far more significant effects of what become known as the ‘year without a summer\".
+-
+-Nhưng có những ảnh hưởng đáng kể hơn nhiều so với cái được biết đến như là “năm không có mùa hè”.
+-
+-But where did the summer go? The main culprit, surprisingly, was a volcano on the other side of the planet: Mount Tamhora in Indonesia, whose eruption of the year before was of such colossal magnitude that it altered global climate.
+-
+-Nhưng mùa hè đã đi đâu? Thật ngạc nhiên, thủ phạm chính lại là một ngọn núi lửa ở bên kia bán cầu trái đất: Núi Tamhora ở Indonesia, sự phun trào của nó những năm trước đây có độ lớn khổng lồ đến nỗi sự phun trào này đã làm thay đổi khí hậu toàn cầu.
+-
+-In the years leading to this, the mountain had experienced minor eruptions, but the 1815 event was the culmination — a huge explosive outburst of the central volcanic vent with subsequent caldera collapse.
+-
+-Những năm trước đó, ngọn núi đã trải qua nhiều đợt phun trào nhỏ, nhưng sự kiện 1815 là đỉnh cao - một vụ nổ khổng lồ từ trung tâm miệng núi lửa với sự sụp đổ của miệng núi lửa ngay sau đó.
+-
+-Over 70,000 people in the vicinity were killed from lava flows, tsunamis, and pumice and ash falls.
+-
+-Hơn 70,000 người trong vùng lân cận đã bị giết chết vì dòng dung nham, sóng thần, đá bọt và tro rơi.
+-
+-But more significantly, the eruption — now acknowledged as the largest in recorded history —ejected huge amounts of dust into the stratosphere.
+-
+-Nhưng đáng chú ý hơn, sự phun trào này - giờ đây đã được ghi nhận là lớn nhất trong lịch sử được ghi lại - nó đã thải ra một lượng lớn bụi bẩn vào tầng bình lưu.
+-
+-This atmospheric layer is the highest and most static, and least affected by rainfall, which means that it takes relatively long periods for volcanic dust to be washed out.
+-
+-Tầng khí quyển này là tầng cao nhất, tĩnh nhất và ít bị ảnh hưởng nhất bởi lượng mưa, điều này có nghĩa là phải mất một thời gian tương đối dài để bụi núi lửa được rửa sạch.
+-
+-If these dust particles are of fine composition, they are quickly blown around the globe, to remain there for years.
+-
+-Nếu những hạt bụi này có cấu thành nhỏ mịn, chúng sẽ nhanh chóng bị thổi bay ra toàn cầu, tồn tại trong nhiều năm.
+-
+-On a somewhat benign note, this air-borne ash resulted in beautiful pastel-coloured sunsets and extended twilights in Northern Europe.
+-
+-Về mặt tích cực thì tro không khí này sinh ra trong những buổi hoàng hôn màu nhạt nhẹ xinh đẹp và những chiều chạng vạng kéo dài ở Bắc u.
+-
+-However, on a (quite literally) darker note, it set into motion a ‘volcanic winter’ due to the filtering of the sun’s rays, and the increased reflectivity of the atmosphere, where heat and sunlight are bounced back into space.
+-
+-Tuy nhiên, trong mặt tiêu cực (đúng theo nghĩa đen), nó đã gây nên \"mùa đông núi lửa\" do sàng lọc của ánh sáng mặt trời và tăng độ phản xạ của bầu khí quyển, gây ra nhiệt và ánh sáng mặt trời bị dội ngược vào không gian.
+-
+-But what is intriguing in this case is that even without the Tambora explosion, the period 1790 to 1830 was already one of the coldest on record.
+-
+-Nhưng điều thú vị trong trường hợp này là ngay cả khi không có vụ nổ Tambora thì giai đoạn từ 1790 đến 1830 đã là một trong những kỷ lục lạnh lùng nhất.
+-
+-This period has officially become known as the ‘Dalton Minimum’, after John Dalton, a London-based meteorologist who noted that the sun at that time did not seem as active in its production of sunspots and solar flares.
+-
+-Giai đoạn này đã chính thức được biết đến với cái tên “Dalton Minimum”, sau khi John Dalton- một nhà khí tượng học ở London người đã nhận thấy rằng mặt trời trong giai đoạn đó dường như không hoạt động trong việc sản xuất những vệt đen mặt trời và bức xạ của nó.
+-
+-Whether there is a correlation between this and the average amount of solar radiation emitted is still unclear.
+-
+-Liệu rằng có một mối tương quan giữa điều này và lượng bức xạ mặt trời trung bình phát ra vẫn chưa rõ ràng.
+-
+-If this does exist, the effect would be small—a fraction of a percent less, but, arguably, significant to our small planet orbiting so far away.
+-
+-Nếu điều này tồn tại, ảnh hưởng đó sẽ nhỏ - một phần nhỏ của ít hơn 1%, nhưng lại được cho là đáng kể đối với hành tinh nhỏ của chúng ta đang quay quanh rất xa.
+-
+-Adding further complexity to the issue, there had been other significant volcanic eruptions in the years prior to Tambora — in the Caribbean, Japan, and the Philippines — in which massive dust clouds were the characterising feature.
+-
+-Thêm sự phức tạp hơn nữa vào vấn đề này là đã có những vụ phun trào núi lửa đáng chú ý khác trong những năm trước Tambora - ở Caribê, Nhật Bản và Philippin - trong đó những đám mây bụi khổng lồ là đặc điểm đặc trưng.
+-
+-Looking at the Philippino example, 1814 saw the most destructive eruption of Mt Mayon ever.
+-
+-Nhìn vào ví dụ Philippin, năm 1814 đã chứng kiến sự phun trào tàn phá nhất chưa từng có của núi Mayon.
+-
+-Killing thousands, burying whole towns and villages, the volcano spewed out millions of tons of ash and rock into the high atmosphere.
+-
+-Giết chết hàng ngàn, chôn vùi toàn bộ thị trấn và làng mạc, núi lửa đã phun ra hàng triệu tấn tro và đá vào bầu không khí cao.
+-
+-When we put all these factors together, the sequence is thus clearer.
+-
+-Khi chúng ta đặt tất cả các yếu tố này lại với nhau, trình tự do đó rõ ràng hơn.
+-
+-With the world already suffering from lower temperatures due to natural variations in the sun’s surface action, a series of severe volcanic eruptions occurred.
+-
+-Cùng với việc thế giới đã đang trải qua nhiệt độ thấp hơn do sự thay đổi tự nhiên trong hoạt động bề mặt của mặt trời, một loạt các vụ phun trào núi lửa nghiêm trọng đã xảy ra.
+-
+-As a result, the accumulation of ash in the stratosphere rose to a historic high, to which the mammoth Tambora explosion substantially added, sending a savage cold spike throughout the already cooler globe.
+-
+-Kết quả là, sự tích tụ tro trong tầng bình lưu đã tăng lên một mức cao lịch sử, nơi mà vụ nổ Tambora khổng lồ được thêm vào đáng kể, tạo ra một cơn gió lạnh dữ dội trên toàn cầu vốn đã lạnh hơn.
+-
+-The consequences were dire.
+-
+-Nhiều hậu quả rất nghiêm trọng.
+-
+-With the dramatic temperature swings, falling to near-freezing within hours, and with the sudden summer frosts and sustained drenching rainfall, all across the Northern Hemisphere, staple crops such as maize and wheat failed to mature, and much livestock were killed.
+-
+-Với những thay đổi nhiệt độ nhanh chóng, nhiệt độ giảm xuống gần như đóng băng trong vòng vài giờ, với sương giá mùa hè đột ngột và mưa rào liên tục trên khắp Bắc bán cầu, những cây trồng chính như ngô và lúa mì không phát triển được, và nhiều vật nuôi bị chết.
+-
+-With agricultural production already low due to the cooler preceding years, and with the rudimentary road systems of those times rendering the importation and distribution of emergency food supplies limited, this final blow was devastating.
+-
+-Với sản xuất nông nghiệp còn chậm do những năm trước lạnh hơn, và với hệ thống đường thô sơ của những năm đó đã khiến việc nhập khẩu và phân phối nguồn cung cấp thực phẩm khẩn cấp bị hạn chế, đòn cuối cùng này đã bị tàn phá.
+-
+-It resulted in widespread malnutrition, starvation, and outbreaks of diseases such as typhus and cholera.
+-
+-Sự biến đổi này đã dẫn đến tình trạng suy dinh dưỡng, đói nghèo lan rộng và bùng phát các bệnh dịch như bệnh sốt phát ban và dịch tả.
+-
+-It created streams of starving refugees, large shifts of population, riots, looting of food warehouses, and other breakdowns of civic order.
+-
+-Nó tạo ra những dòng người tỵ nạn chết đói, những thay đổi lớn về dân số, bạo loạn, cướp bóc kho thực phẩm, và những sự cố khác về trật tự dân sự.
+-
+-100,000 people were thought to have died in Ireland alone, with many times that figure on the European continent.
+-
+-100.000 người đã được cho là đã chết ở Ireland, với nhiều lần con số đó trên lục địa châu u.
+-
+-There was such mortality that the famine is now considered the worst of that century.
+-
+-Tỉ lệ tử vong cao như vậy nên bây giờ nạn đói đó được coi là tồi tệ nhất trong thế kỷ đó.
+-
+-The question then is whether it could happen again.
+-
+-Câu hỏi đặt ra là liệu hiện tượng đó có thể xảy ra lần nữa hay không.
+-
+-And the answer is, since it has happened many times before in geological history, a definite yes.
+-
+-Và câu trả lời là chắc chắn có vì nó đã xảy ra nhiều lần trước đây trong lịch sử địa chất.
+-
+-The most extreme case occurred about 70,000 years ago, when the world’s largest known eruption took place at Lake Toba (relatively close to Tambora).
+-
+-Trường hợp cực đoan nhất xảy ra khoảng 70000 năm trước, khi vụ phun trào lớn nhất thế giới xảy ra tại hồ Toba ( khá gần Tambora).
+-
+-This is thought to have plunged the planet into a decade-long volcanic winter, and triggered the onset of the last ice age, a deep freeze of the planet which lasted many tens of thousands of years, all of which, some speculate, just about wiped out the human race.
+-
+-Điều này được cho là đã đẩy trái đất vào một mùa đông núi lửa kéo dài một thập kỷ, và kích hoạt sự khởi đầu của kỷ băng hà cuối cùng, một sự đóng băng sâu của hành tinh kéo dài hàng chục nghìn năm, tất cả những điều này, cũng như một số suy đoán, đã xóa sổ nhân loại.
+-
+-We can rest in the assurance, however, that such events are extremely few and far between.
+-
+-Tuy nhiên, chúng ta có thể thư giãn trong sự bảo đảm rằng những sự kiện như vậy là rất ít và rất xa.
+-
+-You will certainly be able to enjoy your summer holidays, for a long time to come.
+-
+-Bạn chắc chắn sẽ có thể tận hưởng kỳ nghỉ hè của bạn, trong một thời gian dài sắp tới.
+-
+diff --git a/_posts/2020-01-06-waterfalls.md b/_posts/2020-01-06-waterfalls.md
+deleted file mode 100644
+index 4e0f35d..0000000
+--- a/_posts/2020-01-06-waterfalls.md
++++ /dev/null
+@@ -1,148 +0,0 @@
+----
+-layout: post
+-title:  Waterfalls
+----
+-Waterfalls are places where rivers or streams direct their flow over vertical drops.
+-
+-Thác nước là nơi các con sông hay suối hướng dòng chảy của nó theo chiều thẳng đứng.
+-
+-They have always been a lure for their scenic beauty or, in the case of the biggest, their ability to showcase nature’s might and majesty.
+-
+-Chúng luôn quyến rũ bởi vẻ đẹp thiên nhiên hay, trong phần lớn trường hợp, bởi khả năng thể hiện sức mạnh và sự uy nghi của thiên nhiên.
+-
+-Niagara Falls, on the border of Canada and America (discharging the most water of all), is a magnet for visitors, as is Victoria Falls, also straddling an international boundary between Zimbabwe and Zambia, and presenting the single largest sheet of falling water in the world.
+-
+-Thác Niagara, nằm trên biên giới của Canada và Mỹ (đổ nhiều nước nhất), là một thỏi nam châm thu hút khách du lịch, giống như thác Victoria, cũng trải dài trên biên giới quốc tế giữa Zimbabwe và Zambia, và được giới thiệu là dải đơn lớn nhất của thác nước trên thế giới.
+-
+-Similarly, the remoteness and inaccessibility of the highest waterfall, Angel Falls, located deep in the middle of the Venezuelan jungle, has not stopped it from becoming one of the country’s top tourist attractions.
+-
+-Tương tự, sự xa xôi và khó tiếp cận của thác nước cao nhất, thác Angel, nằm ở sâu trong giữa rừng rậm Venezuela, đã không ngăn nó trở thành một trong những điểm du lịch hàng đầu của đất nước.
+-
+-There are many possible causes of waterfalls, but a common one is differences in rock type.
+-
+-Có rất nhiều nguyên nhân tạo thành thác nước, nhưng một trong những nguyên nhân thường gặp là sự khác biệt về loại đá.
+-
+-When a river flows over a resistant rock bed, erosion is slow, but with the complex geological faulting of the Earth’s surface, softer patches of rock can be exposed.
+-
+-Khi một dòng sông chảy qua một nền đá kháng dưới lòng sông, sự xói mòn chậm, nhưng với các vết nứt địa chất phức tạp của bề mặt Trái đất, những miếng đất đá mềm hơn của đá có thể bị lộ ra.
+-
+-The water cuts into this, resulting in a minor turbulence at the boundary, stirring up pebbles and grit from the riverbed, which increases the erosive capacity of the current.
+-
+-Nước cắt vào phần này, dẫn đến một sự hỗn loạn nhỏ ở ranh giới, khuấy động đá cuội và cát ở dưới lòng sông, làm tăng khả năng ăn mòn của dòng chảy.
+-
+-And so a process begins whereby the river takes on two tiers, or levels, and a waterfall is born.
+-
+-Và do đó một tiến trình bắt đầu bằng cách dòng sông chiếm lấy hai hàng, hay tầng, và một thác nước được ra đời.
+-
+-Other more abrupt causes of waterfalls are earthquakes or landslides, which create fault lines in the land, or divert watercourses, respectively.
+-
+-Những nguyên nhân đột ngột khác tạo thành thác nước là động đất hay sạt lở đất, lần lượt được tạo ra bởi các đường nứt trên mặt đất, hay làm lệch hướng các dòng chảy.
+-
+-Additionally, during past ice ages, glaciers scoured out many deep basins.
+-
+-Thêm vào đó, trong kỷ băng hà, các dòng sông băng đã quét sạch nhiều lưu vực sâu.
+-
+-These glaciers may have disappeared, but their feeder rivers can continue to flow as waterfalls into the remaining depressions.
+-
+-Những dòng sông băng này có thể đã biến mất, nhưng các nhánh sông của nó có thể tiếp tục chảy như những thác nước đổ vào những nơi trũng còn lại.
+-
+-Obviously then, waterfalls come in a variety of shapes and sizes, as different as the local geology in which they are found, and this has resulted in an abundance of descriptive terms.
+-
+-Rõ ràng rằng, các thác nước đến với đa dạng hình dáng và kích cỡ, khác nhau về địa chất địa phương ở nơi mà nó được tìm thấy, và điều này đã dẫn đến một sự phong phú về các thuật ngữ miêu tả.
+-
+-The word 'cataract’ refers simply to a large powerful waterfall, while a ‘cascade’ descends a series of rock steps.
+-
+-Từ ngữ ‘Thác nước lớn’ đơn giản ám chỉ một thác nước khổng lồ mạnh mẽ, trong khi ‘Thác nhiều tầng’ là sự chảy xuống một loạt các bậc đá.
+-
+-If these steps are very distinct, it is a ‘tiered waterfall’, and if each step is larger still, of approximately the same size, and with a significant pool of water at each base, it is known as a ‘multi-step waterfall’.
+-
+-Nếu những bậc đá này rất tách biệt, thì đó là ‘thác nước theo tầng’, và nếu các bậc còn lớn hơn, gần như cùng một kích thước, và với một lượng nước đáng kể ở mỗi bậc, nó được biết đến là ‘Thác nước liên tục’.
+-
+-If the falling water engages with the rock face, it often widens, to be called a 'horsetail waterfall’, while if it does not touch the rock face at all, it is a ‘plunge waterfall’ — often the most picturesque.
+-
+-Nếu nước chảy xuống khớp với mặt đá, nó thường lan rộng ra, được gọi là một ‘thác nước đuôi ngựa’, trong khi đó nếu nó không chạm vào mặt đá hoàn toàn, nó là một ‘thác nước lao’ - thường là đẹp nhất.
+-
+-Regardless of such differences, all waterfalls have in common a vertical height and average flow of water.
+-
+-Bất kể sự khác biệt như vậy, tất cả thác nước đều có chung một chiều thẳng đứng và lưu lượng trung bình của nước.
+-
+-These features, taken together, are a measure of the waterfall’s power, quantified using a ten-point logarithmic scale.
+-
+-Với những đặc điểm này, gom lại với nhau, chính là thước đo sức mạnh của thác nước, được định lượng bằng cách sử dụng thang đo 10 điểm logarit.
+-
+-Giant falls, such as Niagara, are graded at the very top of this scale, find smaller falls, which may occur in town creeks, at the bottom.
+-
+-Thác nước khổng lồ, chẳng hạn như Niagara, được xếp loại rất cao của thang đo này, tìm kiếm những thác nhỏ hơn, có thể gặp ở những con lạch nhỏ của thị trấn, ở phần đáy.
+-
+-Another common feature of larger falls is a ‘plunge pool’. 
+-
+-Một đặc tính khác của những dòng thác lớn hơn là một ‘bể ngập’ 
+-
+-This is caused by the rubble at the base of the falls, which is stirred and broken into smaller pieces. In the never-ending eddies and whirlpools, these pieces scour out a deep underwater basin.
+-
+-Điều này là do đá cuội ở phần nền của thác nước, bị khuấy trộn và vỡ ra thành những mảnh nhỏ hơn. Trong những cơn gió lốc và xoáy nước không ngừng nghỉ, những mảnh vụn này chảy ra lưu vực sâu dưới mặt nước.
+-
+-An interesting consequence is that such falls are in the process of retreat, since the softer material at the lower face suffers undercutting.
+-
+-Một kết quả thú vị đó là các thác nước đang trong quá trình của sự rút nước, từ khi phần vật chất mềm hơn ở mặt thấp hơn chịu sự xói mòn.
+-
+-This gives rise to rock shelters behind the falling water, which steadily become larger until the roof collapses, and the waterfall retreats significantly backward into the Earth.
+-
+-Điều này làm lộ ra những tảng đá nấp đằng sau thác nước, nó chắc chắn trở nên lớn hơn cho đến khi phần đỉnh sụp đổ, và thác nước rút lui đáng kể trở về phía mặt đất.
+-
+-Of course, to people at large, a waterfall seems fixed and forever.
+-
+-Tất nhiên, đối với người hào phóng, một thác nước dường như bất biến và mãi mãi.
+-
+-Erosion is indeed a slow process; however, given a sufficiently powerful waterfall and the right sort of rock, the retreat can be over a meter a year.
+-
+-Sự xói mòn thực sự là một quá trình chậm; tuy nhiên, với một thác nước đủ mạnh và một loại đá phù hợp, sự rút nước có thể lên đến một mét mỗi năm.
+-
+-This would be clearly observable over a person’s life time, and a fast-motion view, spanning several decades, would see an essentially unchanged height of falling water burrowing backwards with surprising evenness.
+-
+-Điều này có thể quan sát rõ ràng qua thời gian sống của một con người, và một cái nhìn chuyển động nhanh, kéo dài vài thập niên, sẽ thấy một chiều cao cơ bản không đổi của thác nước rớt xuống chảy ngược lại với sự đều đặn bất ngờ.
+-
+-Since this motion is towards higher elevations or through more hilly terrain, a host of geological features can be laid in the waterfall’s retreating path.
+-
+-Vì chuyển động này hướng tới độ cao cao hơn hoặc qua nhiều địa hình đồi núi hơn, nên một loạt các đặc điểm địa chất có thể được đặt trong con đường rút lui của thác nước.
+-
+-Victoria Falls are a prime example, with its lower reaches characterised by spectacular islands, gorges, and rock formations.
+-
+-Thác Victoria là một ví dụ điển hình, với độ cao thấp hơn được đặc trưng bởi những hòn đảo đẹp mắt, hẻm núi và hình dạng đá ngoạn mục.
+-
+-This retreat occasionally causes problems, as can be seen with Niagara Falls.
+-
+-Sự rút nước này thỉnh thoảng gây ra vài vấn đề, như có thể thấy với thác Niagara.
+-
+-In just over ten millennia, the falls have moved almost 11 kilometres upstream.
+-
+-Chỉ trong hơn mười thiên niên kỷ, thác đã di chuyển gần 11km ngược dòng.
+-
+-Since the Niagara river marks the border of Canada and America, as agreed in 1819, the detectable retreat of these falls since that time technically means that the Canadian frontier has advanced forward at the expense of America, although this argument has obviously caused dispute.
+-
+-Kể từ khi sông Niagara đánh dấu biên giới giữa Canada và Mỹ, theo thỏa thuận năm 1819, việc rút lui có thể nhận thấy của thác nước từ thời điểm đó một cách chính xác có nghĩa là biên giới Canada đã tiến về phía trước ở vùng sử dụng của Mỹ, mặc dù lập luận này rõ ràng đã gây ra tranh chấp.
+-
+-More practically, with so much infrastructure, such as hotels, roads, bridges, and scenic viewpoints, all rigidly established, it remains important to limit the erosion.
+-
+-Thực tế hơn, với rất nhiều cơ sở hạ tầng, chẳng hạn như khách sạn, đường xá, cầu cống và cảnh quan tuyệt đẹp, tất cả được xây dựng một cách vững chắc, điều quan trọng còn lại là hạn chế xói mòn.
+-
+-For this reason, the exposed ridges of the falls have been extensively strengthened, and underwater barriers installed to divert the more erosive of river currents.
+-
+-Vì lý do này, các gò đất lộ ra của thác đã được củng cố toàn bộ, và các rào cản dưới nước được thiết lập để chuyển hướng sự ăn mòn hơn của dòng chảy.
+-
+-The most ambitious erosion-control measure took place in 1969 on Niagara’s American Falls, whose retreat was nibbling away at American territory.
+-
+-Các biện pháp kiểm soát xói mòn tham vọng nhất đã diễn ra vào năm 1969 trên thác Niagara của Mỹ, nơi mà sự rút nước đang ăn sâu vào lãnh thổ Mỹ.
+-
+-The branch of the Niagara river which feeds these subsidiary falls was dammed, allowing the main Horseshoe Falls to absorb the excess flow.
+-
+-Các nhánh của sông Niagara mà nguồn cấp dữ liệu những thác nước phụ thuộc bị chặn lại, cho phép thác Horseshoe chính hấp thụ dòng chảy dư thừa.
+-
+-The then-completely-dry-and-exposed river bottom and cliff face allowed a team of US-army engineers to use bolts, cement, and brackets, to strengthen any unstable rock.
+-
+-Đáy sông lúc bấy giờ hoàn toàn khô và có thể tiếp xúc và mặt đá cheo leo cho phép một nhóm các kỹ sư quân đội Mỹ sử dụng bu lông, xi măng, và quai móc, để làm kiến cố bất kỳ hòn đá không vững chắc nào.
+-
+-Five months later, the temporary dam was destroyed with explosives, returning water to the falls, but with the inexorable erosion process having been slowed considerably.
+-
+-Năm tháng sau, con đập tạm thời bị phá hủy bằng chất nổ, đưa nước quay trở lại thác, nhưng với quá trình xói mòn không thể tránh khỏi việc tiến trình bị chậm trễ đáng kể .
+-
+diff --git a/_posts/2020-01-12-ac-or-dc-the-war-of-currents.md b/_posts/2020-01-12-ac-or-dc-the-war-of-currents.md
+deleted file mode 100644
+index d78a7b6..0000000
+--- a/_posts/2020-01-12-ac-or-dc-the-war-of-currents.md
++++ /dev/null
+@@ -1,168 +0,0 @@
+----
+-layout: post
+-title: "AC or DC - The war of currents"
+----
+-Electricity can be delivered in either alternating current (AC), or direct current (DC), and in the late 1880s in America, with electricity delivery in its infancy, it initially seemed clear which system was superior.
+-
+-Điện có thể được phát từ dòng điện xoay chiều (AC), hoặc dòng điện một chiều (DC), và vào cuối những năm 1880 ở Mỹ, khi việc phân phát điện ở thời kỳ đầu, từ ban đầu dường như đã rõ ràng hệ thống nào là vượt trội hơn.
+-
+-Thomas Edison, a home-grown American inventor, heavily favored DC from the start.
+-
+-Nhà phát minh người Mỹ, Thomas Edison đã rất ủng hộ DC ngay từ ban đầu.
+-
+-Yet the limitations of his system would become increasingly obvious, as would the advantages of AC, and despite Edison’s best efforts, his crusade would ultimately be lost.
+-
+-Tuy nhiên, những hạn chế trong hệ thống của ông càng ngày trở nên rõ hơn, cũng như những lợi thế của AC và mặc dù Edison đã nổ lực hết mình nhưng cuộc vận động của ông cuối cùng cũng bị thất bại.
+-
+-In 1879, Edison’s team at Menlo Park had improved the electric light bulb, but Edison needed an efficient electricity distribution system to capitalise on this.
+-
+-Năm 1879, nhóm nghiên cứu của Edison tại Menlo Park đã cải tiến bóng đèn điện, nhưng Edison cần một hệ thống phân phối điện hiệu quả để tận dụng điều này.
+-
+-Thus, in 1880, he founded the Edison Illuminating Company and constructed a generating station providing 110 volts of direct current.
+-
+-Vì vậy, vào năm 1880, ông đã thành lập Công ty Edison Illuminating  và xây dựng một trạm phát điện cung cấp dòng điện một chiều 110 volt.
+-
+-Yet such a system has drawbacks.
+-
+-Tuy nhiên, một hệ thống này có những nhược điểm.
+-
+-Due to the low voltage, there Hows correspondingly higher current, meaning that the electrical resistance of the transmission wires significantly reduces the voltage as it travels further afield.
+-
+-Do điện áp thấp, tại nơi Hows có dòng điện tương ứng cao hơn, nghĩa là điện trở của các dây dẫn truyền làm giảm điện áp đáng kể khi dòng điện di chuyển ra xa hơn.
+-
+-Whatever thickness of wire is used, there is a natural limitation in the distance over which the electricity can be economically transmitted.
+-
+-Bất kể độ dày nào của dây được sử dụng đều có hạn chế tự nhiên ở khắp đường truyền mà về mặt hiệu quả kinh tế điện có thể đã được truyền qua.
+-
+-There are, however, benefits to using DC.
+-
+-Tuy nhiên, có những lợi ích khi sử dụng DC.
+-
+-It can allow storage batteries to be directly connected to the electricity grid, giving extra power to meet sudden short-term peaks of demand or backup during the breakdown of supply.
+-
+-Nó có thể cho phép các pin lưu trữ được kết nối trực tiếp với lưới điện, từ đó cung cấp thêm năng lượng để đáp ứng nhu cầu những lúc cao điểm trong ngắn hạn hoặc dự phòng khi sập nguồn.
+-
+-Furthermore, during Edison’s time, there were no practical AC motors, only DC ones.
+-
+-Hơn nữa, trong thời kỳ của Edison, không có động cơ AC thiết thực nào, chỉ có động cơ DC.
+-
+-Also, most of the load consisted of incandescent light bulbs, which ran well in DC.
+-
+-Ngoài ra, phần lớn vật tải bao gồm các bóng đèn sợi đốt, cái mà chạy tốt trong DC.
+-
+-Perhaps most importantly, Edison had the patents (legal rights) to many associated DC devices which he and his team had invented, such as meters, telegraphic devices, and household machinery.
+-
+-Quan trọng nhất có lẽ là Edison đã có các bằng sáng chế (quyền hợp pháp) đối với nhiều thiết bị DC kết hợp mà ông và nhóm của ông đã phát minh ra như đồng hồ đo, thiết bị điện báo và máy móc gia dụng.
+-
+-Thus, the widespread adoption of DC across America would see him gain considerably from patent royalties.
+-
+-Do đó, việc áp dụng rộng rãi DC trên khắp nước Mỹ cho thấy ông ấy thu lời đáng kể từ tiền bản quyền bằng sáng chế.
+-
+-Still, all such inventions were somewhat useless when DC electricity could only be delivered to customers within a few kilometers of the generating source.
+-
+-Tuy nhiên, tất cả những phát minh này hơi kém hiệu quả khi điện DC chỉ có thể được phân phát tới các khách hàng trong vòng vài kilômét từ nguồn phát điện.
+-
+-To overcome this problem, the best answer is to transform, or step-up, the voltage to very high levels for transmission, and then transform it down to safe levels for customer use.
+-
+-Để khắc phục vấn đề này, tốt nhất là chuyển đổi, hoặc tăng điện áp lên những mức rất cao khi truyền tải và sau đó chuyển xuống các mức an toàn để khách hàng sử dụng.
+-
+-This also allows thinner and less expensive wires, but there is no low-cost technology to transform voltage — unless one uses AC, and it was the brilliant physicist and prolific inventor, Nikola Tesla, who had extensively researched this system.
+-
+-Điều này cũng cho phép sử dụng ở các loại dây mỏng hơn và ít tốn kém hơn, nhưng lại không có kỹ thuật, công nghệ nào giá rẻ để biến đổi điện áp - trừ công nghệ sử dụng AC, và Nikola Tesla là nhà vật lý tài năng và nhà phát minh ra nhiều sản phẩm, người đã nghiên cứu sâu rộng hệ thống này.
+-
+-Tesla, a penniless immigrant from Serbia, worked for a year at Edison’s Menlo lab.
+-
+-Tesla là một người nhập cư không xu dính túi từ Serbia, đã làm việc một năm tại phòng thí nghiệm của Menlo ở Edison.
+-
+-He had actually proposed the AC system to Edison, but Edison, an empirical experimenter with little formal education, dismissed it as impractical.
+-
+-Thực ra ông là người đã đề xuất hệ thống AC cho Edison, nhưng Edison là một người thử nghiệm theo kinh nghiệm kèm theo việc không được đào tạo chính quy, cho rằng AC không thực tế nên đã bỏ qua nó.
+-
+-Tesla, with the mathematical training and formal theoretical knowledge, was able to understand AC’s potential, even inventing an AC polyphase electric induction motor.
+-
+-Với sự đào tạo về toán học và kiến ​​thức lý thuyết chính quy, Tesla đã có thể hiểu được tiềm năng của AC, ngay cả phát minh ra động cơ cảm ứng điện đa pha AC.
+-
+-Tesla soon felt he was not being given due credit or enough financial compensation from Edison, and a direct confrontation led to him immediately resigning, after which he was reduced to working as a labourer for a few years to make ends meet.
+-
+-Tesla sớm cảm nhận được ông ấy không được trả tiền đúng hạn hay không đủ tiền bồi thường tài chính từ Edison, và một cuộc chạm trán trực tiếp dẫn đến anh ta từ chức ngay lập tức, sau việc đó ông bị giáng chức như một người lao động trong vài năm để xoay sở sống qua ngày.
+-
+-But Tesla was not the first to advocate AC.
+-
+-Nhưng Tesla không phải là người đầu tiên ủng hộ AC.
+-
+-The system was being trialed in many European countries, with considerable success.
+-
+-Hệ thống này đã được thử nghiệm ở nhiều nước châu  Âu, với thành công đáng kể.
+-
+-One of the converts to the cause was a university-trained electrical engineer named George Westinghouse, and he was willing to invest in the idea.
+-
+-Một trong những người thay đổi sự nghiệp  là một kỹ sư điện được đào tạo tại trường đại học có tên là George Westinghouse, và ông ta quyết tâm nỗ lực vào ý tưởng này.
+-
+-He formed a company and purchased the patents to AC-based transformer technology from its European inventors, as well those to Tesla’s AC polyphase electric motor, among others.
+-
+-Ông ta đã thành lập một công ty và mua bằng sáng chế cho công nghệ biến áp dựa trên AC từ các nhà phát minh châu Âu, cũng như bằng sáng chế cho động cơ điện AC đa pha của Tesla,  giữa những người khác.
+-
+-This eventually led to him hiring Tesla himself to help commercialise AC, and promote it as a better system.
+-
+-Điều này cuối cùng dẫn đến việc anh ta thuê Tesla để giúp thương mại hóa AC và thúc đẩy thành một hệ thống tốt hơn.
+-
+-A bitter feud, known as the ‘War of Currents’ was set to begin.
+-
+-Từ đây một mối thù cay đắng, được gọi là \"cuộc chiến Dòng điện\" bắt đầu.
+-
+-Edison first strike was to claim that high-voltage systems were too dangerous to use.
+-
+-Cuộc tấn công đầu tiên của Edison là ông tuyên bố rằng việc sử dụng các hệ thống điện cao áp quá nguy hiểm.
+-
+-Certainly, they were dangerous, but Westinghouse countered that such risks could be minimised and were considerably outweighed by the benefits.
+-
+- Tất nhiên là chúng nguy hiểm, nhưng Westinghouse phản đối rằng những rủi ro như vậy có thể được giảm thiểu và những lợi ích mang lại có giá trị đáng để kể hơn.
+-
+-Edison’s next strike was to use his influence on various American state governments to limit power transmission to low voltages, effectively eliminating AC from the competition.
+-
+- Tiếp theo, Edisson tấn công bằng cách sử dụng ảnh hưởng của ông đối với các chính phủ tiểu bang khác nhau của Mỹ để hạn chế khả năng truyền tải điện xuống điện áp thấp, loại bỏ hiệu quả AC khỏi cuộc tranh đua.
+-
+-When this failed, Edison was prepared to conduct public electrocutions of animals by AC — even on a rogue elephant no longer wanted by its circus owners.
+-
+-Khi điều này thất bại, Edison đã chuẩn bị thực hiện công khai các cuộc điện giật trên động vật bằng AC - thậm chí trên một con voi cô độc đã bị các chủ xiếc của nó bỏ.
+-
+-In the battle of public opinion, this was even filmed.
+-
+-Trong trận chiến công khai dư luận, nó thậm chí còn được quay phim lại.
+-
+-The next logical step was to show AC’s deadliness on human beings themselves.
+-
+- Để hợp với lô - gich, bước tiếp theo là ông chỉ ra sự gây chết chóc của AC trên chính con người.
+-
+-Edison, realising that he was losing the war, again used his influence on government, this time to promote the use of AC for the execution of prisoners.
+-
+-Edison nhận thức rõ  ông thua trong cuộc chiến này, lại lần nữa sử dụng sức ảnh hưởng của ông đối với chính phủ, nhưng lần này là để thúc đẩy việc sử dụng AC cho việc hành quyết các tù nhân.
+-
+-Thus, in 1890, the first ‘electric chair’ was constructed in anticipation of ande impending death sentence.
+-
+-Vì vậy, vào năm 1890, \"ghế điện\" đầu tiên được dựng lên, dự đoán về một bản án tử hình sắp xảy ra.
+-
+-Westinghouse countered by hiring the best lawyers of the day to defend the prisoner in question, as well as to prevent the system of execution.
+-
+-Westinghouse đã phản đối bằng cách thuê những luật sư tốt nhất lúc đó để bảo vệ tù nhân đang còn bị chất vấn, cũng như ngăn chặn hệ thống hành hình này.
+-
+-Although he failed in both respects, the results were unexpected.
+-
+-Mặc dù ông đã thất bại trong cả hai khía cạnh, nhưng kết quả không ngờ.
+-
+-Despite a botched execution and the horror of the spectators, the electric chair would remain, but AC would not be stigmatised as the killer Edison’s had hoped.
+-
+-Bất chấp cuộc hành quyết bất thành và sự kinh hoàng của khán giả, chiếc ghế điện vẫn được duy trì, nhưng AC sẽ không bị kỳ thị như kẻ giết người mà Edison đã hy vọng.
+-
+-Meanwhile, AC’s range and efficiency saw Westinghouse being given high prestige engineering projects, such as the Ames Hydro-electric Generating Plant (1891), and another one on Niagara Falls, culminating in the greatest public relations victory in 1893: the contract to illuminate the Columbian Exposition in Chicago.
+-
+-Trong khi đó, Westinghouse được các dự án kỹ thuật có uy tín cao, như Dự án nhà máy thủy điện Ames (1891), và một dự án khác trên thác Niagara, đỉnh điểm trong chiến thắng quan hệ công chúng lớn nhất năm 1893: hợp đồng chiếu sáng Triển lãm Columbian ở Chicago cho thấy tầm ảnh hưởng và hiệu suất của AC.
+-
+-Here, Tesla and Westinghouse showed the wonders of AC power with various electrical exhibits, such as fluorescent lamps and Tesla’s AC motors, to an awestruck audience and widespread press attention.
+-
+-Ở đây, Tesla và Westinghouse đã cho thấy những điều kỳ diệu về năng lượng AC với nhiều hiện vật trưng bày về điện khác nhau, chẳng hạn như đèn huỳnh quang và các động cơ AC của Tesla, làm cho khán giả kinh ngạc và báo chí khắp nơi chú ý.
+-
+-After that, the war was effectively won, and AC would take over almost completely.
+-
+-Sau đó, cuộc chiến đã chiến thắng hiệu quả, và AC tiếp quản gần như hoàn toàn thị trường điện.
+-
+diff --git a/_posts/2020-01-12-continents-collide.md b/_posts/2020-01-12-continents-collide.md
+deleted file mode 100644
+index bd384aa..0000000
+--- a/_posts/2020-01-12-continents-collide.md
++++ /dev/null
+@@ -1,157 +0,0 @@
+----
+-layout: post
+-title: Continents collide
+----
+-
+-The idea that the continents are moving was first proposed by a German meteorologist,Alfred Wegener, in a book published in 1915.
+-
+-Ý tưởng về việc các lục địa vẫn đang chuyển động được đề xuất lần đầu bởi nhà khí tượng học người Đức- Alfred Wegener, trong cuốn sách được xuất bản năm 1915 của ông.
+-
+-
+-The idea that the continents are moving was first proposed by a German meteorologist,Alfred Wegener, in a book published in 1915.
+-
+-Ý tưởng về việc các lục địa vẫn đang chuyển động được đề xuất lần đầu bởi nhà khí tượng học người Đức- Alfred Wegener, trong cuốn sách được xuất bản năm 1915.
+-
+-He had gathered a great deal of careful and tantalising evidence, the most obvious being the simple observation that the great landmasses of the world seem to fit together, jigsaw-like, a striking example being the coastlines of either side of the Atlantic ocean.
+-
+-Ông đã tập hợp hàng loạt bằng chứng quan trọng và đầy thu hút, đáng chú ý nhất là việc quan sát được các đại lục địa trên thế giới dường như khớp với nhau như là các mảnh ghép của một bộ ghép hình, một ví dụ nổi bật chính đường bờ biển hai phía của Đại Tây Dương.
+-
+-Wegener was even able to theorise, correctly, that all the continents were once assembled into a supercontinent (now called Pangaea).
+-
+-Thậm chí, Wegener có thể lập luận một cách chính xác, rằng tất cả các lục địa đã từng hợp nhất thành một siêu lục địa (hiện nay được đặt tên là Pangaea).
+-
+-Pangaea broke up into Laurasia (which became North America and Eurasia) and Gondwana (which became the remaining continents).
+-
+-Pangaea sau đó tách ra thành Laurasia (hiện tại là Bắc Mỹ và đại lục Á- u) và Gondwana (hiện tại là các lục địa còn lại) Unfortunately, Wegener could propose no propulsive force for this movement, apart from the vague and erroneous suggestion that it might be centrifugal forces.
+-
+-Unfortunately, Wegener could propose no propulsive force for this movement, apart from the vague and erroneous suggestion that it might be centrifugal forces.
+-
+-Thật không may, Wegener có thể cho rằng không có ngoại lực (lực đẩy) tác động lên sự dịch chuyển này, ngoại trừ việc đưa ra các gợi ý mơ hồ và còn nhiều sai sót như lực ly tâm.
+-
+-He also severely overestimated the speed of this motion.
+-
+-Ông ấy cũng đánh giá quá cao về tốc độ của chuyển động này.
+-
+-These problems, and the fact that he was a meteorologist (rather than a geologist), meant that, upon publishing his ideas, the scientific community was resolutely and implacably hostile.
+-
+-Những vấn đề trên cùng với sự thật rằng ông là một nhà khí tượng học (chứ không phải là một nhà địa chất học) đồng nghĩa với sau khi công bố ý tưởng này, cộng đồng khoa học hoàn toàn phản đối kịch liệt.
+-
+-It is an interesting example of that not uncommon instance in which a scientist who was fundamentally correct was denied any recognition in his lifetime.
+-
+-Đây là một ví dụ thú vị về những trường hợp kém phổ biến khi những nhà khoa học đã đưa ra ý tưởng cơ bản là đúng nhưng suốt cuộc đời mình ông ấy lại chẳng nhận được sự công nhận nào .
+-
+-Semmelweis, who advocated the washing of hands before surgery as a way to reduce hospital fatalities, is another example.
+-
+-Một ví dụ khác là Semmelweis- người đã ủng hộ việc rửa tay sạch trước khi phẫu thuật để giảm thiểu những ca tử vong ở bệnh viện.
+-
+-Wegener was to unexpectedly die on an expedition in Greenland, probably of a heart attack - in his death, as in his life, left out in the cold.
+-
+-Wegener đột tử bất ngờ khi thực hiện một chuyến thám hiểm Greenland, nguyên nhân có lẽ là vì đau tim.
+-
+-The first hints of the existence of Gondwana came from the similarity of fossil plants and animals distributed in the same geological period over South America, Africa, Antarctica, India, and Australia.
+-
+-Cuộc đời và ngay cả cái chết của ông đều bị bỏ rơi trong sự ghẻ lạnh.
+-
+-Geological period: A geological period is one of several subdivisions of geologic time enabling cross-referencing of rocks and geologic events from place to place.
+-
+-Những gợi ý đầu tiên về sự có tồn tại của Gondwana chính là sự tương đồng của các hóa thạch thực và động vật phân phối khắp Nam Mỹ, Châu Phi, Nam Cực, Ấn Độ và Úc tại cùng một Kỷ địa chất.
+-
+-These periods form elements of a hierarchy of divisions into which geologists have split the Earth's history.
+-
+-Một cách giống như vậy, những thành phần và thuộc tính của đá nằm dọc những đường bờ biển của những lục địa kể trên cũng thể hiện điều tương tự.
+-
+-Similarly, the composition and nature of the rocks along relevant coastlines spoke the same story, yet to become scientifically credible, the theory needed evidence of a propulsive force to move such huge continents (in the same way that Semmelweis’s ideas needed the germ theory of disease).
+-
+-Thế nhưng, để lý thuyết này trở thành một ý tưởng có cơ sở khoa học, lý thuyết cần những bằng chứng về một lực đẩy để dịch chuyển khối siêu lục địa (cũng giống như việc ý tưởng của Semmelweis cần lý thuyết về vi trùng).
+-
+-It was only in the 1960s, decades after Wegener’s death, that hard evidence for his theory began amassing to eventually become overwhelming.
+-
+-Mãi cho đến thập niên 1960, hàng thập kỷ sau khi Wegener qua đời, những bằng chứng cụ thể chứng minh cho lý thuyết của ông mới dần tích lũy và cuối cùng là gây choáng ngợp cho mọi người.
+-
+-The theory is now called ‘plate tectonics’, since it was proven that the Earth’s surface is fractured into ‘plates’.
+-
+-Lý thuyết này hiện tại được gọi là “Mảng Kiến Tạo (thuyết đề cập đến sự dịch chuyển của các mảng Trái Đất ở quy mô lớn) vì nó đã được chứng minh là bề mặt Trái Đất đã bị tách ra thành nhiều “mảng” These bump and grind as they steadily move at infinitesimally slow rates in given directions, driven by ‘convention forces’.
+-
+-These bump and grind as they steadily move at infinitesimally slow rates in given directions, driven by ‘convention forces’.
+-
+-Những mảng này gần như đứng yên (bump and grind refers to various kinds of rough movement) bởi vì chúng di chuyển ở tốc độ cực nhỏ và đều đặn theo những hướng cố định nhờ vào “Lực cưỡng bức”.
+-
+-These are formed by the vast circular rising of superheated rock from the planet’s molten interior.
+-
+-Những lực này được tạo nên bởi số lượng lớn các loại đá có nhiệt độ cực cao tăng tuần hoàn từ quyển mềm của Trái Đất.
+-
+-This material cools as it nears the surface, eventually sinking once again towards the centre.
+-
+-Chất liệu này dần nguội đi khi tiến đến gần bề mặt Trái Đất và lại dần chìm về hướng lõi.
+-
+-Add to this the rotation of the Earth itself, and there is a complicated and barely understood set of cyclic swirls of molten rock, producing drags and pulls on each tectonic plate, the sum of which results in a steady migration.
+-
+-Quyển mềm và sự tự quay quanh trục của Trái Đất tạo nên một vòng xoay tuần hoàn của những thạch quyển được nung chảy dẫn đến sự tách giãn của từng mảng kiến tạo.
+-
+-Of course, this motion is slow, typically at the speed at which fingernails grow, and at its fastest, the rate at which hair does.
+-
+-Kết quả là tất cả những mảng này di chuyển đều đặn.
+-
+-But by being consistent and essentially unstoppable, the results can be spectacular, particularly when plates meet.
+-
+-Tất nhiên, sự vận động này rất chậm, đặc biệt là tốc độ thông thường thì ở mức tốc độ mọc móng tay và nhanh nhất là tốc độ mọc tóc.
+-
+-Here, the release of heat, as well as the buckling and melting which results, gives rise to geological events such as earthquakes, and geological features such as mountains, volcanoes, and oceanic ridges and trenches.
+-
+-Nhưng nhờ vào chuyển động đều đặn và không ngừng nghỉ, kiến tạo mảng tạo ra kết quả rất kinh ngạc, nhất là khi các mảng va vào nhau.
+-
+-Plate boundaries see most of the world’s active volcanoes, with the Pacific Plate’s ‘Ring of Fire’ being a good example.
+-
+-Khi đó, các sự kiện kiến tạo địa chất như núi lửa và những đặc trưng địa chất như sự hình thành núi, núi lửa, sống núi và máng của đại dương sẽ được hình thành từ sự tỏa nhiệt, sự biến dạng và tan chảy.
+-
+-Volcanism may sometimes occur in the middle of plates, but this has been theorised to be a result of ‘hotspots’: anomalously hot areas of interior rock which melt through the plate, forcing an escape to the surface.
+-
+-Các ranh giới mảng là nơi có nhiều núi lửa hoạt động nhất trên thế giới.
+-
+-Plate boundaries come in three types.
+-
+-Ví dụ điển hình nhất chính là “Vành đai lửa” của mảng Thái Bình Dương.
+-
+-First, Transform boundaries, where the plates grind past each other.
+-
+-Dung nham đôi khi diễn ra ở giữa các mảng, nhưng nó được chứng minh là kết quả của “điểm nóng”, những khu vực nóng bất thường do những thạch quyển tan chảy bên dưới mảng, bị đẩy lên bề mặt.
+-
+-It was once thought that the well-known Aegir Ridge was an example, until studies showed that it had never been active, whereas the periodic earthquakes along California’s San Andreas Fault show the very opposite case.
+-
+-Các ranh giới mảng được chia làm 3 loại.
+-
+-The second type is Divergent boundaries, where the two plates slide apart from each other.
+-
+-Loại đầu tiên là ranh giới chuyển dạng, xảy ra khi các mảng làm biến dạng lẫn nhau.
+-
+-Mid-oceanic ridges, such as in the Atlantic, and active rift zones, such as in East Africa, are examples.
+-
+-Người ta từng nghĩ rằng đỉnh đại dương Aegir là một ví dụ điển hình cho đến khi các nghiên cứu chứng minh rằng nó chưa bao giờ xuất hiện.
+-
+-Finally, there are Convergent boundaries, where the two plates slide towards each other.
+-
+-Trong khi đó, những trận động đất kiến tạo địa chất như đường đứt gãy San Andreas ở bang California cho thấy điều ngược lại.
+-
+-This can form either a subduction zone (if one plate moves underneath the other) or a continental collision.
+-
+-Loại thứ hai là Ranh giới phân kỳ, nơi hai mảng trượt xa nhau.
+-
+-Deep marine trenches are formed in the former case, and with the descending plate releasing its trapped water on being heated in the Earth’s interior, huge amounts of heat and pressure rise to the surface, causing mountains and volcanoes to form, such as in the Andes mountain range.
+-
+-Những hình ảnh điển hình cho loại ranh giới này là những vết nứt giữa đáy đại dương như vùng Đại Tây Dương và những khu đứt gãy hoạt động tích cực ở khu vực Đông Phi.
+-
+-The best example of a continental collision is the Indian plate, which is steadily and implacably migrating straight into central Asia.
+-
+-Ví dụ điển hình nhất cho sự va chạm lục địa là mảng Ấn Độ. Mảng này dần dần và chặt chẽ di chuyển đến gần vùng Trung Á. Dãy núi Himalaya ở Nepal và Bắc Ấn, dãy núi Karakoram ở Pakistan và vùng cao nguyên Afghanistan, phần hình cung từ hệ thống nếp gấp phức tạp được hình thành, tạo nên những nóc nhà cao nhất của thế giới.
+-
+-The Himalayas of Nepal and Northern India, the Karakoram Ranges of Northern Pakistan, and the highlands of Afghanistan, arc all part of the complex fold system that resulted, producing some of the highest peaks in the world.
+-
+-Dãy núi Himalaya ở Nepal và Bắc Ấn, dãy núi Karakoram ở Pakistan và vùng cao nguyên Afghanistan,phần hình cung từ hệ thống nếp gấp phức tạp được hình thành tạo nên những nóc nhà cao nhất của thế giới
+-
+-There are also some deep valleys receiving the run-off melt-water from the far side of these mountains, creating some mighty rivers, such as the Indus, the Irrawaddy, and the Mekong.
+-
+-Các thung lũng sau hút có được dòng nước tan chảy từ các ngọn núi trên và hình thành nên những dòng sông vĩ đại nhất như sông Ấn, sông Hằng và sông Mekong.
+-
+-Interestingly, the Himalayas arc still growing, meaning that the summit of Mount Everest is perhaps a couple of metres higher now than when people first stood there in 1953, presumably making it just that little bit harder to reach.
+-
+-Điều thú vị ở đây là là, dãy núi Himalaya vẫn tiếp tục cao lên, đồng nghĩa với việc đỉnh núi Everest bây giờ đã cao hơn vài mét so với lần đầu tiên khi có người đặt chân đến đó vào năm 1953, phóng chừng càng làm cho đỉnh núi này càng ngày khó với tới
+\ No newline at end of file
+diff --git a/_posts/2020-01-12-leadership-traits.md b/_posts/2020-01-12-leadership-traits.md
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/_posts/2020-04-12-leadership-traits.md b/_posts/2020-04-12-leadership-traits.md
+deleted file mode 100644
+index f561cf0..0000000
+--- a/_posts/2020-04-12-leadership-traits.md
++++ /dev/null
+@@ -1,10 +0,0 @@
+----
+-layout: post
+-title: Something in the way 
+----
+-
+-Kỹ năng lãnh đạo là cần thiết cho những người làm chủ. Chắc chắc là phải được tiếp xúc rất nhiều, bạn mới có thể vỡ lẽ và học hỏi từ những vị doanh nhân thành công này. Có thể nói người lãnh đạo ảnh hưởng đến toàn bộ cả một tổ chức, vì vậy kỹ năng lãnh đạo của người sếp là chính là chìa khoá dẫn đến thành công của doanh nghiệp. Trong bài viết này, tôi xin được trình bày những hiểu biết qua trải nghiệm của mình về kỹ năng cần có để lãnh đạo.
+-
+-1. Thuyết phục, thu phục lòng người
+-
+-Nghe thì có vẻ mơ hồ, nhưng 
+diff --git a/_posts/2021-05-01-uet-in-a-post.md b/_posts/2021-05-01-uet-in-a-post.md
+deleted file mode 100644
+index 29bba20..0000000
+--- a/_posts/2021-05-01-uet-in-a-post.md
++++ /dev/null
+@@ -1,12 +0,0 @@
+----
+-title: My CS bachelor in a post
+-layout: post
+-tag: computer science
+-comments: true
+----
+-
+-
+-It has been four years since I first sat on university hall. Though four years, I am a real proof that we are stressed out at university, although it does not too hard.
+-
+-
+-
+diff --git a/_posts/2023-06-13-cssm.md b/_posts/2023-06-13-cssm.md
+deleted file mode 100644
+index e411751..0000000
+--- a/_posts/2023-06-13-cssm.md
++++ /dev/null
+@@ -1,21 +0,0 @@
+----
+-layout: post
+-title: Computational state space model
+-subtitle: There's lots to learn!
+-gh-repo: daattali/beautiful-jekyll
+-gh-badge: [star, fork, follow]
+-tags: [test]
+-comments: true
+-mathjax: true
+-author: Bill Smith
+----
+-
+-# Introduction
+-The former method, namely state space model(SSM), is conventionally used for models with explicit and limited number of states. For reasoning in more intricate enviroments, the authors come up with a new varient of SSM, named it as computational state space model. 
+-Basically, it shares major similar with SSM, but adding a computational method to compute transitions.
+-
+-
+-# Experiment
+-
+-# Result
+-
+diff --git a/_posts/2024-06-30-how-to-use-aws-cli.md b/_posts/2024-06-30-how-to-use-aws-cli.md
+deleted file mode 100644
+index a4a245b..0000000
+--- a/_posts/2024-06-30-how-to-use-aws-cli.md
++++ /dev/null
+@@ -1,145 +0,0 @@
+----
+-layout: post
+-title: "How to set up and use AWS CLI"
+----
+-
+-Here's a detailed guide on how to use the AWS CLI to manage your AWS services from the command line.
+-
+-### Step 1: Install AWS CLI
+-
+-#### On Windows
+-
+-1. Download the AWS CLI MSI installer from the [AWS website](https://aws.amazon.com/cli/).
+-2. Run the MSI installer and follow the instructions.
+-
+-#### On macOS
+-
+-1. Using Homebrew:
+-    ```sh
+-    brew install awscli
+-    ```
+-
+-2. Or using pip:
+-    ```sh
+-    pip install awscli
+-    ```
+-
+-#### On Linux
+-
+-1. Using the package manager (Ubuntu/Debian):
+-    ```sh
+-    sudo apt-get update
+-    sudo apt-get install awscli
+-    ```
+-
+-2. Or using pip:
+-    ```sh
+-    pip install awscli
+-    ```
+-
+-### Step 2: Configure AWS CLI
+-
+-After installing, configure the AWS CLI with your credentials:
+-
+-```sh
+-aws configure
+-```
+-
+-You will be prompted to enter the following information:
+-
+-- AWS Access Key ID: (Your access key ID)
+-- AWS Secret Access Key: (Your secret access key)
+-- Default region name: (Your preferred region, e.g., us-west-2)
+-- Default output format: (Your preferred output format, e.g., json)
+-
+-You can also edit the configuration manually in `~/.aws/config` file.
+-
+-### Step 3: Using AWS CLI
+-
+-Here are some common AWS CLI commands. They are seperated into services. 
+-
+-#### 1. EC2
+-An EC2 (instance) is virtual computer, located in AWS data center.
+-- **List all instances:**
+-    ```sh
+-    aws ec2 describe-instances
+-    ```
+-
+-- **Start an instance:**
+-    ```sh
+-    aws ec2 start-instances --instance-ids i-1234567890abcdef0
+-    ```
+-
+-- **Stop an instance:**
+-    ```sh
+-    aws ec2 stop-instances --instance-ids i-1234567890abcdef0
+-    ```
+-
+-- **Launch a new instance:**
+-    ```sh
+-    aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-12345678 --subnet-id subnet-12345678
+-    ```
+-
+-#### 2. S3
+-
+-- **List all buckets:**
+-    ```sh
+-    aws s3 ls
+-    ```
+-
+-- **Create a bucket:**
+-    ```sh
+-    aws s3 mb s3://my-bucket
+-    ```
+-
+-- **Upload a file:**
+-    ```sh
+-    aws s3 cp myfile.txt s3://my-bucket/
+-    ```
+-
+-- **Download a file:**
+-    ```sh
+-    aws s3 cp s3://my-bucket/myfile.txt myfile.txt
+-    ```
+-
+-#### 3. IAM
+-
+-- **List users:**
+-    ```sh
+-    aws iam list-users
+-    ```
+-
+-- **Create a user:**
+-    ```sh
+-    aws iam create-user --user-name my-user
+-    ```
+-
+-- **Attach a policy to a user:**
+-    ```sh
+-    aws iam attach-user-policy --user-name my-user --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+-    ```
+-
+-### Step 4: Automation with Scripts
+-
+-You can create scripts to automate AWS tasks. Here’s an example of a script to stop all instances:
+-
+-```sh
+-#!/bin/bash
+-instances=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --output text)
+-
+-for instance in $instances; do
+-  aws ec2 stop-instances --instance-ids $instance
+-done
+-```
+-
+-Save this script as `stop_all_instances.sh`, then run it:
+-
+-```sh
+-bash stop_all_instances.sh
+-```
+-
+-### Step 5: Documentation and Support
+-
+-AWS CLI has extensive documentation. You can refer to the official documentation [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+-
+-Using the AWS CLI allows you to manage AWS services efficiently and automate many tasks, improving your workflow significantly.
+\ No newline at end of file
+diff --git a/_posts/2025-01-25-github-hard-situation.md b/_posts/2025-01-25-github-hard-situation.md
+deleted file mode 100644
+index d2468b8..0000000
+--- a/_posts/2025-01-25-github-hard-situation.md
++++ /dev/null
+@@ -1,35 +0,0 @@
+-
+-
+-### Situation when work with Github
+-
+-Error:
+-```
+-error: RPC failed; HTTP 400 curl 22 The requested URL returned error: 400
+-send-pack: unexpected disconnect while reading sideband packet
+-fatal: the remote end hung up unexpectedly
+-Everything up-to-date
+-```
+-
+-Solution:
+-```
+-git config http.postBuffer 524288000
+-```
+-
+-This command includes the buffer size
+-
+-
+-Error: Can not checkout
+-```
+-Please move or remove them before you switch branches.
+-```
+-
+-Solution:
+-```
+-git reset --hard
+-git clean -fd
+-git checkout <branch-name>
+-```
+-
+-
+-
+-
+diff --git a/_posts/2025-01-25-vuejs.md b/_posts/2025-01-25-vuejs.md
+deleted file mode 100644
+index e69de29..0000000
+diff --git "a/_posts/K\341\272\276T QU\341\272\242 H\341\273\214C T\341\272\254P.docx" "b/_posts/K\341\272\276T QU\341\272\242 H\341\273\214C T\341\272\254P.docx"
+deleted file mode 100644
+index 6813141..0000000
+Binary files "a/_posts/K\341\272\276T QU\341\272\242 H\341\273\214C T\341\272\254P.docx" and /dev/null differ
+diff --git a/_posts/snippets-for-macos.md b/_posts/snippets-for-macos.md
+deleted file mode 100644
+index 9b70b02..0000000
+--- a/_posts/snippets-for-macos.md
++++ /dev/null
+@@ -1,12 +0,0 @@
+-
+-
+-Update/ Reinstall Node
+-
+-```
+-brew uninstall node
+-brew install node@22 #replace 22 with your number
+-brew link --overwrite node@22
+-which node
+-ls -lrt /usr/local/bin/node
+-```
+-
+diff --git a/_posts/snippets-for-ubuntu b/_posts/snippets-for-ubuntu
+deleted file mode 100644
+index d07456b..0000000
+--- a/_posts/snippets-for-ubuntu
++++ /dev/null
+@@ -1,14 +0,0 @@
+-
+-
+-
+-
+-- chroot
+-
+-
+-- install Java
+-sudo apt install openjdk-21-jdk
+-sudo nano ~/.bashrc
+-# add this line
+-export JAVA_HOME=/usr/lib/jvm/jdk/java-21-openjdk-amd64/
+-source ~/.bashrc
+-
+diff --git a/assets/css/custom-styles.css b/assets/css/custom-styles.css
+deleted file mode 100644
+index ee7fcb2..0000000
+--- a/assets/css/custom-styles.css
++++ /dev/null
+@@ -1,3 +0,0 @@
+-.avatar_container {
+-    left: 9%;
+-}
+\ No newline at end of file
+diff --git a/assets/css/test.pdf b/assets/css/test.pdf
+deleted file mode 100644
+index 094eba4..0000000
+Binary files a/assets/css/test.pdf and /dev/null differ
+diff --git a/css/main.css b/css/main.css
+deleted file mode 100644
+index 6efc6d3..0000000
+--- a/css/main.css
++++ /dev/null
+@@ -1,788 +0,0 @@
+----
+-layout: null
+----
+-
+-@import url("pygment_highlights.css");
+-
+-/* --- General --- */
+-
+-body {
+-  font-family: 'Lora', 'Times New Roman', serif;
+-  font-size: 18px;
+-  color: #404040;
+-  position: relative;
+-  background-color: {{ site.page-col }};
+-  {% if site.page-img %}
+-  background-image: url({{ site.page-img | relative_url }});
+-  background-attachment: fixed;
+-  {% endif %}
+-}
+-p {
+-  line-height: 1.5;
+-  margin: 30px 0;
+-}
+-h1,h2,h3,h4,h5,h6 {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  font-weight: 800;
+-}
+-a {
+-  color: {{ site.link-col }};
+-}
+-a:hover,
+-a:focus {
+-  color: {{ site.hover-col }};
+-}
+-blockquote {
+-  color: #808080;
+-  font-style: italic;
+-}
+-blockquote p:first-child {
+-  margin-top: 0;
+-}
+-hr.small {
+-  max-width: 100px;
+-  margin: 15px auto;
+-  border-width: 4px;
+-  border-color: inherit;
+-  border-radius: 3px;
+-}
+-
+-.main-content {
+-  padding-top: 80px;
+-}
+-@media only screen and (min-width: 768px) {
+-  .main-content {
+-    padding-top: 130px;
+-  }
+-}
+-
+-.main-explain-area {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  padding: 15px inherit;
+-}
+-
+-.hideme {
+-  display: none;
+-}
+-
+-::-moz-selection {
+-  color: white;
+-  text-shadow: none;
+-  background-color: {{ site.hover-col }};
+-}
+-::selection {
+-  color: white;
+-  text-shadow: none;
+-  background-color: {{ site.hover-col }};
+-}
+-img::selection {
+-  color: white;
+-  background: transparent;
+-}
+-img::-moz-selection {
+-  color: white;
+-  background: transparent;
+-}
+-
+-img {
+-  max-width: 100%;
+-}
+-
+-.disqus-comments {
+-  margin-top: 30px;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .disqus-comments {
+-    margin-top: 40px;
+-  }
+-}
+-
+-.linked-section {
+-  padding-top: 60px;
+-  margin-top: -25px;
+-}
+-
+-/* --- Navbar --- */
+-
+-.navbar-custom {
+-  background-color: {{ site.navbar-col }};
+-  border-bottom: 1px solid #EAEAEA;
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  {% if site.navbar-img %}
+-  background-image: url({{ site.navbar-img | relative_url }});
+-  background-attachment: fixed;
+-  {% endif %}
+-}
+-
+-.navbar-custom .nav li a {
+-  text-transform: uppercase;
+-  font-size: 12px;
+-  letter-spacing: 1px;
+-}
+-
+-.navbar-custom .navbar-brand,
+-.navbar-custom .nav li a {
+-  font-weight: 800;
+-  color: {{ site.navbar-text-col }};
+-}
+-
+-.navbar-custom .navbar-brand:hover,
+-.navbar-custom .navbar-brand:focus ,
+-.navbar-custom .nav li a:hover,
+-.navbar-custom .nav li a:focus {
+-  color: {{ site.hover-col }};
+-}
+-
+-.navbar-custom .navbar-brand-logo {
+-  padding-top: 0;
+-  -webkit-transition: padding .5s ease-in-out;
+-  -moz-transition: padding .5s ease-in-out;
+-  transition: padding .5s ease-in-out;
+-}
+-.navbar-custom .navbar-brand-logo img {
+-  height: 50px;
+-  -webkit-transition: height .5s ease-in-out;
+-  -moz-transition: height .5s ease-in-out;
+-  transition: height .5s ease-in-out;
+-}
+-.navbar-custom.top-nav-short .navbar-brand-logo {
+-  padding-top: 5px;
+-}
+-.navbar-custom.top-nav-short .navbar-brand-logo img {
+-  height: 40px;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .navbar-custom {
+-    padding: 20px 0;
+-    -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+-    -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+-    transition: background .5s ease-in-out,padding .5s ease-in-out;
+-  }
+-
+-  .navbar-custom.top-nav-short {
+-    padding: 0;
+-  }
+-}
+-
+-.navbar-custom .avatar-container {
+-  position: absolute;
+-  left: 9%;
+-  width: 50px;
+-  margin-top: -25px;
+-}
+-.navbar-custom .avatar-container .avatar-img-border {
+-  width: 100%;
+-  border-radius: 50%;
+-  margin-left: -50%;
+-  display: inline-block;
+-  box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+-  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+-}
+-.navbar-custom .avatar-container .avatar-img {
+-  width: 100%;
+-  border-radius: 50%;
+-  display: block;
+-}
+-
+-.navbar-custom.top-nav-expanded .avatar-container {
+-  display: none;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .navbar-custom .avatar-container {
+-    width: 100px;
+-    margin-top: -50px;
+-  }
+-
+-  .navbar-custom .avatar-container .avatar-img-border {
+-    width: 100%;
+-    box-shadow: 1px 1px 2px rgba(0, 0, 0, .8);
+-    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .8);
+-    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, .8);
+-  }
+-
+-  .navbar-custom .avatar-container .avatar-img {
+-    width: 100%;
+-  }
+-}
+-
+-/* Multi-level navigation links */
+-.navbar-custom .nav .navlinks-container {
+-  position: relative;
+-}
+-.navbar-custom .nav .navlinks-parent:after {
+-  content: " \25BC";
+-}
+-.navbar-custom .nav .navlinks-children {
+-  width: 100%;
+-  display: none;
+-  word-break: break-word;
+-}
+-.navbar-custom .nav .navlinks-container .navlinks-children a {
+-  display: block;
+-  padding: 10px;
+-  padding-left: 30px;
+-  background-color: {{ site.navbar-children-col }};
+-  text-decoration: none !important;
+-  border-width: 0 1px 1px 1px;
+-  font-weight: normal;
+-}
+-@media only screen and (max-width: 767px) {
+-  .navbar-custom .nav .navlinks-container.show-children {
+-    background: rgba(0, 0, 0, 0.2);
+-  }
+-  .navbar-custom .nav .navlinks-container.show-children .navlinks-children {
+-    display: block;
+-  }
+-}
+-@media only screen and (min-width: 768px) {
+-  .navbar-custom .nav .navlinks-container {
+-    text-align: center;
+-  }
+-  .navbar-custom .nav .navlinks-container:hover {
+-    background: rgba(0, 0, 0, 0.1);
+-  }
+-  .navbar-custom .nav .navlinks-container:hover .navlinks-children {
+-    display: block;
+-  }
+-  .navbar-custom .nav .navlinks-children {
+-    position: absolute;
+-  }
+-  .navbar-custom .nav .navlinks-container .navlinks-children a {
+-    padding-left: 10px;
+-    border: 1px solid #eaeaea;
+-    border-width: 0 1px 1px;
+-  }
+-}
+-
+-/* --- Footer --- */
+-
+-footer {
+-  padding: 30px 0;
+-  border-top: 1px #EAEAEA solid;
+-  margin-top: 50px;
+-  font-size: 14px;
+-  background-color: {{ site.footer-col }};
+-  {% if site.footer-img %}
+-  background-image: url({{ site.footer-img | relative_url }});
+-  background-attachment: fixed;
+-  {% endif %}
+-}
+-
+-footer p.text-muted {
+-  color: {{ site.footer-text-col }};
+-}
+-
+-footer a {
+-  color: {{site.footer-link-col}};
+-}
+-
+-footer .list-inline {
+-  margin: 0;
+-  padding: 0;
+-}
+-footer .copyright {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  text-align: center;
+-  margin-bottom: 0;
+-}
+-footer .theme-by {
+-  text-align: center;
+-  margin: 10px 0 0;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  footer {
+-    padding: 50px 0;
+-  }
+-  footer .footer-links {
+-    font-size: 18px;
+-  }
+-  footer .copyright {
+-    font-size: 16px;
+-  }
+-}
+-
+-/* --- Post preview --- */
+-
+-.post-preview {
+-  padding: 20px 0;
+-  border-bottom: 1px solid #eee;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .post-preview {
+-    padding: 35px 0;
+-  }
+-}
+-
+-.post-preview:last-child {
+-  border-bottom: 0;
+-}
+-
+-.post-preview a {
+-  text-decoration: none;
+-  color: #404040;
+-}
+-
+-.post-preview a:focus,
+-.post-preview a:hover {
+-  text-decoration: none;
+-  color: {{ site.hover-col }};
+-}
+-
+-.post-preview .post-title {
+-  font-size: 30px;
+-  margin-top: 0;
+-}
+-.post-preview .post-subtitle {
+-  margin: 0;
+-  font-weight: 300;
+-  margin-bottom: 10px;
+-}
+-.post-preview .post-meta,
+-.post-heading .post-meta {
+-  color: #808080;
+-  font-size: 18px;
+-  font-style: italic;
+-  margin: 0 0 10px;
+-}
+-.post-preview .post-entry {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-}
+-.post-entry-container {
+-  display: inline-block;
+-  width: 100%;
+-}
+-.post-entry {
+-  width: 100%;
+-}
+-.post-image {
+-  float: right;
+-  height: 192px;
+-  width: 192px;
+-  margin-top: -35px;
+-  filter: grayscale(90%);
+-}
+-.post-image:hover {
+-  filter: grayscale(0%);
+-}
+-.post-image img {
+-  border-radius: 100px;
+-  height: 192px;
+-  width: 192px;
+-}
+-.post-preview .post-read-more {
+-  font-weight: 800;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .post-preview .post-title {
+-    font-size: 36px;
+-  }
+-}
+-
+-/* --- Tags --- */
+-
+-.blog-tags {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  color: #999;
+-  font-size: 15px;
+-  margin-bottom: 30px;
+-}
+-
+-.blog-tags a {
+-  color: {{ site.link-col }};
+-  text-decoration: none;
+-  padding: 0px 5px;
+-}
+-
+-.blog-tags a:hover {
+-  border-radius: 2px;
+-  color: {{ site.hover-col }};
+-  background-color: #EEE;
+-}
+-
+-.post-preview .blog-tags {
+-  margin-top: 5px;
+-  margin-bottom: 0;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .post-preview .blog-tags {
+-    margin-top: 10px;
+-  }
+-}
+-
+-@media only screen and (max-width: 500px) {
+-  .post-image, .post-image img {
+-    height: 100px;
+-    width: 100px;
+-  }
+-
+-  .post-image {
+-    width: 100%;
+-    text-align: center;
+-    margin-top: 0;
+-    float: left;
+-  }
+-}
+-/* --- Post and page headers --- */
+-
+-.intro-header {
+-  margin: 80px 0 20px;
+-  position: relative;
+-}
+-.intro-header.big-img {
+-  background: no-repeat center center;
+-  -webkit-background-size: cover;
+-  -moz-background-size: cover;
+-  background-size: cover;
+-  -o-background-size: cover;
+-  margin-top: 51px; /* The small navbar is 50px tall + 1px border */
+-  margin-bottom: 35px;
+-}
+-.intro-header.big-img .big-img-transition {
+-  position: absolute;
+-  width: 100%;
+-  height: 100%;
+-  opacity: 0;
+-  background: no-repeat center center;
+-  -webkit-background-size: cover;
+-  -moz-background-size: cover;
+-  background-size: cover;
+-  -o-background-size: cover;
+-  -webkit-transition: opacity 1s linear;
+-  -moz-transition: opacity 1s linear;
+-  transition: opacity 1s linear;
+-}
+-.intro-header .page-heading {
+-  text-align: center;
+-}
+-.intro-header.big-img .page-heading,
+-.intro-header.big-img .post-heading {
+-  padding: 100px 0;
+-  color: #FFF;
+-  text-shadow: 1px 1px 3px #000;
+-}
+-.intro-header .page-heading h1 {
+-  margin-top: 0;
+-  font-size: 50px;
+-}
+-.intro-header .post-heading h1 {
+-  margin-top: 0;
+-  font-size: 35px;
+-}
+-.intro-header .page-heading .page-subheading,
+-.intro-header .post-heading .post-subheading {
+-  font-size: 27px;
+-  line-height: 1.1;
+-  display: block;
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  font-weight: 300;
+-  margin: 10px 0 0;
+-}
+-.intro-header .post-heading .post-subheading {
+-  margin-bottom: 20px;
+-}
+-.intro-header.big-img .page-heading .page-subheading,
+-.intro-header.big-img .post-heading .post-subheading {
+-  font-weight: 400;
+-}
+-.intro-header.big-img .page-heading hr {
+-  box-shadow: 1px 1px 3px #000;
+-  -webkit-box-shadow: 1px 1px 3px #000;
+-  -moz-box-shadow: 1px 1px 3px #000;
+-}
+-.intro-header.big-img .post-heading .post-meta {
+-  color: #EEE;
+-}
+-.intro-header.big-img .img-desc {
+-  background: rgba(30, 30, 30, 0.6);
+-  position: absolute;
+-  padding: 5px 10px;
+-  font-size: 11px;
+-  color: #EEE;
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  right: 0;
+-  bottom: 0;
+-  display: none;
+-}
+-@media only screen and (min-width: 768px) {
+-  .intro-header {
+-    margin-top: 130px;
+-  }
+-  .intro-header.big-img {
+-    margin-top: 91px; /* Full navbar is small navbar + 20px padding on each side when expanded */
+-  }
+-  .intro-header.big-img .page-heading,
+-  .intro-header.big-img .post-heading {
+-    padding: 150px 0;
+-  }
+-  .intro-header .page-heading h1 {
+-    font-size: 80px;
+-  }
+-  .intro-header .post-heading h1 {
+-    font-size: 50px;
+-  }
+-  .intro-header.big-img .img-desc {
+-    font-size: 14px;
+-  }
+-}
+-
+-.header-section.has-img .no-img {
+-  margin-top: 0;
+-  background-color: #FCFCFC;
+-  margin: 0 0 40px;
+-  padding: 20px 0;
+-  box-shadow: 0 0 5px #AAA;
+-}
+-/* Many phones are 320 or 360px, so make sure images are a proper aspect ratio in those cases */
+-.header-section.has-img .intro-header.no-img {
+-  display: none;
+-}
+-@media only screen and (max-width: 365px) {
+-  .header-section.has-img .intro-header.no-img {
+-    display: block;
+-  }
+-  .intro-header.big-img {
+-    width: 100%;
+-    height: 220px;
+-  }
+-  .intro-header.big-img .page-heading,
+-  .intro-header.big-img .post-heading {
+-    display: none;
+-  }
+-  .header-section.has-img .big-img {
+-    margin-bottom: 0;
+-  }
+-}
+-@media only screen and (max-width: 325px) {
+-  .intro-header.big-img {
+-    height: 200px;
+-  }
+-}
+-
+-.caption {
+-  text-align: center;
+-  font-size: 14px;
+-  padding: 10px;
+-  font-style: italic;
+-  margin: 0;
+-  display: block;
+-  border-bottom-right-radius: 5px;
+-  border-bottom-left-radius: 5px;
+-}
+-
+-#header-gh-btns {
+-  margin-bottom: 15px;
+-}
+-@media only screen and (max-width: 500px) {
+-  #header-gh-btns > iframe {
+-    display: block;
+-    margin-bottom: 5px;
+-  }
+-}
+-
+-/* --- Pager --- */
+-
+-.pager li a {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-  text-transform: uppercase;
+-  font-size: 14px;
+-  font-weight: 800;
+-  letter-spacing: 1px;
+-  padding: 10px 5px;
+-  background-color: #FFF;
+-  border-radius: 0;
+-  color: #404040;
+-}
+-@media only screen and (min-width: 768px) {
+-  .pager li a {
+-    padding: 15px 25px;
+-  }
+-}
+-.pager li a:hover,
+-.pager li a:focus {
+-  color: #FFF;
+-  border: 1px solid {{ site.hover-col }};
+-  background-color: {{ site.hover-col }};
+-}
+-
+-.pager {
+-  margin: 10px 0 0;
+-}
+-
+-.pager.blog-pager {
+-  margin-top: 0;
+-}
+-
+-@media only screen and (min-width: 768px) {
+-  .pager.blog-pager {
+-    margin-top: 10px;
+-  }
+-}
+-
+-/* --- Tables --- */
+-
+-table {
+-  padding: 0;
+-}
+-table tr {
+-  border-top: 1px solid #cccccc;
+-  background-color: #ffffff;
+-  margin: 0;
+-  padding: 0;
+-}
+-table tr:nth-child(2n) {
+-  background-color: #f8f8f8;
+-}
+-table tr th {
+-  font-weight: bold;
+-  border: 1px solid #cccccc;
+-  text-align: left;
+-  margin: 0;
+-  padding: 6px 13px;
+-}
+-table tr td {
+-  border: 1px solid #cccccc;
+-  text-align: left;
+-  margin: 0;
+-  padding: 6px 13px;
+-}
+-table tr th :first-child,
+-table tr td :first-child {
+-  margin-top: 0;
+-}
+-table tr th :last-child,
+-table tr td :last-child {
+-  margin-bottom: 0;
+-}
+-
+-/* --- Code blocks --- */
+-
+-pre {
+-  font-size: 16px;
+-  line-height: 1.5em;
+-}
+-.highlight pre {
+-  border: none;
+-  background: none;
+-  margin: 0;
+-}
+-.highlight > pre {
+-  background-image: linear-gradient(
+-    rgba(0,0,0,0.06), rgba(0,0,0,0.06) 1.5em, rgba(0,0,0,0.03) 1.5em, rgba(0,0,0,0.03) 3em);
+-  background-size: auto 3em;
+-  background-position-y: 10px;
+-  border: 1px solid rgba(0,0,0,0.1);
+-  border-left: 7px solid #444;
+-}
+-.highlight > pre:not([class~="highlight"]) { /* code block with line number */
+-  padding: 0;
+-}
+-.highlight table, .highlight tr, .highlight td { /* to be removed after fixing table styles */
+-  border: none;
+-  background: none;
+-  padding: 0;
+-  margin: 0;
+-}
+-.highlight pre.lineno {
+-  color: rgba(0,0,0,0.3);
+-  border-radius: 0;
+-  border-right: 2px solid #444;
+-}
+-
+-/* Make line numbers unselectable: excludes line numbers from copy-paste user ops */
+-.lineno {
+-  -webkit-user-select: none;
+-     -moz-user-select: none;
+-      -ms-user-select: none;
+-          user-select: none;
+-}
+-.lineno::selection, .lineno::-moz-selection {
+-  background: none;
+-}
+-
+-/* --- Social media sharing section --- */
+-
+-#social-share-section {
+-  margin-bottom: 30px;
+-}
+-
+-/* --- Notification boxes --- */
+-.box-note, .box-warning, .box-error, .box-success {
+-  padding: 15px 15px 15px 10px;
+-  margin: 20px 20px 20px 5px;
+-  border: 1px solid #eee;
+-  border-left-width: 5px;
+-  border-radius: 5px 3px 3px 5px;
+-}
+-
+-.box-note {
+-  background-color: #eee;
+-  border-left-color: #2980b9;
+-}
+-
+-.box-warning {
+-  background-color: #fdf5d4;
+-  border-left-color: #f1c40f;
+-}
+-
+-.box-error {
+-  background-color: #f4dddb;
+-  border-left-color: #c0392b;
+-}
+-
+-.box-success {
+-  background-color: #98FB98;
+-  border-left-color: #3CB371;
+-}
+-
+-/* Fix table border github gist snippets */
+-
+-.gist, .gist-file table tr {
+-  border: unset;
+-}
+-
+-.gist, .gist-file table tr td {
+-  border: unset;
+-}
+-
+-/* Fix .navbar-toggle */
+-
+-.navbar-default button.navbar-toggle:focus,
+-.navbar-default button.navbar-toggle:hover {
+-  background-color: initial;
+-}
+-
+-.navbar-default button.navbar-toggle[aria-expanded="true"] {
+-  background-color: rgba(0, 0, 0, 0.2);
+-}
+-
+-/* Tags page */
+-
+-.tag-btn {
+-  margin: 5px;
+-}
+-
+-#full-tags-list {
+-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+-}
+-
+-#full-tags-list .tag-entry {
+-  margin: 0 0 15px 25px;
+-}
+-
+-#full-tags-list .tag-entry a {
+-  font-size: 20px;
+-}
+-
+-#full-tags-list .tag-entry .entry-date {
+-  color: #808080;
+-  font-style: italic;
+-  font-size: 16px;
+-}
+diff --git a/index.html b/index.html
+index 3205493..c72dfaa 100644
+--- a/index.html
++++ b/index.html
+@@ -1,5 +1,5 @@
+ ---
+ layout: home
+-title: Le Ba Cong
+-subtitle: oooooooooo
++title: My website
++subtitle: This is where I will tell my friends way too much about me
+ ---

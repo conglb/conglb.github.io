@@ -10,7 +10,7 @@
 ############################
 
 # Name of website
-title: conglb
+title: cong
 
 # Your name to show in the footer
 author: cong le
@@ -36,15 +36,6 @@ round-avatar: true
 # If you want to have an image logo in the top-left corner instead of having the title of the website,
 # then specify the following parameter
 #title-img: /path/to/image
-
-# --- Background colour/image options --- #
-
-# Alternatively, the navbar, footer, and page background can be set to use background images
-# instead of colour
-
-# navbar-img: "/img/bgimage.png"
-# footer-img: "/img/bgimage.png"
-# page-img: "/img/bgimage.png"
 
 # --- Footer options --- #
 
@@ -173,8 +164,7 @@ footer-link-col: "#404040"
 #mobile-theme-col: "#0085A1"
 
 # For any extra visual customization, you can include additional CSS files in every page on your site. List any custom CSS files here
-site-css:
-  - "/assets/css/custom-styles.css"
+site-css: "/assets/css/custom-styles.css"
 
 # If you have common JavaScript files that should be included in every page, list them here
 #site-js:
