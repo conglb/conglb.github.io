@@ -1,12 +1,6 @@
 <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom top-nav-regular">
   <div class="container-fluid" style="margin-left:12%;">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       {%- if site.title-img -%}
         <a class="navbar-brand navbar-brand-logo" href="{{ '' | absolute_url }}"><img src="{{ site.title-img }}"/></a>
       {%- else -%}
@@ -23,8 +17,12 @@
   {%- endif -%}
   -->
   
+  
+  <button id="nav-item-toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-  <div class="collapse navbar-collapse" id="main-navbar">
+  <div class="navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
       {%- for link in site.navbar-links -%}
         {%- if link[1].first %}
@@ -71,7 +69,7 @@
     </div>
   {% endif %}
 
-
+  </div>
 </nav>
 
 {% include search.html %}
