@@ -10,7 +10,7 @@
 ############################
 
 # Name of website
-title: cong
+title: le ba cong
 
 # Your name to show in the footer
 author: cong le
@@ -96,7 +96,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "MyWebsite.com"
+url-pretty: "Live is sharing"
 
 # Add the website title to the title of every page
 title-on-all-pages: true
@@ -122,7 +122,7 @@ edit_page_button: true
 navbar-var-length: false
 
 # The keywords to associate with your website, for SEO purposes
-#keywords: "my,list,of,keywords"
+keywords: "mua hang nhap khau, mua hang xach tay, hang xach tay, hang nhap khau, hang xach tay gia re, hang nhap khau gia re, hang xach tay uy tin, hang nhap khau uy tin, mua hang xach tay uy tin, mua hang nhap khau uy tin"
 
 ######################################
 # --- Colours / background image --- #
@@ -175,13 +175,13 @@ site-css: "/assets/css/custom-styles.css"
 #################################
 
 # Fill in your Google Analytics tag ID (or "Measurement ID") to track your website usage
-#gtag: "G-XXXXXXXXXX"
+gtag: "G-VQS1QZNV3X "
 
 # Fill in your Cloudflare Analytics beacon token to track your website using Cloudflare Analytics
 #cloudflare_analytics: ""
 
 # Google Tag Manager ID
-#gtm: ""
+gtm: "GTM-5BS495ZV"
 
 # Matomo (aka Piwik) Web statistics
 # Uncomment the following section to enable Matomo. The opt-out parameter controls
