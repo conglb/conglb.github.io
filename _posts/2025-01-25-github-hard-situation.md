@@ -1,4 +1,7 @@
-
+---
+layout: post
+title: "Hard error & Solution in Github"
+---
 
 ### Situation when work with Github
 

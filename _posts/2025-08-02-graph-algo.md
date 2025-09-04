@@ -1,4 +1,7 @@
-
+---
+layout: post
+title: "Algorithm in Graphs"
+---
 
 
 - Thuật toán duyệt đồ thị
