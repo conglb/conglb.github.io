@@ -3,8 +3,8 @@ layout: post
 title: "Dò tìm các luồng suy nghĩ của một mô hình ngôn ngữ lớn"
 ---
 
-# Tracing the thoughts of a large language model
-# Dò tìm các luồng suy nghĩ của một mô hình ngôn ngữ lớn
+## Tracing the thoughts of a large language model
+*Dò tìm các luồng suy nghĩ của một mô hình ngôn ngữ lớn*
 
 Language models like Claude aren't programmed directly by humans—instead, they‘re trained on large amounts of data. During that training process, they learn their own strategies to solve problems. These strategies are encoded in the billions of computations a model performs for every word it writes. They arrive inscrutable to us, the model’s developers. This means that we don’t understand how models do most of the things they do.
 
