@@ -141,14 +141,14 @@ let BeautifulJekyllJS = {
 
 document.addEventListener('DOMContentLoaded', BeautifulJekyllJS.init);
 
-// Xử lý toggle: nếu #main-navbar có class collapse thì xóa, không thì thêm lại
-$(document).ready(function() {
-  $('#nav-item-toggle').on('click', function() {
-    var nav = $('#main-navbar');
-    if (nav.hasClass('collapse')) {
-      nav.removeClass('collapse');
-    } else {
-      nav.addClass('collapse');
-    }
-  });
-});
+// // Xử lý toggle: nếu #main-navbar có class collapse thì xóa, không thì thêm lại
+// $(document).ready(function() {
+//   $('#nav-item-toggle').on('click', function() {
+//     var nav = $('#main-navbar');
+//     if (nav.hasClass('collapse')) {
+//       nav.removeClass('collapse');
+//     } else {
+//       nav.addClass('collapse');
+//     }
+//   });
+// });
