@@ -86,3 +86,44 @@ See the log of webapp with command
 ```
 pm2 log
 ```
+
+
+### Nginx works as a router
+
+Thanks to reverse proxy, Nginx can work well as a router. The IP you access is Host_A:Port_X but the content is fetch from the destination of Host_B:Port_Y.
+
+```
+server {
+    # Nginx running on Host_A listening 3000
+    listen 3004;
+
+    # server_name bt.congsoft.tech;
+
+    location / {
+        # Đẩy traffic về IP Tailscale của Host_B và cổng dịch vụ đang chạy
+        proxy_pass http://100.84.102.50:3000;
+
+        # Các header cần thiết để Homelab nhận diện đúng IP thật của người dùng
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
+
+Don't forget symbol link and firewall.
+
+```
+sudo ln -s /etc/nginx/sites-available/cong_pc_app /etc/nginx/sites-enabled/
+```
+
+Check network status.
+
+```
+sudo ss -tulpn | grep 3004
+```
