@@ -3,7 +3,7 @@ layout: post
 title: "Facts and Tips in Unix enviroment"
 ---
 
-After a few years of using Ubuntu, Debian, I find these little facts that usually misundertood. 
+After a few years of using Ubuntu, Debian. I find these little facts that usually misundertood. 
 
 1. root permission do not source `.bashrc`.
 Also, crontab run task without sourcing the `.bashrc`.
